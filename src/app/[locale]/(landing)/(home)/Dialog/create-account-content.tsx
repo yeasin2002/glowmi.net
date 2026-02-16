@@ -45,7 +45,6 @@ export const CreateAccountContent = ({ setCurrentStep }: CreateAccountContentPro
   const { mutateAsync: createTempInfo, isPending } = useCreateTempInfo()
 
   const onFormSubmit = async (data: CreateAccountFormData) => {
-    // Format birthday as YYYY-MM-DD
     const birthday = format(data.birthday, 'yyyy-MM-dd')
 
     await createTempInfo(
@@ -55,7 +54,7 @@ export const CreateAccountContent = ({ setCurrentStep }: CreateAccountContentPro
         contact_number: data.contactNumber,
         skin_type: data.skinType,
         birthday: birthday,
-        lean: 'EN', // Default language, you can make this dynamic based on locale
+        lean: 'EN',
       },
       {
         onSuccess: () => {
