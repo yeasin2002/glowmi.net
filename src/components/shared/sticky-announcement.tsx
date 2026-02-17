@@ -16,17 +16,17 @@ export const StickyAnnouncement = () => {
   }
 
   return (
-    <section className="flex h-11.25 w-full items-center justify-center gap-x-20 bg-black text-[20px] font-normal text-white *:cursor-pointer">
+    <section className="flex h-11.25 w-full items-center justify-center gap-x-8 bg-black text-[20px] font-normal text-white *:cursor-pointer md:gap-x-20">
       <button
         type="button"
         onClick={openFromAnnouncement}
-        className="text-[20px] underline-offset-1 hover:underline focus:underline focus:outline-none"
+        className="text-[15px] underline-offset-1 hover:underline focus:underline focus:outline-none lg:text-[20px]"
       >
         Join Glowmi Circle — Early Access to THE CIRCLE
       </button>
 
       <button aria-label="close announcement" onClick={dismiss}>
-        <X />
+        <X className="size-5" />
       </button>
     </section>
   )
