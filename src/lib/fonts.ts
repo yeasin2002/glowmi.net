@@ -1,5 +1,18 @@
 import { Lato } from 'next/font/google'
 
+
+export const lato = Lato({
+  weight: ['100', '300', '400', '700', '900'],
+  subsets: ['latin', 'latin-ext'],
+  display: 'swap',
+  variable: '--next-font-lato',
+  fallback: ['system-ui', 'sans-serif'],
+})
+
+const fontList = [lato]
+export const fonts = fontList.map((f) => f.variable).join(' ')
+
+
 // export const caudex = Caudex({
 //   weight: ['400', '700'],
 //   subsets: ['latin'],
@@ -15,14 +28,3 @@ import { Lato } from 'next/font/google'
 //   variable: '--next-',
 //   fallback: ['system-ui', 'sans-serif'],
 // })
-
-export const lato = Lato({
-  weight: ['100', '300', '400', '700', '900'],
-  subsets: ['latin', 'latin-ext'],
-  display: 'swap',
-  variable: '--next-font-lato',
-  fallback: ['system-ui', 'sans-serif'],
-})
-
-const fontList = [lato]
-export const fonts = fontList.map((f) => f.variable).join(' ')
