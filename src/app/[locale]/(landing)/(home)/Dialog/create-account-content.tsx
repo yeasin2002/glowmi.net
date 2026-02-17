@@ -4,16 +4,15 @@ import { useCreateTempInfo } from '@/api/api-hooks/member.api-hook'
 import createProfileBg from '@/assets/image/modals/complete-profile-image.png'
 import { DatePicker } from '@/components/shared/date-picker'
 import { lato } from '@/lib/fonts'
+import { MembershipModalStep } from '@/store/membership-modal.store'
 import { cn } from '@/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { format } from 'date-fns'
 import { ChevronDown, Loader2 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
-import { Dispatch, SetStateAction } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { z } from 'zod'
-import { ModalStep } from '../show-modals'
 
 const createAccountSchema = z.object({
   fullName: z.string().min(2, 'Full name must be at least 2 characters'),
@@ -26,7 +25,7 @@ const createAccountSchema = z.object({
 type CreateAccountFormData = z.infer<typeof createAccountSchema>
 
 type CreateAccountContentProps = {
-  setCurrentStep: Dispatch<SetStateAction<ModalStep>>
+  setCurrentStep: (step: MembershipModalStep) => void
 }
 
 export const CreateAccountContent = ({ setCurrentStep }: CreateAccountContentProps) => {
