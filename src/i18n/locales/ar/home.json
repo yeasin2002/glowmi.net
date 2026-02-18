@@ -190,8 +190,8 @@
     "cta": "انضم إلى الدائرة"
   },
   "createAccountDialog": {
-    "title": "تم فك شفرة بشرتك",
-    "subtitle": "أكمل ملفك الشخصي لفتح القفل.",
+    "title": "إكتشفنا سر بشرتك ",
+    "subtitle": "أكمل ملفك الشخصي لعرض التفاصيل",
     "offer": "انضم إلى دائرة غلومي واحصل على طلبك الأول مجاناً",
     "fields": {
       "fullName": "الاسم الكامل",
@@ -202,10 +202,18 @@
       "contactNumberPlaceholder": "رقم الاتصال",
       "skinType": "نوع البشرة",
       "skinTypePlaceholder": "اختر",
+      "skinTypeOptions": {
+        "normal": "عادية",
+        "dry": "جافة",
+        "oily": "دهنية",
+        "combination": "مختلطة",
+        "sensitive": "حساسة"
+      },
       "birthday": "تاريخ الميلاد",
       "day": "اليوم",
       "month": "الشهر",
-      "year": "السنة"
+      "year": "السنة",
+      "SelectDateLabelName": "اختر التاريخ"
     },
     "cta": "ادخل إلى الدائرة"
   },

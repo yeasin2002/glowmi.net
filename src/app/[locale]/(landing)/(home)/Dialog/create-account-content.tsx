@@ -4,8 +4,8 @@ import { useCreateTempInfo } from '@/api/api-hooks/member.api-hook'
 import createProfileBg from '@/assets/image/modals/complete-profile-image.png'
 import { DatePicker } from '@/components/shared/date-picker'
 import { lato } from '@/lib/fonts'
-import { MembershipModalStep } from '@/store/membership-modal.store'
 import { cn } from '@/lib/utils'
+import { MembershipModalStep } from '@/store/membership-modal.store'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { format } from 'date-fns'
 import { ChevronDown, Loader2 } from 'lucide-react'
@@ -30,6 +30,13 @@ type CreateAccountContentProps = {
 
 export const CreateAccountContent = ({ setCurrentStep }: CreateAccountContentProps) => {
   const t = useTranslations('home.createAccountDialog')
+  const SkinTypeOptions = [
+    { value: 'normal', label: t('fields.skinTypeOptions.normal') },
+    { value: 'dry', label: t('fields.skinTypeOptions.dry') },
+    { value: 'oily', label: t('fields.skinTypeOptions.oily') },
+    { value: 'combination', label: t('fields.skinTypeOptions.combination') },
+    { value: 'sensitive', label: t('fields.skinTypeOptions.sensitive') },
+  ]
 
   const {
     register,
@@ -171,11 +178,11 @@ export const CreateAccountContent = ({ setCurrentStep }: CreateAccountContentPro
                   aria-invalid={errors.skinType ? 'true' : 'false'}
                 >
                   <option value="">{t('fields.skinTypePlaceholder')}</option>
-                  <option value="normal">Normal</option>
-                  <option value="dry">Dry</option>
-                  <option value="oily">Oily</option>
-                  <option value="combination">Combination</option>
-                  <option value="sensitive">Sensitive</option>
+                  {SkinTypeOptions.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
                 </select>
                 <ChevronDown className="pointer-events-none absolute top-1/2 right-4 size-4 -translate-y-1/2 text-black" />
               </div>
@@ -194,7 +201,13 @@ export const CreateAccountContent = ({ setCurrentStep }: CreateAccountContentPro
               <Controller
                 control={control}
                 name="birthday"
-                render={({ field }) => <DatePicker value={field.value} onChange={field.onChange} />}
+                render={({ field }) => (
+                  <DatePicker
+                    value={field.value}
+                    onChange={field.onChange}
+                    labelName={t('fields.SelectDateLabelName')}
+                  />
+                )}
               />
               {errors.birthday && (
                 <span className="mt-1 text-xs text-red-600" role="alert">

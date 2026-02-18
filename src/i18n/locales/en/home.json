@@ -202,10 +202,18 @@
       "contactNumberPlaceholder": "Contact number",
       "skinType": "Skin Type",
       "skinTypePlaceholder": "Select",
+      "skinTypeOptions": {
+        "normal": "Normal",
+        "dry": "Dry",
+        "oily": "Oily",
+        "combination": "Combination",
+        "sensitive": "Sensitive"
+      },
       "birthday": "Birth Date",
       "day": "Day",
       "month": "Month",
-      "year": "Year"
+      "year": "Year",
+      "SelectDateLabelName": "Select Date"
     },
     "cta": "Enter the Circle"
   },

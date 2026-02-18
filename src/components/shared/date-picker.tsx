@@ -10,9 +10,15 @@ interface DatePickerProps {
   value?: Date
   onChange?: (date: Date | undefined) => void
   className?: string
+  labelName?: string
 }
 
-export function DatePicker({ value, onChange, className }: DatePickerProps) {
+export function DatePicker({
+  value,
+  onChange,
+  className,
+  labelName = 'Select date',
+}: DatePickerProps) {
   const [open, setOpen] = useState(false)
   const [date, setDate] = useState<Date | undefined>(value)
 
@@ -25,7 +31,7 @@ export function DatePicker({ value, onChange, className }: DatePickerProps) {
             id="date"
             className={cn('justify-start rounded-full font-normal', className)}
           >
-            {date ? date.toLocaleDateString() : 'Select date'}
+            {date ? date.toLocaleDateString() : labelName}
           </Button>
         }
       />
