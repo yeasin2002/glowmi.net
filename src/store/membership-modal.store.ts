@@ -17,5 +17,5 @@ export const useMembershipModalStore = create<MembershipModalState>((set) => ({
   open: (step = 'be-member') => set({ isOpen: true, step }),
   close: () => set({ isOpen: false, step: null }),
   setStep: (step) => set({ isOpen: true, step }),
-  openFromAnnouncement: () => set({ isOpen: true, step: 'be-member' }),
+  openFromAnnouncement: () => set({ isOpen: true, step: 'create-account' }),
 }))
