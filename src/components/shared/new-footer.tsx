@@ -57,17 +57,7 @@ export const NewFooter = async ({ className, ...props }: Props) => {
 
         {/* Middle Section - Contact, Logo, Contact */}
         <div className="mb-12 grid grid-cols-1 items-end gap-8 md:mb-16 md:grid-cols-3 md:gap-12 lg:mb-20 lg:gap-47">
-          {/* Left Contact */}
-          <div className="flex flex-col gap-4 text-center md:text-left">
-            <p className="footer-email-container">{tHome('contact.title')}</p>
-            <a
-              href={`mailto:${contactEmail}`}
-              className="footer-email"
-              style={{ direction: 'ltr' }}
-            >
-              <span>{tHome('contact.email')}:</span> <span> {contactEmail}</span>
-            </a>
-          </div>
+          <EmailContact />
 
           {/* Center Logo & Tagline */}
           <div className="flex flex-col items-center gap-4 md:gap-6">
@@ -81,13 +71,7 @@ export const NewFooter = async ({ className, ...props }: Props) => {
             <p className="text-xl font-normal md:text-2xl lg:text-[28px]">{tShared('heading')}</p>
           </div>
 
-          {/* Right Contact */}
-          <div className="flex flex-col gap-4 text-center md:text-right">
-            <p className="footer-email-container">{tHome('contact.title')}</p>
-            <a href={`mailto:${contactEmail}`} className="footer-email">
-              <span>{tHome('contact.email')}:</span> <span> {contactEmail}</span>
-            </a>
-          </div>
+          <EmailContact />
         </div>
 
         {/* Bottom Section - Follow Us */}
@@ -118,5 +102,17 @@ export const NewFooter = async ({ className, ...props }: Props) => {
         </div>
       </div>
     </footer>
+  )
+}
+
+export const EmailContact = async () => {
+  const tHome = await getTranslations('home.footer')
+  return (
+    <div className="flex flex-col gap-4 text-center md:text-right">
+      <p className="footer-email-container">{tHome('contact.title')}</p>
+      <a href={`mailto:${contactEmail}`} className="footer-email">
+        <span>{tHome('contact.email')}:</span> <span> {contactEmail}</span>
+      </a>
+    </div>
   )
 }
