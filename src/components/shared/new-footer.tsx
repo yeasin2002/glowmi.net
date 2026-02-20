@@ -59,10 +59,10 @@ export const NewFooter = async ({ className, ...props }: Props) => {
         <div className="mb-12 grid grid-cols-1 items-end gap-8 md:mb-16 md:grid-cols-3 md:gap-12 lg:mb-20 lg:gap-47">
           {/* Left Contact */}
           <div className="flex flex-col gap-4 text-center md:text-left">
-            <p className="text-lg font-normal md:text-xl lg:text-xl">{tHome('contact.title')}</p>
+            <p className="footer-email-container">{tHome('contact.title')}</p>
             <a
               href={`mailto:${contactEmail}`}
-              className="text-lg font-normal transition-opacity hover:opacity-70 md:text-xl lg:text-xl"
+              className="footer-email"
               style={{ direction: 'ltr' }}
             >
               <span>{tHome('contact.email')}:</span> <span> {contactEmail}</span>
@@ -83,11 +83,8 @@ export const NewFooter = async ({ className, ...props }: Props) => {
 
           {/* Right Contact */}
           <div className="flex flex-col gap-4 text-center md:text-right">
-            <p className="text-lg font-normal md:text-xl lg:text-xl">{tHome('contact.title')}</p>
-            <a
-              href={`mailto:${contactEmail}`}
-              className="text-lg font-normal transition-opacity hover:opacity-70 md:text-xl lg:text-xl"
-            >
+            <p className="footer-email-container">{tHome('contact.title')}</p>
+            <a href={`mailto:${contactEmail}`} className="footer-email">
               <span>{tHome('contact.email')}:</span> <span> {contactEmail}</span>
             </a>
           </div>
