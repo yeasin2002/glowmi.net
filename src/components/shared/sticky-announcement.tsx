@@ -2,13 +2,12 @@
 
 import { useExpiringDismissal } from '@/hooks/use-expiring-dismissal'
 import { useMembershipModalStore } from '@/store/membership-modal.store'
-import { X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
 export const StickyAnnouncement = () => {
   const t = useTranslations('home.JoinGlowmiCircle')
   const openFromAnnouncement = useMembershipModalStore((state) => state.openFromAnnouncement)
-  const { isReady, isDismissed, dismiss } = useExpiringDismissal(
+  const { isReady, isDismissed } = useExpiringDismissal(
     'sticky-announcement-dismissed',
     24 * 60 * 60 * 1000
   )
@@ -16,17 +15,13 @@ export const StickyAnnouncement = () => {
   if (!isReady || isDismissed) return null
 
   return (
-    <section className="flex h-11.25 w-full items-center justify-center gap-x-8 bg-black text-[20px] font-normal text-white *:cursor-pointer md:gap-x-20">
+    <section className="px-20 py-6">
       <button
         type="button"
         onClick={openFromAnnouncement}
-        className="text-[15px] underline-offset-1 hover:underline focus:underline focus:outline-none lg:text-[20px]"
+        className="cursor-pointer rounded-full border border-black px-6 py-1 text-[20px] underline-offset-1 hover:underline focus:underline focus:outline-none lg:text-[20px]"
       >
         {t('title')}
-      </button>
-
-      <button aria-label="close announcement" onClick={dismiss}>
-        <X className="size-5" />
       </button>
     </section>
   )
