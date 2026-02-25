@@ -108,7 +108,7 @@ export const NewFooter = async ({ className, ...props }: Props) => {
 export const EmailContact = async () => {
   const tHome = await getTranslations('home.footer')
   return (
-    <div className="flex flex-col gap-4 text-center md:text-right">
+    <div className="flex flex-col gap-4 text-center md:text-left">
       <p className="footer-email-container">{tHome('contact.title')}</p>
       <a href={`mailto:${contactEmail}`} className="footer-email">
         <span>{tHome('contact.email')}:</span> <span> {contactEmail}</span>
