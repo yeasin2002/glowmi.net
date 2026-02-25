@@ -36,7 +36,7 @@ export const NewNavMobile = ({ navItems }: Props) => {
               <Menu className="size-7 text-black" />
             </SheetTrigger>
 
-            <SheetContent side="right" className="w-[300px] sm:w-[400px]" showCloseButton={false}>
+            <SheetContent side="right" className="w-75 sm:w-100" showCloseButton={false}>
               {/* Header with Logo and Close Button */}
               <div className="flex items-center justify-between border-b pb-4">
                 <Image

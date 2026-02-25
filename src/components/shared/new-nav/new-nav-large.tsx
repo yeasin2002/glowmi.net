@@ -22,7 +22,7 @@ export const NewNavLarge = ({ navItems }: Props) => {
     <header className="hidden w-full bg-white py-4 lg:block">
       <div className="container mx-auto px-4">
         {/* Logo - Top Center */}
-        <div className="flex justify-center pb-6">
+        <div className="flex justify-center pb-16">
           <Link href="/">
             <Image
               src={newLogo}
@@ -37,12 +37,12 @@ export const NewNavLarge = ({ navItems }: Props) => {
         {/* Navigation Bar - Nav Items Center + Icons Right */}
         <div className="relative flex items-center justify-center">
           {/* Navigation Links - Center */}
-          <nav className="flex items-center gap-8 lg:gap-12">
+          <nav className="flex items-center gap-8 lg:gap-40">
             {navItems.map((item) => (
               <Link
                 key={item.name}
                 href={{ pathname: item.url }}
-                className="text-[1.50rem] leading-normal font-light! text-black transition-opacity hover:opacity-70"
+                className="text-[1.20rem] leading-normal font-light! text-black transition-opacity hover:opacity-70"
               >
                 {item.name}
               </Link>
@@ -61,7 +61,7 @@ export const NewNavLarge = ({ navItems }: Props) => {
                   className="rounded-full p-2 transition-colors hover:bg-gray-100"
                   aria-label={action.label}
                 >
-                  <Icon className="size-7 font-semibold" strokeWidth="1.5" />
+                  <Icon className="size-[1.20rem] font-semibold" strokeWidth="1.5" />
                 </Link>
               )
             })}
