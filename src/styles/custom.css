@@ -19,12 +19,34 @@
   }
 }
 
+@keyframes bounce-kfm {
+  0% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(18px);
+  }
+  55% {
+    transform: translateY(-12px);
+  }
+  75% {
+    transform: translateY(6px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
 .animate-fade-in {
   animation: fade-in 1s ease-out;
 }
 
 .animate-fade-in-up {
   animation: fade-in-up 1s ease-out 0.3s both;
+}
+
+.animate-bounce-kfm {
+  animation: bounce-kfm 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .arabic-text {
@@ -68,3 +90,6 @@
 .locale-rtl button {
   direction: rtl;
 }
+
+
+
