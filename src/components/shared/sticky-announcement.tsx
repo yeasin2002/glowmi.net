@@ -19,7 +19,7 @@ export const StickyAnnouncement = () => {
       <button
         type="button"
         onClick={openFromAnnouncement}
-        className="animate-bounce-kfm cursor-pointer rounded-full border border-black px-6 py-1 text-[20px] underline-offset-1 hover:underline focus:underline focus:outline-none lg:text-[20px]"
+        className="animate-bounce-kfm cursor-pointer rounded-full border border-black px-6 py-1 text-[20px] focus:outline-none lg:text-[20px]"
       >
         {t('title')}
       </button>
