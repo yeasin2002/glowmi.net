@@ -68,7 +68,9 @@ export const NewFooter = async ({ className, ...props }: Props) => {
               height={80}
               className="h-16 w-16 md:h-20 md:w-20"
             />
-            <p className="text-xl font-normal md:text-2xl lg:text-[28px]">{tShared('heading')}</p>
+            <p className="text-xl font-normal whitespace-nowrap md:text-2xl lg:text-[28px]">
+              {tShared('heading')}
+            </p>
           </div>
 
           <EmailContact />
