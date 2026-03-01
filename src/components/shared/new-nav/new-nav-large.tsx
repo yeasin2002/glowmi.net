@@ -1,4 +1,4 @@
-import newLogo from '@/assets/icons/logo.svg'
+import newLogo from '@/assets/GLOWMI-logo.svg'
 import { Link } from '@/i18n/navigation'
 import { Info, Mail, MapPin } from 'lucide-react'
 import Image from 'next/image'
@@ -22,15 +22,9 @@ export const NewNavLarge = ({ navItems }: Props) => {
     <header className="hidden w-full bg-white py-4 lg:block">
       <div className="container mx-auto px-4">
         {/* Logo - Top Center */}
-        <div className="flex justify-center pb-16">
+        <div className="flex justify-center pt-4 pb-16">
           <Link href="/">
-            <Image
-              src={newLogo}
-              alt="GLOWMI"
-              width={140}
-              height={40}
-              className="h-auto w-32 lg:w-36"
-            />
+            <Image src={newLogo} alt="GLOWMI" width={400} height={400} className="w-32 lg:w-36" />
           </Link>
         </div>
 
