@@ -66,7 +66,7 @@ export const NewFooter = async ({ className, ...props }: Props) => {
               alt="Glowmi"
               width={80}
               height={80}
-              className="h-16 w-16 md:h-20 md:w-20"
+              className="size-12 md:size-14"
             />
             <p className="text-xl font-normal whitespace-nowrap md:text-2xl lg:text-[28px]">
               {tShared('heading')}
