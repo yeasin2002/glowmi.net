@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     template: '%s | GLOWMI',
   },
   description:
-    'Discover personalized skincare with GLOWMI. AI-powered skin analysis, premium ingredients, and customized routines for your unique skin needs.',
+    'Glowmi blends science and luxury to create intelligent skincare for radiant, healthy skin. Discover the essence of timeless glow.',
   keywords: [
     'skincare',
     'AI skin analysis',
