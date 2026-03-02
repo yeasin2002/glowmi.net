@@ -19,7 +19,11 @@ const createAccountSchema = z.object({
   email: z.string().regex(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Invalid email address'),
   contactNumber: z.string().min(10, 'Contact number must be at least 10 digits'),
   skinType: z.string().min(1, 'Please select a skin type'),
-  birthday: z.date({ message: 'A date of birth is required' }),
+  birthday: z
+    .date({ message: 'A date of birth is required' })
+    .refine((birthday) => birthday <= new Date(), {
+      message: 'Birthday cannot be a future date',
+    }),
 })
 
 type CreateAccountFormData = z.infer<typeof createAccountSchema>
@@ -206,6 +210,7 @@ export const CreateAccountContent = ({ setCurrentStep }: CreateAccountContentPro
                     value={field.value}
                     onChange={field.onChange}
                     labelName={t('fields.SelectDateLabelName')}
+                    maxDate={new Date()}
                   />
                 )}
               />
