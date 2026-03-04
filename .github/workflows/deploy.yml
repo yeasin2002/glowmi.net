@@ -1,107 +1,59 @@
-name: Manual VPS Redeploy
+name: Deploy To VPS
 
 on:
+  push:
+    branches:
+      - production
   workflow_dispatch:
     inputs:
-      environment:
-        description: 'Deployment environment'
-        required: true
-        default: 'coming-soon'
-        type: choice
-        options:
-          - production
+      branch:
+        description: Branch to deploy
+        required: false
+        default: production
+        type: string
 
 concurrency:
-  group: vps-redeploy
+  group: deploy-production
   cancel-in-progress: false
 
+permissions:
+  contents: read
+
 jobs:
-  redeploy:
-    name: Redeploy via SSH + PM2
+  deploy:
+    name: Deploy on production push
     runs-on: ubuntu-latest
+    env:
+      DEPLOY_BRANCH: ${{ github.event_name == 'workflow_dispatch' && inputs.branch || 'production' }}
+      APP_DIR: ${{ secrets.APP_DIR }}
+      PM2_APP_NAME: ${{ secrets.PM2_APP_NAME }}
+      APP_PORT: ${{ secrets.APP_PORT }}
 
     steps:
-      - name: Redeploy on VPS
+      - name: SSH into VPS and run deploy script
         uses: appleboy/ssh-action@v1.2.2
-        env:
-          DEPLOY_BRANCH: ${{ inputs.branch }}
-          APP_DIR: ${{ secrets.APP_DIR }}
-          REPO_URL: ${{ secrets.DEPLOY_PATH }}
-          PM2_APP_NAME: ${{ secrets.PM2_APP_NAME }}
-          APP_PORT: ${{ secrets.APP_PORT }}
         with:
           host: ${{ secrets.SSH_HOST || secrets.VPS_HOST }}
           username: ${{ secrets.SSH_USERNAME || secrets.VPS_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY || secrets.VPS_SSH_KEY }}
-          port: ${{ secrets.SSH_PORT || '22' }}
-          envs: DEPLOY_BRANCH,APP_DIR,REPO_URL,PM2_APP_NAME,APP_PORT
+          password: ${{ secrets.SSH_PASSWORD || secrets.VPS_PASSWORD }}
+          port: ${{ secrets.SSH_PORT || secrets.VPS_PORT || '22' }}
+          envs: DEPLOY_BRANCH,APP_DIR,PM2_APP_NAME,APP_PORT
+          script_stop: true
+          command_timeout: 40m
           script: |
-            set -eu
+            set -euo pipefail
 
-            APP_DIR="${APP_DIR:-$HOME/rumi77-ai_skin_care-jvai}"
-            REPO_URL="${REPO_URL:-git@github.com:yeasin2002/rumi77-ai_skin_care-jvai.git}"
+            APP_DIR="${APP_DIR:-/home/ubuntu/rumi77-ai_skin_care-jvai}"
+            DEPLOY_BRANCH="${DEPLOY_BRANCH:-production}"
             PM2_APP_NAME="${PM2_APP_NAME:-rumi77-ai-skin-care}"
-            DEPLOY_BRANCH="${DEPLOY_BRANCH:-main}"
             APP_PORT="${APP_PORT:-3000}"
-            export NODE_ENV=production
-            export PORT="$APP_PORT"
 
-            echo "Deploying branch '$DEPLOY_BRANCH' into '$APP_DIR'"
-
-            mkdir -p "$APP_DIR"
-
-            if [ ! -d "$APP_DIR/.git" ]; then
-              echo "Repository missing in app dir. Cloning..."
-              git clone "$REPO_URL" "$APP_DIR"
+            if [ ! -d "$APP_DIR" ]; then
+              echo "App directory not found: $APP_DIR"
+              exit 1
             fi
 
             cd "$APP_DIR"
-
-            echo "Fetching latest code..."
-            git fetch --prune origin "$DEPLOY_BRANCH"
-            if git show-ref --verify --quiet "refs/heads/$DEPLOY_BRANCH"; then
-              git checkout "$DEPLOY_BRANCH"
-            else
-              git checkout -b "$DEPLOY_BRANCH" "origin/$DEPLOY_BRANCH"
-            fi
-            git pull --ff-only origin "$DEPLOY_BRANCH"
-
-            if ! command -v pnpm >/dev/null 2>&1; then
-              echo "pnpm not found. Installing..."
-              if command -v corepack >/dev/null 2>&1; then
-                corepack enable
-                corepack prepare pnpm@latest --activate
-              else
-                npm install -g pnpm
-              fi
-            fi
-
-            if ! command -v pm2 >/dev/null 2>&1; then
-              echo "pm2 not found. Installing..."
-              npm install -g pm2
-            fi
-
-            echo "Installing dependencies..."
-            pnpm install --frozen-lockfile
-
-            echo "Building app..."
-            pnpm run build
-
-            if pm2 describe "$PM2_APP_NAME" >/dev/null 2>&1; then
-              echo "Restarting PM2 app: $PM2_APP_NAME"
-              pm2 restart "$PM2_APP_NAME" --update-env
-            else
-              echo "Starting PM2 app: $PM2_APP_NAME"
-              pm2 start "pnpm start" --name "$PM2_APP_NAME"
-            fi
-
-            pm2 save
-
-            echo "Waiting for health check..."
-            sleep 10
-            if command -v curl >/dev/null 2>&1; then
-              curl -fsS "http://127.0.0.1:${APP_PORT}" >/dev/null
-            fi
-
-            echo "Deployment successful. PM2 status:"
-            pm2 status
+            chmod +x ./deploy.sh
+            ./deploy.sh "$DEPLOY_BRANCH" "$PM2_APP_NAME" "$APP_PORT"
