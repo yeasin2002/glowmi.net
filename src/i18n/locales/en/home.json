@@ -222,11 +222,13 @@
   },
   "welcomeDialog": {
     "logoAlt": "Glowmi logo",
-    "title": "Welcome to the inner circle",
-    "messagePrimary": "Your profile has been created and your Welcome Privilege has been automatically applied to your bag.",
-    "messageSecondary": "We look forward to building your skin's resilience.",
+    "title": "Welcome to the Glowmi Circle",
+    "messagePrimary": "Your profile has been successfully created.",
+    "messageSecondary": "You are now part of a community devoted to intelligent skincare, refined rituals, and timeless glow.",
+    "messageTertiary": "Your welcome privilege has been applied.",
+    "messageQuaternary": "We look forward to supporting your skin’s resilience — beautifully and intentionally.",
     "tagline": "The Essence of Timeless Glow",
-    "thanks": "Thank You"
+    "thanks": "Thank you for joining us."
   },
   "footer": {
     "tagline": "The Essence of Timeless Glow",

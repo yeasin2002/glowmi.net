@@ -26,6 +26,8 @@ export const WelcomeContent = () => {
             {t('messagePrimary')}
           </p>
           <p className="text-sm text-black/70 sm:text-base">{t('messageSecondary')}</p>
+          <p className="text-sm text-black/70 sm:text-base">{t('messageTertiary')}</p>
+          <p className="text-sm text-black/70 sm:text-base">{t('messageQuaternary')}</p>
         </div>
 
         <div className="mt-2 flex items-center gap-4">
