@@ -92,7 +92,7 @@ export const CreateAccountContent = ({ setCurrentStep }: CreateAccountContentPro
       {/* Form Content */}
       <div className="flex flex-col gap-6 bg-white/20 p-6 backdrop-blur-[1px] md:p-12 lg:col-span-7">
         {/* Header */}
-        <div className="flex flex-col gap-8 text-center text-black">
+        <div className="text-primary flex flex-col gap-8 text-center">
           <div className="text-xl">
             <p className="mb-0">{t('title')}</p>
             <p>{t('subtitle')}</p>
@@ -104,7 +104,7 @@ export const CreateAccountContent = ({ setCurrentStep }: CreateAccountContentPro
         <div className="flex flex-col gap-2">
           {/* Full Name */}
           <div className="grid grid-cols-3 gap-2">
-            <label htmlFor="fullName" className="min-w-24 text-base font-normal text-black">
+            <label htmlFor="fullName" className="text-primary min-w-24 text-base font-normal">
               {t('fields.fullName')}
             </label>
             <div className="col-span-2 flex flex-col">
@@ -126,7 +126,7 @@ export const CreateAccountContent = ({ setCurrentStep }: CreateAccountContentPro
 
           {/* Email */}
           <div className="grid grid-cols-3 gap-2">
-            <label htmlFor="email" className="min-w-24 text-base text-black">
+            <label htmlFor="email" className="text-primary min-w-24 text-base">
               {t('fields.email')}
             </label>
             <div className="col-span-2 flex flex-col">
@@ -148,7 +148,7 @@ export const CreateAccountContent = ({ setCurrentStep }: CreateAccountContentPro
 
           {/* Contact Number */}
           <div className="grid grid-cols-3 gap-2">
-            <label htmlFor="contactNumber" className="min-w-32 text-base text-black">
+            <label htmlFor="contactNumber" className="text-primary min-w-32 text-base">
               {t('fields.contactNumber')}
             </label>
             <div className="col-span-2 flex flex-col">
@@ -170,14 +170,14 @@ export const CreateAccountContent = ({ setCurrentStep }: CreateAccountContentPro
 
           {/* Skin Type */}
           <div className="grid grid-cols-3 gap-2">
-            <label htmlFor="skinType" className="min-w-24 text-base text-black">
+            <label htmlFor="skinType" className="text-primary min-w-24 text-base">
               {t('fields.skinType')}
             </label>
             <div className="col-span-2 flex flex-col">
               <div className="relative w-full">
                 <select
                   id="skinType"
-                  className="h-9.5 w-full appearance-none rounded-full bg-white px-5 py-2 pr-10 text-sm text-black focus:ring-2 focus:ring-black/20 focus:outline-none"
+                  className="text-primary h-9.5 w-full appearance-none rounded-full bg-white px-5 py-2 pr-10 text-sm focus:ring-2 focus:ring-black/20 focus:outline-none"
                   {...register('skinType')}
                   aria-invalid={errors.skinType ? 'true' : 'false'}
                 >
@@ -188,7 +188,7 @@ export const CreateAccountContent = ({ setCurrentStep }: CreateAccountContentPro
                     </option>
                   ))}
                 </select>
-                <ChevronDown className="pointer-events-none absolute top-1/2 right-4 size-4 -translate-y-1/2 text-black" />
+                <ChevronDown className="text-primary pointer-events-none absolute top-1/2 right-4 size-4 -translate-y-1/2" />
               </div>
               {errors.skinType && (
                 <span className="mt-1 text-xs text-red-600" role="alert">
@@ -200,7 +200,7 @@ export const CreateAccountContent = ({ setCurrentStep }: CreateAccountContentPro
 
           {/* Birthday */}
           <div className="grid grid-cols-3 gap-2">
-            <label className="min-w-24 text-base text-black">{t('fields.birthday')}</label>
+            <label className="text-primary min-w-24 text-base">{t('fields.birthday')}</label>
             <div className="col-span-2 flex flex-col">
               <Controller
                 control={control}

@@ -41,7 +41,7 @@ export const DashboardNav = () => {
       {/* Logo and tagline */}
       <div className="flex flex-col gap-1 lg:gap-3">
         <Image src={logoLight} alt="Logo" className="max-w-24 lg:max-w-none" />
-        <p className="hidden text-sm text-black/60 lg:ml-10 lg:block">
+        <p className="text-primary/60 hidden text-sm lg:ml-10 lg:block">
           Monitor user interactions and skincare analytics
         </p>
       </div>

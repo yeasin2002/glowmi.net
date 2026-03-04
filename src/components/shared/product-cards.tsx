@@ -51,7 +51,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
 
       {/* Product Info */}
       <div className="mt-3">
-        <p className="text-sm font-medium text-black">{product.price}</p>
+        <p className="text-primary text-sm font-medium">{product.price}</p>
         <p className="text-main-button text-sm">{product.name}</p>
       </div>
     </div>

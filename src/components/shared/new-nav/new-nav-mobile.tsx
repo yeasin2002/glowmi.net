@@ -33,7 +33,7 @@ export const NewNavMobile = ({ navItems }: Props) => {
               className="rounded-lg p-2 transition-colors hover:bg-gray-100"
               aria-label="Open menu"
             >
-              <Menu className="size-7 text-black" />
+              <Menu className="text-primary size-7" />
             </SheetTrigger>
 
             <SheetContent side="right" className="w-75 sm:w-100" showCloseButton={false}>
@@ -50,7 +50,7 @@ export const NewNavMobile = ({ navItems }: Props) => {
                   className="rounded-lg p-2 transition-colors hover:bg-gray-100"
                   aria-label="Close menu"
                 >
-                  <X className="size-6 text-black" />
+                  <X className="text-primary size-6" />
                 </SheetClose>
               </div>
 
@@ -60,7 +60,7 @@ export const NewNavMobile = ({ navItems }: Props) => {
                   <Link
                     key={item.name}
                     href={{ pathname: item.url }}
-                    className="rounded-lg px-4 py-3 text-xl font-normal text-black transition-colors hover:bg-gray-100"
+                    className="text-primary rounded-lg px-4 py-3 text-xl font-normal transition-colors hover:bg-gray-100"
                     onClick={() => setOpen(false)}
                   >
                     {item.name}
@@ -82,8 +82,8 @@ export const NewNavMobile = ({ navItems }: Props) => {
                   className="flex items-center gap-3 rounded-lg px-4 py-3 transition-colors hover:bg-gray-100"
                   aria-label="Information"
                 >
-                  <Info className="size-6 text-black" />
-                  <span className="font-medium text-black">Information</span>
+                  <Info className="text-primary size-6" />
+                  <span className="text-primary font-medium">Information</span>
                 </button>
 
                 <button
@@ -91,8 +91,8 @@ export const NewNavMobile = ({ navItems }: Props) => {
                   className="flex items-center gap-3 rounded-lg px-4 py-3 transition-colors hover:bg-gray-100"
                   aria-label="Contact"
                 >
-                  <Phone className="size-6 text-black" />
-                  <span className="font-medium text-black">Contact</span>
+                  <Phone className="text-primary size-6" />
+                  <span className="text-primary font-medium">Contact</span>
                 </button>
 
                 <button
@@ -100,8 +100,8 @@ export const NewNavMobile = ({ navItems }: Props) => {
                   className="flex items-center gap-3 rounded-lg px-4 py-3 transition-colors hover:bg-gray-100"
                   aria-label="Location"
                 >
-                  <MapPin className="size-6 text-black" />
-                  <span className="font-medium text-black">Location</span>
+                  <MapPin className="text-primary size-6" />
+                  <span className="text-primary font-medium">Location</span>
                 </button>
               </div>
             </SheetContent>

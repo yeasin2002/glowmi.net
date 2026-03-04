@@ -29,7 +29,7 @@ export const BeMemberContent = ({ onJoinClick }: BeMemberContentProps) => {
       <div className="flex flex-1 flex-col items-center justify-center gap-4 px-6 py-8 md:gap-12 md:px-12 md:py-16">
         {/* Header */}
         <div className="flex flex-col items-center gap-1 text-center md:gap-2">
-          <h2 className="font-leto text-xl font-normal text-black md:text-4xl">{t('title')}</h2>
+          <h2 className="font-leto text-primary text-xl font-normal md:text-4xl">{t('title')}</h2>
           <p className="max-w-87 text-xs text-[#3E4259] md:text-base">{t('subtitle')}</p>
         </div>
 

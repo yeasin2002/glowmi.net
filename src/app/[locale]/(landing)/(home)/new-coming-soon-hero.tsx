@@ -44,14 +44,12 @@ export const NewComingSoonHero = ({ className, ...props }: Props) => {
         )}
       >
         <div className={cn('flex flex-col items-center justify-center gap-2', 'md:gap-4')}>
-          <h1 className={cn('text-sm font-normal text-black', 'md:text-4xl')}>
-            <span>{t('title')}</span>
-          </h1>
+          <h1 className={cn('text-primary text-sm font-normal', 'md:text-4xl')}>{t('title')}</h1>
 
           <Link
             href={'/coming-soon'}
             className={cn(
-              'cursor-pointer rounded-[4px]! bg-black! px-6 py-1 text-xs text-white',
+              'bg-primary cursor-pointer rounded-lg! px-6 py-1 text-xs text-white',
               'md:px-12 md:py-3 md:text-lg'
             )}
           >
