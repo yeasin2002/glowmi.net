@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import type React from 'react'
 import '../../styles/globals.css'
 
+import { DirectionProvider } from '@/components/ui/direction'
 import { routing } from '@/i18n/routing'
 import { lato } from '@/lib/fonts'
 import { hasLocale } from 'next-intl'
@@ -31,12 +32,12 @@ export default async function RootLayout({
     <html
       lang={locale}
       data-locale={locale}
-      className={isRTL ? 'locale-rtl' : ''}
+      // className={isRTL ? 'locale-rtl' : ''}
       suppressHydrationWarning
     >
       <body className={lato.className!}>
         <RootWrapper locale={locale} messages={messages} timeZone={timeZone}>
-          {children}
+          <DirectionProvider direction={isRTL ? 'rtl' : 'ltr'}>{children}</DirectionProvider>
         </RootWrapper>
         <Toaster />
       </body>
