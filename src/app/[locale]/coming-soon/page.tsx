@@ -40,9 +40,9 @@ export default async function ComingSoonPage() {
 
         {/* Decorative Divider */}
         <div className="mb-8 flex items-center gap-3">
-          <div className="h-px w-24 bg-black/20" />
-          <div className="h-2 w-2 rounded-full bg-black" />
-          <div className="h-px w-24 bg-black/20" />
+          <div className="bg-primary/20 h-px w-24" />
+          <div className="bg-primary h-2 w-2 rounded-full" />
+          <div className="bg-primary/20 h-px w-24" />
         </div>
 
         {/* Bottom Tagline */}

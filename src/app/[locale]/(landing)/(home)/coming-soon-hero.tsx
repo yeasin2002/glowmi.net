@@ -164,7 +164,7 @@ export const ComingSoonHero = () => {
             key={index}
             onClick={() => setCurrentSlide(index)}
             className={`min-h-3 rounded-xl transition-all ${
-              currentSlide === index ? 'min-w-14 bg-black' : 'min-w-8 bg-[#D9D9D9]'
+              currentSlide === index ? 'bg-primary min-w-14' : 'min-w-8 bg-[#D9D9D9]'
             }`}
             aria-label={`Go to slide ${index + 1}`}
             type="button"

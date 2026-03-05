@@ -227,7 +227,7 @@ export const CreateAccountContent = ({ setCurrentStep }: CreateAccountContentPro
         <button
           type="submit"
           disabled={isPending}
-          className="mx-auto mt-4 flex h-9.5 w-64 cursor-pointer items-center justify-center rounded-full bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-gray-900 disabled:cursor-not-allowed disabled:opacity-50"
+          className="bg-primary mx-auto mt-4 flex h-9.5 w-64 cursor-pointer items-center justify-center rounded-full px-5 py-2 text-sm text-white transition-colors hover:bg-gray-900 disabled:cursor-not-allowed disabled:opacity-50"
         >
           {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : t('cta')}
         </button>

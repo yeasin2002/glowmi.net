@@ -52,7 +52,7 @@ export const BeMemberContent = ({ onJoinClick }: BeMemberContentProps) => {
           <button
             type="button"
             onClick={onJoinClick}
-            className="mx-auto flex h-12 w-fit cursor-pointer items-center justify-center rounded bg-black px-12 py-5 text-white transition-colors hover:bg-gray-900 lg:text-xl"
+            className="bg-primary mx-auto flex h-12 w-fit cursor-pointer items-center justify-center rounded px-12 py-5 text-white transition-colors hover:bg-gray-900 lg:text-xl"
           >
             {t('cta')}
           </button>

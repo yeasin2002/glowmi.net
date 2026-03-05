@@ -25,7 +25,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
       {/* Image Container */}
       <div className="relative aspect-3/4 overflow-hidden rounded-lg bg-[#e8e6e3]">
         {/* Category Badge */}
-        <span className="absolute top-3 left-3 z-10 rounded-full bg-black px-3 py-1 text-xs text-white">
+        <span className="bg-primary absolute top-3 left-3 z-10 rounded-full px-3 py-1 text-xs text-white">
           {product.category}
         </span>
 
@@ -40,7 +40,8 @@ export const ProductCard = ({ product }: ProductCardProps) => {
           <Link
             href={'/skin-analyzer/product-details/1234'}
             className={buttonVariants({
-              className: 'w-full rounded-md bg-black! py-2 text-sm text-white hover:bg-black/90',
+              className:
+                'bg-primary! hover:bg-primary/90 w-full rounded-md py-2 text-sm text-white',
             })}
             style={{ background: 'black' }}
           >
