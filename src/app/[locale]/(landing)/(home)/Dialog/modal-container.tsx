@@ -48,7 +48,7 @@ export const ModalContainer = ({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className="bg-primary/50 fixed inset-0 z-50 flex items-center justify-center p-4"
+          className="bg-primary0 fixed inset-0 z-50 flex items-center justify-center p-4"
           onClick={onClose}
         >
           <motion.div

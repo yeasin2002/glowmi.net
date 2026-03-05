@@ -7,7 +7,7 @@ export const HomeBottomCta = async () => {
   const t = await getTranslations('home.homeBottomCta')
 
   return (
-    <section className="relative h-[350px] w-full overflow-hidden sm:h-[400px] md:h-[450px]">
+    <section className="relative h-87.5 w-full overflow-hidden sm:h-100 md:h-112.5">
       {/* Background Image */}
       <Image
         src={bgImage}
@@ -18,7 +18,7 @@ export const HomeBottomCta = async () => {
       />
 
       {/* Overlay */}
-      <div className="bg-primary/30 absolute inset-0" />
+      <div className="bg-primary absolute inset-0" />
 
       {/* Content */}
       <div className="relative z-10 flex h-full flex-col items-center justify-center px-4 text-center">

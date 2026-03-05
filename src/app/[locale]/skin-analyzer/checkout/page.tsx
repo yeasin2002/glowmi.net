@@ -29,7 +29,7 @@ const Checkout = async () => {
         </div>
 
         {/* Checkout Button */}
-        <Button className="bg-primary hover:bg-primary/90 mt-6 w-full rounded-lg py-6 text-base text-white">
+        <Button className="bg-primary hover:bg-primary mt-6 w-full rounded-lg py-6 text-base text-white">
           {t('checkoutButton')}
         </Button>
       </div>

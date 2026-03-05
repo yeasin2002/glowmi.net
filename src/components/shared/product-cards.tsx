@@ -40,8 +40,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
           <Link
             href={'/skin-analyzer/product-details/1234'}
             className={buttonVariants({
-              className:
-                'bg-primary! hover:bg-primary/90 w-full rounded-md py-2 text-sm text-white',
+              className: 'bg-primary! hover:bg-primary w-full rounded-md py-2 text-sm text-white',
             })}
             style={{ background: 'black' }}
           >
