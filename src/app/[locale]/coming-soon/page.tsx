@@ -1,9 +1,8 @@
-import logoCompact from '@/assets/icons/logo/logo-mini-dark.svg'
+import { Logo } from '@/components/shared/logo'
 
+import { cn } from '@/lib/utils'
 import { getTranslations } from 'next-intl/server'
-import Image from 'next/image'
 import Link from 'next/link'
-import { cn } from '../../../lib/utils'
 
 export default async function ComingSoonPage() {
   const t = await getTranslations('comingSoon')
@@ -13,14 +12,7 @@ export default async function ComingSoonPage() {
       <div className="flex max-w-2xl flex-col items-center text-center">
         {/* Logo */}
         <Link className="mb-12" href={'/'}>
-          <Image
-            src={logoCompact}
-            alt="Glowmi Logo"
-            width={80}
-            height={80}
-            className="h-20 w-20"
-            priority
-          />
+          <Logo className="text-primary h-20 w-20" />
         </Link>
 
         {/* Title */}

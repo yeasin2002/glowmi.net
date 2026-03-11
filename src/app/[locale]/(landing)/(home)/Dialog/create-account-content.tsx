@@ -90,7 +90,7 @@ export const CreateAccountContent = ({ setCurrentStep }: CreateAccountContentPro
     >
       <div className="col-span-5 hidden lg:block"></div>
       {/* Form Content */}
-      <div className="flex flex-col gap-6 bg-[#FFFFFF33]/20 p-6 backdrop-blur-[1px] md:p-12 lg:col-span-7">
+      <div className="flex flex-col gap-6 bg-white/20 p-6 backdrop-blur-[1px] md:p-12 lg:col-span-7">
         {/* Header */}
         <div className="text-primary flex flex-col gap-8 text-center">
           <div className="text-xl">
