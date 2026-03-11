@@ -48,7 +48,14 @@ if ! command -v pm2 >/dev/null 2>&1; then
 fi
 
 echo "Installing dependencies"
-pnpm install --frozen-lockfile
+if [ -f "pnpm-lock.yaml" ]; then
+  echo "Lockfile found. Installing with frozen lockfile"
+  pnpm install --frozen-lockfile
+else
+  echo "Warning: pnpm-lock.yaml not found. Falling back to a non-frozen install"
+  echo "Commit pnpm-lock.yaml to keep production installs reproducible"
+  pnpm install --no-frozen-lockfile
+fi
 
 echo "Building application"
 pnpm run build
