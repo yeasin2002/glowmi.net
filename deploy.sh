@@ -1,76 +1,44 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-# Usage: ./deploy.sh [branch] [pm2_app_name] [port]
+# Deployment script for Ubuntu VPS
+# Usage: ./deploy.sh
 
-set -euo pipefail
+set -e  # Exit on error
 
-BRANCH_NAME="${1:-production}"
-APP_NAME="${2:-rumi77-ai-skin-care}"
-APP_PORT="${3:-3000}"
+# Configuration
+BRANCH_NAME="coming-soon"
+APP_NAME="coming-soon"
 
-export NODE_ENV=production
-export PORT="$APP_PORT"
+echo "🚀 Starting deployment for branch: $BRANCH_NAME"
 
-echo "Starting deployment"
-echo "Branch: $BRANCH_NAME"
-echo "PM2 app: $APP_NAME"
-echo "Port: $APP_PORT"
+# Stop existing PM2 process
+echo "⏹️  Stopping PM2 process: $APP_NAME"
+pm2 stop "$APP_NAME" 2>/dev/null || echo "No process to stop"
 
-if [ ! -d ".git" ]; then
-  echo "Error: deploy.sh must run from the project root."
-  exit 1
-fi
+echo "⏹️ Deleting All Services"
+pm2 delete all || echo "No process to delete"
 
-echo "Fetching latest code from origin/$BRANCH_NAME"
-git fetch --prune origin "$BRANCH_NAME"
+# Pull latest changes
+echo "📥 Pulling latest changes from git"
+git pull origin "$BRANCH_NAME"
 
-if git show-ref --verify --quiet "refs/heads/$BRANCH_NAME"; then
-  git checkout "$BRANCH_NAME"
-else
-  git checkout -b "$BRANCH_NAME" "origin/$BRANCH_NAME"
-fi
+# Install dependencies
+echo "📦 Installing dependencies with pnpm"
+pnpm install --frozen-lockfile
 
-git pull --ff-only origin "$BRANCH_NAME"
-
-if ! command -v pnpm >/dev/null 2>&1; then
-  echo "pnpm not found. Installing..."
-  if command -v corepack >/dev/null 2>&1; then
-    corepack enable
-    corepack prepare pnpm@latest --activate
-  else
-    npm install -g pnpm
-  fi
-fi
-
-if ! command -v pm2 >/dev/null 2>&1; then
-  echo "pm2 not found. Installing..."
-  npm install -g pm2
-fi
-
-echo "Installing dependencies"
-if [ -f "pnpm-lock.yaml" ]; then
-  echo "Lockfile found. Installing with frozen lockfile"
-  pnpm install --frozen-lockfile
-else
-  echo "Warning: pnpm-lock.yaml not found. Falling back to a non-frozen install"
-  echo "Commit pnpm-lock.yaml to keep production installs reproducible"
-  pnpm install --no-frozen-lockfile
-fi
-
-echo "Building application"
+# Build the application
+echo "🔨 Building Next.js application"
 pnpm run build
 
-if pm2 describe "$APP_NAME" >/dev/null 2>&1; then
-  echo "Restarting PM2 app: $APP_NAME"
-  pm2 restart "$APP_NAME" --update-env
-else
-  echo "Starting PM2 app: $APP_NAME"
-  pm2 start "pnpm start" --name "$APP_NAME" --update-env
-fi
+# Start with PM2
+echo "▶️  Starting application with PM2"
+pm2 start npm --name "$APP_NAME" -- start
 
-echo "Saving PM2 process list"
+# Save PM2 configuration
+echo "💾 Saving PM2 configuration"
 pm2 save
 
-echo "Deployment completed successfully"
-pm2 status "$APP_NAME"
+echo "✅ Deployment completed successfully!"
+echo "📊 View logs: pm2 logs $APP_NAME"
+echo "📈 View status: pm2 status"
  
