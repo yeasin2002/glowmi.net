@@ -8,8 +8,8 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { usePathname, useRouter } from '@/i18n/navigation'
 import { localeNames, routing } from '@/i18n/routing'
+import { cn } from '@/lib/utils'
 import { useLocale } from 'next-intl'
-import { cn } from '../../lib/utils'
 
 import multiLangIcon from '@/assets/icons/multi-lang-icon.svg'
 import Image from 'next/image'

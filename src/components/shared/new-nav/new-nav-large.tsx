@@ -55,7 +55,7 @@ export const NewNavLarge = ({ navItems }: Props) => {
                   className="rounded-full p-2 transition-colors hover:bg-gray-100"
                   aria-label={action.label}
                 >
-                  <Icon className="size-[1.20rem] font-semibold" strokeWidth="1.5" />
+                  <Icon className="size-[1.20rem] font-semibold text-[#363739]" strokeWidth="1.5" />
                 </Link>
               )
             })}

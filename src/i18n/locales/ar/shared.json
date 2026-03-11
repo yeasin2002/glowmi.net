@@ -3,7 +3,7 @@
     "button_text": "تسجيل الدخول",
     "navItems": {
       "home": "الرئيسية",
-      "products": "منتج",
+      "products": "مستحضراتنا ",
       "analyzeSkin": "تحليل البشرة",
       "aboutUs": "من نحن",
       "contactUs": "تواصل معنا",
@@ -16,7 +16,7 @@
     "remove": "إزالة"
   },
   "footer": {
-    "heading": "العلم مع الذكاء",
+    "heading": "...عِلم صُمم لبشرتك",
     "cta": "تابعنا"
   }
 }
