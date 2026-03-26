@@ -1,9 +1,9 @@
 'use client'
 
+import { useRegister } from '@/api/api-hooks/auth.api-hook'
 import { AuthInput } from '@/components/shared'
 import { Button } from '@/components/ui'
 import { Link } from '@/i18n/navigation'
-import { useRegister } from '@/api/api-hooks/auth.api-hook'
 import { useAuthStore } from '@/store/auth.store'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ArrowLeft, Lock, Mail } from 'lucide-react'
@@ -46,10 +46,10 @@ const SignUp = () => {
       if (registerData) {
         setUser(registerData.user ?? null)
         setToken({
-          accessToken: registerData.access_token,
-          refreshToken: registerData.refresh_token,
+          accessToken: registerData.access,
+          refreshToken: registerData.refresh,
         })
-        router.push('/skin-analyzer/analysis')
+        router.push('/skin-analyzer/skin-intelligence')
       }
     } catch (error) {
       console.log('🚀 ~ onSubmit ~ error:', error)

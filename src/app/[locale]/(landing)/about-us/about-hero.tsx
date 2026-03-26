@@ -1,5 +1,4 @@
 import ingredientsBg from '@/assets/image/AboutUs-bg.jpg'
-import { NavList } from '@/components/shared'
 import { getTranslations } from 'next-intl/server'
 import Image from 'next/image'
 
@@ -18,11 +17,6 @@ export const AboutHero = async () => {
       <h1 className="text-main-button absolute bottom-10 left-20 text-5xl leading-none font-normal tracking-normal">
         {t('title')}
       </h1>
-
-      <NavList
-        wrapperClassName="absolute top-5 right-2 z-20 justify-around md:w-full"
-        className="text-main-button"
-      />
     </div>
   )
 }

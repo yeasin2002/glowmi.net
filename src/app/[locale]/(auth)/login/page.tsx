@@ -51,7 +51,7 @@ const Login = () => {
         if (loginData.user?.role === 'admin') {
           router.push('/dashboard')
         } else {
-          router.push('/skin-analyzer/analysis')
+          router.push('/skin-analyzer/skin-intelligence')
         }
       }
     } catch (error) {

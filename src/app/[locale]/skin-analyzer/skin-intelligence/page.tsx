@@ -1,5 +1,3 @@
-'use client'
-
 import { SiteHeading } from '@/components/shared'
 import { buttonVariants } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -57,7 +55,7 @@ const Analysis = () => {
   ]
 
   return (
-    <div className="bg-background min-h-screen">
+    <div className="bg-[#FFFFFF]">
       {/* Header */}
       <div className="py-12">
         <SiteHeading heading={t('header.title')} subHeading={t('header.subtitle')} />
@@ -65,7 +63,7 @@ const Analysis = () => {
 
       {/* Form Card */}
       <div className="mx-auto max-w-4xl px-6 pb-20">
-        <div className="bg-main-foreground rounded-2xl p-8">
+        <div className="rounded-2xl p-8" style={{ backgroundColor: '#F5F6F5' }}>
           {/* Skin Type */}
           <div className="mb-8">
             <Label className="text-main-button mb-4 flex items-center gap-2 text-sm font-medium">
@@ -135,7 +133,7 @@ const Analysis = () => {
             </Label>
             <Textarea
               placeholder={t('form.additionalDetails.placeholder')}
-              className="border-main-button/30 min-h-[120px] bg-white"
+              className="border-main-button/30 min-h-30 bg-white"
             />
           </div>
 
@@ -145,7 +143,7 @@ const Analysis = () => {
               <Upload className="size-4" />
               {t('form.uploadPhoto.label')}
             </Label>
-            <div className="border-main-button/30 hover:border-main-button flex min-h-[100px] cursor-pointer flex-col items-center justify-center rounded-md border border-dashed bg-white p-6 transition-colors">
+            <div className="border-main-button/30 hover:border-main-button flex min-h-25 cursor-pointer flex-col items-center justify-center rounded-md border border-dashed bg-white p-6 transition-colors">
               <Upload className="text-main-button/50 mb-2 size-6" />
               <p className="text-main-button text-sm">{t('form.uploadPhoto.clickToUpload')}</p>
               <p className="text-main-button/60 text-xs">{t('form.uploadPhoto.fileTypes')}</p>
