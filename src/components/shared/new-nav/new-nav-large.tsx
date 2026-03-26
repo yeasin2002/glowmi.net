@@ -1,4 +1,5 @@
 import newLogo from '@/assets/GLOWMI-logo.svg'
+import { buttonVariants } from '@/components/ui/button'
 import { Link } from '@/i18n/navigation'
 import { Info, Mail, MapPin } from 'lucide-react'
 import Image from 'next/image'
@@ -11,21 +12,36 @@ const navActions = [
 ] as const
 
 type Props = {
+  buttonLabel: string
   navItems: {
     name: string
     url: string
   }[]
 }
 
-export const NewNavLarge = ({ navItems }: Props) => {
+export const NewNavLarge = ({ buttonLabel, navItems }: Props) => {
   return (
     <header className="hidden w-full bg-white py-4 lg:block">
       <div className="container mx-auto px-4">
-        {/* Logo - Top Center */}
-        <div className="flex justify-center pt-4 pb-16">
-          <Link href="/">
-            <Image src={newLogo} alt="GLOWMI" width={400} height={400} className="w-32 lg:w-36" />
-          </Link>
+        {/* Top Row - Logo Centered, Sign In Button Right */}
+        <div className="relative pt-4 pb-16">
+          <div className="flex justify-center">
+            <Link href="/">
+              <Image src={newLogo} alt="GLOWMI" width={400} height={400} className="w-32 lg:w-36" />
+            </Link>
+          </div>
+
+          <div className="absolute top-4 right-0">
+            <Link
+              href={'/sign-up'}
+              className={buttonVariants({
+                //  className: 'bg-primary! hover:bg-primary w-full rounded-md py-2 text-sm text-white',
+                size: 'lg',
+              })}
+            >
+              {buttonLabel}
+            </Link>
+          </div>
         </div>
 
         {/* Navigation Bar - Nav Items Center + Icons Right */}
