@@ -111,7 +111,7 @@ const BeforeAfterComparison = () => {
 
   return (
     <div
-      className="border-main-button relative h-[500px] w-full max-w-[500px] overflow-hidden rounded-3xl border-8 lg:h-[700px]!"
+      className="border-main-button relative h-125 w-full max-w-125 overflow-hidden rounded-3xl border-8 lg:h-175!"
       style={{ direction: 'ltr' }}
     >
       {/* After Image (Background) */}

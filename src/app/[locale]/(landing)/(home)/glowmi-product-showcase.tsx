@@ -6,7 +6,7 @@ import showcase3 from '@/assets/products/Box/Serum-Dropper-box.png'
 import showcase4 from '@/assets/products/Box/Sleeping-Mask-Box.jpg'
 
 import { SiteHeading } from '@/components/shared'
-import { caudex } from '@/lib/fonts'
+
 import { getTranslations } from 'next-intl/server'
 
 const imageList = [showcase1, showcase2, showcase3, showcase4]
@@ -30,7 +30,7 @@ export const GlowmiProductShowcase = async () => {
       </div>
 
       {/* Video Section with Text Overlay */}
-      <div className="relative mt-8 h-[300px] w-full overflow-hidden sm:h-[400px] md:h-[700px] lg:mt-28">
+      <div className="relative mt-8 h-75 w-full overflow-hidden sm:h-100 md:h-175 lg:mt-28">
         <video
           autoPlay
           muted
@@ -52,8 +52,7 @@ export const GlowmiProductShowcase = async () => {
           <div className="px-6 py-8 sm:px-12 md:px-16 lg:px-24">
             <h2
               className={
-                'max-w-md text-2xl leading-tight text-white italic sm:text-3xl md:text-4xl lg:text-5xl ' +
-                caudex.className
+                'max-w-md text-2xl leading-tight text-white italic sm:text-3xl md:text-4xl lg:text-5xl'
               }
             >
               {t('heading')}
