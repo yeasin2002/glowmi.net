@@ -164,7 +164,7 @@ export const AddProduct = () => {
           </div>
           <Textarea
             placeholder="Write your the ingredients"
-            className={cn('min-h-[100px] resize-none', inputClassName)}
+            className={cn('min-h-25 resize-none', inputClassName)}
             {...register('keyIngredients')}
           />
           {errors.keyIngredients && (
@@ -201,7 +201,7 @@ export const AddProduct = () => {
           </div>
           <Textarea
             placeholder="Write your the ingredients"
-            className={cn('min-h-[100px] resize-none', inputClassName)}
+            className={cn('min-h-25 resize-none', inputClassName)}
             {...register('skinType')}
           />
           {errors.skinType && <p className="text-destructive text-sm">{errors.skinType.message}</p>}
@@ -236,7 +236,7 @@ export const AddProduct = () => {
           </div>
           <Textarea
             placeholder="Write your the ingredients"
-            className={cn('min-h-[100px] resize-none', inputClassName)}
+            className={cn('min-h-25 resize-none', inputClassName)}
             {...register('keyBenefits')}
           />
           {errors.keyBenefits && (
@@ -273,7 +273,7 @@ export const AddProduct = () => {
           </div>
           <Textarea
             placeholder="Write about the info"
-            className={cn('min-h-[100px] resize-none', inputClassName)}
+            className={cn('min-h-25 resize-none', inputClassName)}
             {...register('description')}
           />
           {errors.description && (
@@ -310,7 +310,7 @@ export const AddProduct = () => {
           </div>
           <Textarea
             placeholder="Write your the info"
-            className={cn('min-h-[100px] resize-none', inputClassName)}
+            className={cn('min-h-25 resize-none', inputClassName)}
             {...register('howToUse')}
           />
           {errors.howToUse && <p className="text-destructive text-sm">{errors.howToUse.message}</p>}
