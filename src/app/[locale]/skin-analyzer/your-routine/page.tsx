@@ -1,11 +1,11 @@
 'use client'
 
-import CalendarCheck from '@/assets/icons/CalendarCheck.svg'
+import carbon_update_complete from '@/assets/icons/carbon_update-complete.svg'
 import { SiteHeading } from '@/components/shared'
 import { buttonVariants } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Link } from '@/i18n/navigation'
-import { MessageCircle, Package, Sparkles } from 'lucide-react'
+import { CalendarCheck2, MessageCircle, Package, Sparkles } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import { AllProductsContent } from './all-products-content'
@@ -26,16 +26,23 @@ const YourRoutine = () => {
 
       {/* Header */}
       <div className="py-8">
-        <SiteHeading heading={t('heading')} subHeading={t('subHeading')} />
+        <SiteHeading
+          heading={t('heading')}
+          subHeading={t('subHeading')}
+          headingClassName="text-main-button"
+          subHeadingClassname="text-[#363739]!"
+        />
       </div>
 
       {/* Skin Concerns Banner */}
       <div className="mx-auto max-w-4xl px-6">
-        <div className="text-main-primary-base_medium rounded-lg bg-[#2447311A] p-4">
-          <h3 className="mb-2 text-lg font-medium">{t('skinConcerns.title')}</h3>
+        <div className="bg-brand-shade-10 rounded-lg p-4">
+          <h3 className="text-primary-base_medium mb-2 text-lg text-[32px] font-bold">
+            {t('skinConcerns.title')}
+          </h3>
           <div className="flex flex-wrap gap-2">
-            <span className="flex items-center gap-1 rounded-full bg-white/20 px-3 py-1 text-sm">
-              <span className="size-2 rounded-full bg-white" />
+            <span className="flex items-center gap-1 gap-x-2 rounded-full bg-[#989E9A1A] px-3 py-1 text-sm">
+              <Image src={carbon_update_complete} alt="carbon_update_complete" />
               {t('skinConcerns.acneBreakouts')}
             </span>
           </div>
@@ -47,14 +54,14 @@ const YourRoutine = () => {
         <TabsList className="mx-auto flex w-fit justify-center gap-2 bg-transparent">
           <TabsTrigger
             value="routine"
-            className="text-main-primary-base_medium! data-active:bg-main-foreground! rounded-full border border-[#59351B] px-6 py-4"
+            className="rounded-full border border-[#59351B] px-6 py-4 text-[#363739] data-active:bg-black! data-active:text-white!"
           >
-            <Image src={CalendarCheck} alt="Calendar Check" className="size-5" />
+            <CalendarCheck2 />
             {t('tabs.yourRoutine')}
           </TabsTrigger>
           <TabsTrigger
             value="products"
-            className="text-main-primary-base_medium! data-active:bg-main-foreground! rounded-full border border-[#59351B] px-6 py-4"
+            className="rounded-full border border-[#59351B] px-6 py-4 text-[#363739] data-active:bg-black! data-active:text-white!"
           >
             <Package className="size-5" />
             {t('tabs.allProducts')}
@@ -70,8 +77,8 @@ const YourRoutine = () => {
 
       {/* Chat CTA */}
       <div className="mx-auto mt-12 max-w-4xl px-6 text-center">
-        <h3 className="text-main-button mb-2 text-2xl">{t('chatCta.title')}</h3>
-        <p className="text-main-button/70 mb-6 text-sm">{t('chatCta.description')}</p>
+        <h3 className="text-main-button mb-2 text-3xl font-bold">{t('chatCta.title')}</h3>
+        <p className="mb-6 text-sm text-[#363739]">{t('chatCta.description')}</p>
         <Link
           href={'/ai-chat-assistant'}
           className={buttonVariants({

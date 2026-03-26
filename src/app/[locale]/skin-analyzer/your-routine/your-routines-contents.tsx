@@ -17,13 +17,13 @@ export const YourRoutinesContents = () => {
   return (
     <div className="mx-auto mt-8 max-w-4xl space-y-6 px-6">
       {/* Morning Routine */}
-      <div className="bg-main-foreground rounded-2xl p-6">
+      <div className="bg-brand-shade-10 rounded-2xl p-6">
         <div className="mb-4 flex items-start justify-between">
           <div className="flex items-center gap-3">
             <Sun className="size-12 text-yellow-500" />
             <div className="space-y-3">
               <h2 className="text-main-button text-5xl">{t('routines.morning.title')}</h2>
-              <p className="text-main-button/60 text-sm">{t('routines.morning.subtitle')}</p>
+              <p className="text-main-button text-sm">{t('routines.morning.subtitle')}</p>
             </div>
           </div>
           <button type="button" className="text-main-button/50 hover:text-main-button">
@@ -39,7 +39,7 @@ export const YourRoutinesContents = () => {
       </div>
 
       {/* Evening Routine */}
-      <div className="bg-main-foreground rounded-2xl p-6">
+      <div className="bg-brand-shade-10 rounded-2xl p-6">
         <div className="mb-4 flex items-start justify-between">
           <div className="flex items-center gap-3">
             <Moon className="text-main-button size-12" />
@@ -74,7 +74,7 @@ const ProductCard = ({ product, t }: ProductCardProps) => {
         {product.step}
       </div>
       <div className="flex-1">
-        <h3 className="text-main-button text-lg font-medium">{t(`products.${productKey}.name`)}</h3>
+        <h3 className="text-main-button text-lg font-bold">{t(`products.${productKey}.name`)}</h3>
         <p className="text-main-button/60 text-sm">
           {t(`products.${productKey}.brand`)} • {t(`products.${productKey}.type`)}
         </p>
@@ -90,7 +90,7 @@ const ProductCard = ({ product, t }: ProductCardProps) => {
           height={200}
           className="min-h-40 min-w-32 rounded-lg object-cover"
         />
-        <span className="absolute -bottom-2 left-1/2 w-full -translate-x-1/2 rounded-b bg-[#244731B2] px-2 py-0.5 text-center text-xs text-white">
+        <span className="absolute -bottom-2 left-1/2 w-full -translate-x-1/2 rounded-b bg-black/70 px-2 py-0.5 text-center text-xs text-white">
           {product.price}
         </span>
       </div>

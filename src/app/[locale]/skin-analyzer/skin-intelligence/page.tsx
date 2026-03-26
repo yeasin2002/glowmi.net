@@ -64,7 +64,7 @@ const Analysis = () => {
         className="mx-auto flex max-w-4xl items-center justify-end gap-x-1 px-6"
       >
         <Image src={Chat} alt="chat" />
-        <p className="text-center text-base leading-normal font-semibold text-[#363739]">
+        <p className="text-main-button text-center text-base leading-normal font-semibold">
           Chat Assistant
         </p>
       </Link>

@@ -45,7 +45,7 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  --color-main-button: #244731;
+  --color-main-button: #363739;
   --color-main-foreground: #f4e9da;
   --color-main-primary-base_medium: #755033;
   --color-main-primary-base_default: #f8f5ee;
@@ -55,6 +55,7 @@
   --color-main-secondary-base: #f8e5b3;
   --color-main-secondary-darkest: #f4e9da;
   --color-brand-shade-10: #f5f6f5;
+  --color-primary-base_medium: #363739;
 }
 
 :root {
