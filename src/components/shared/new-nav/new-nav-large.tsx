@@ -5,6 +5,7 @@ import { Info, Mail, MapPin } from 'lucide-react'
 import Image from 'next/image'
 import { LanguageToggle } from '../language-toggle'
 
+
 const navActions = [
   { icon: Info, label: 'Information', href: '/coming-soon' },
   { icon: Mail, label: 'Contact', href: '/coming-soon' },

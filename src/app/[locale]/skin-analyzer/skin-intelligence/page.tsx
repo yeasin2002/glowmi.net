@@ -11,6 +11,7 @@ import Image from 'next/image'
 import AiPowered from '@/assets/icons/AI-Powered.png'
 import ExpertBacked from '@/assets/icons/Expert-Backed.png'
 import Personalized from '@/assets/icons/Personalized.png'
+import CommonNav from '@/components/shared/common-nav'
 import { Link } from '@/i18n/navigation'
 
 const Analysis = () => {
@@ -56,6 +57,7 @@ const Analysis = () => {
 
   return (
     <div className="bg-[#FFFFFF]">
+      <CommonNav />
       {/* Header */}
       <div className="py-12">
         <SiteHeading heading={t('header.title')} subHeading={t('header.subtitle')} />
