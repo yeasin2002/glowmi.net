@@ -8,9 +8,10 @@ import { FileText, Sparkles, Sun, Upload, UserCircle } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 
-import AiPowered from '@/assets/icons/AI-Powered.png'
-import ExpertBacked from '@/assets/icons/Expert-Backed.png'
-import Personalized from '@/assets/icons/Personalized.png'
+import AiPowered from '@/assets/icons/AI-Powered.svg'
+import ExpertBacked from '@/assets/icons/Expert-Backed.svg'
+import Personalized from '@/assets/icons/Personalized.svg'
+import Chat from '@/assets/icons/chat-regular.svg'
 import CommonNav from '@/components/shared/common-nav'
 import { Link } from '@/i18n/navigation'
 
@@ -58,6 +59,16 @@ const Analysis = () => {
   return (
     <div className="bg-[#FFFFFF]">
       <CommonNav />
+      <Link
+        href="/skin-analyzer/your-routine"
+        className="mx-auto flex max-w-4xl items-center justify-end gap-x-1 px-6"
+      >
+        <Image src={Chat} alt="chat" />
+        <p className="text-center text-base leading-normal font-semibold text-[#363739]">
+          Chat Assistant
+        </p>
+      </Link>
+
       {/* Header */}
       <div className="py-12">
         <SiteHeading heading={t('header.title')} subHeading={t('header.subtitle')} />
@@ -171,8 +182,8 @@ const Analysis = () => {
           {features.map((feature) => (
             <div key={feature.title} className="flex flex-col items-center text-center">
               <Image src={feature.image} alt={feature.title} className="mb-4 size-10" />
-              <h3 className="text-main-button mb-2 text-xl">{feature.title}</h3>
-              <p className="text-main-button/70 text-sm">{feature.subtitle}</p>
+              <h3 className="mb-2 text-xl text-black">{feature.title}</h3>
+              <p className="text-sm text-black/70">{feature.subtitle}</p>
             </div>
           ))}
         </div>
