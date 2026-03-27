@@ -8,7 +8,7 @@ export const RelatedProductsFromProductDetails = async () => {
 
   return (
     <div className="mx-auto mt-8 max-w-5xl px-6">
-      <SiteHeading heading={t('relatedProducts')} />
+      <SiteHeading heading={t('relatedProducts')} showWave />
 
       <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
         {products.map((product) => (

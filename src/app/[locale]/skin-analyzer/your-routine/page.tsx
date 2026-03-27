@@ -5,7 +5,7 @@ import { SiteHeading } from '@/components/shared'
 import { buttonVariants } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Link } from '@/i18n/navigation'
-import { CalendarCheck2, MessageCircle, Package, Sparkles } from 'lucide-react'
+import { CalendarCheck2, MessageCircle, Package } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import { AllProductsContent } from './all-products-content'
@@ -19,7 +19,7 @@ const YourRoutine = () => {
       {/* Badge */}
       <div className="flex justify-center pt-8">
         <span className="bg-main-button/10 text-main-button flex items-center gap-2 rounded-full px-4 py-2 text-sm">
-          <Sparkles className="size-4" />
+          <Image src={carbon_update_complete} alt="carbon_update_complete" />
           {t('badge')}
         </span>
       </div>
