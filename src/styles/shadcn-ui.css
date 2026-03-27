@@ -56,6 +56,8 @@
   --color-main-secondary-darkest: #f4e9da;
   --color-brand-shade-10: #f5f6f5;
   --color-primary-base_medium: #363739;
+  --color-secondary-light: #6d5534;
+  --color-primary-background: #fff;
 }
 
 :root {

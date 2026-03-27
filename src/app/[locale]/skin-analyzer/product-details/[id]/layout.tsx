@@ -1,11 +1,11 @@
-import { Nav } from '@/components/shared'
 import React from 'react'
+import CommonNav from '../../../../../components/shared/common-nav'
 import { Footer } from '../../../../../components/shared/footer'
 
 const ProductDetailsLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
-      <Nav />
+      <CommonNav />
       {children}
       <Footer className="mt-20! px-20!" />
     </>
