@@ -38,7 +38,7 @@ export const UserProfileAndStates = () => {
   return (
     <div className="space-y-6">
       {/* User Profile Card */}
-      <Card className="border-none bg-[#d9d9d0] shadow-none">
+      <Card className="bg-brand-shade-10 border-none shadow-none">
         <CardContent className="flex items-center gap-6">
           <div className="relative size-20 shrink-0 overflow-hidden rounded-xl">
             <Image
@@ -61,7 +61,7 @@ export const UserProfileAndStates = () => {
       {/* Stats Cards */}
       <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
         {userStats.map((stat) => (
-          <Card key={stat.id} className="border-none bg-[#d9d9d0] shadow-none">
+          <Card key={stat.id} className="bg-brand-shade-10 border-none shadow-none">
             <CardContent className="pt-4">
               <stat.icon className="text-main-button size-6" />
               <p className="text-main-button mt-4 text-4xl font-normal">{stat.value}</p>

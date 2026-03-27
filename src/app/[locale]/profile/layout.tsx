@@ -28,9 +28,9 @@ const ProfileLayout = async ({ children }: { children: React.ReactNode }) => {
         <UserProfileAndStates />
         <NavLinkList
           items={tabsLists}
-          inactiveClassName="text-[#58351B]"
-          activeClassName="text-main-button font-semibold"
-          className=""
+          // inactiveClassName="text-primary-base_medium"
+          // activeClassName="text-main-button font-semibold"
+          className="text-primary-base_medium!"
         />
         {children}
       </div>

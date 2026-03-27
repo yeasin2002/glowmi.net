@@ -7,7 +7,7 @@ const OrderHistory = async () => {
   const t = await getTranslations('profile.orderHistory')
 
   return (
-    <div className="bg-main-button rounded-xl p-6">
+    <div className="bg-brand-shade-10 rounded-xl p-6">
       <div className="flex gap-8">
         {/* Timeline */}
         <div className="flex flex-col">
