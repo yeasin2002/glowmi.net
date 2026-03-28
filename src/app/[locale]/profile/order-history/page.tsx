@@ -17,8 +17,8 @@ const OrderHistory = async () => {
               <div className="h-16 w-px bg-white/30" />
             </div>
             <div>
-              <p className="text-white">{t('orderPlaced')}</p>
-              <p className="text-sm text-white">25.12.2025</p>
+              <p className="text-main-button">{t('orderPlaced')}</p>
+              <p className="text-main-button text-sm">25.12.2025</p>
             </div>
           </div>
 
@@ -28,8 +28,8 @@ const OrderHistory = async () => {
               <div className="h-16 w-px bg-white/30" />
             </div>
             <div>
-              <p className="text-white">{t('shipped')}</p>
-              <p className="text-sm text-white/70">28.12.2025</p>
+              <p className="text-main-button">{t('shipped')}</p>
+              <p className="text-main-button/70 text-sm">28.12.2025</p>
             </div>
           </div>
 
@@ -38,8 +38,8 @@ const OrderHistory = async () => {
               <div className="size-3 rounded-full bg-white/70" />
             </div>
             <div>
-              <p className="text-white">{t('delivered')}</p>
-              <p className="text-sm text-white/70">29.12.2025</p>
+              <p className="text-main-button">{t('delivered')}</p>
+              <p className="text-main-button/70 text-sm">29.12.2025</p>
             </div>
           </div>
         </div>
@@ -51,10 +51,10 @@ const OrderHistory = async () => {
               <Image src={productImg} alt={t('productName')} fill className="object-contain p-2" />
             </div>
             <div className="space-y-1 font-medium">
-              <p className="text-sm font-semibold text-white">#12134</p>
-              <h3 className="text-3xl font-bold text-white">{t('productName')}</h3>
-              <p className="text-sm text-white">$ 98.00 ( USD )</p>
-              <p className="text-sm text-white">
+              <p className="text-main-button text-sm font-semibold">#12134</p>
+              <h3 className="text-main-button text-3xl font-bold">{t('productName')}</h3>
+              <p className="text-main-button text-sm">$ 98.00 ( USD )</p>
+              <p className="text-main-button text-sm">
                 {t('orderLocation')}: 1901 Thornridge Cir.
                 <br />
                 Shiloh, Hawaii 81063

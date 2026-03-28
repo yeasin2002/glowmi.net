@@ -41,7 +41,7 @@ const Settings = () => {
   }
 
   return (
-    <div className="bg-main-button rounded-xl p-6">
+    <div className="bg-brand-shade-10 rounded-xl p-6">
       <h2 className="mb-6 text-4xl leading-none font-normal text-[#F7F5ED]!">{t('title')}</h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -49,7 +49,7 @@ const Settings = () => {
           label={t('name')}
           placeholder={t('namePlaceholder')}
           variant="default"
-          labelClassName="text-[#E6DFC2BF] pb-4!"
+          labelClassName="text-main-button pb-4!"
           className="placeholder:text-main-button text-main-button text-sm"
           error={errors.name?.message}
           {...register('name')}
@@ -58,7 +58,7 @@ const Settings = () => {
           label={t('gender')}
           placeholder={t('genderPlaceholder')}
           variant="default"
-          labelClassName="text-[#E6DFC2BF] pb-4!"
+          labelClassName="text-main-button pb-4!"
           className="placeholder:text-main-button text-main-button text-sm"
           error={errors.gender?.message}
           {...register('gender')}
@@ -68,7 +68,7 @@ const Settings = () => {
           placeholder={t('emailPlaceholder')}
           type="email"
           variant="default"
-          labelClassName="text-[#E6DFC2BF] pb-4!"
+          labelClassName="text-main-button pb-4!"
           className="placeholder:text-main-button text-main-button text-sm"
           error={errors.email?.message}
           {...register('email')}
@@ -77,7 +77,7 @@ const Settings = () => {
           label={t('skinType')}
           placeholder={t('skinTypePlaceholder')}
           variant="default"
-          labelClassName="text-[#E6DFC2BF] pb-4!"
+          labelClassName="text-main-button pb-4!"
           className="placeholder:text-main-button text-main-button text-sm"
           error={errors.skinType?.message}
           {...register('skinType')}
@@ -86,8 +86,11 @@ const Settings = () => {
         <Button
           type="submit"
           variant="outline"
-          className="text-main-button! mt-2 px-12 py-5 font-bold"
+          className="text-main-button! mt-2 rounded-md border border-[#E0E0E0] bg-[#FFF] px-12 py-5 font-bold"
           disabled={isSubmitting}
+          style={{
+            boxShadow: `0 4px 4px 0 rgba(255, 255, 255, 0.25) inset, 0 -4px 5.1px 0 rgba(0, 0, 0, 0.20) inset`,
+          }}
         >
           <Pencil className="text-main-button! size-4" />
           {isSubmitting ? t('saving') : t('editProfile')}
