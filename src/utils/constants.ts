@@ -11,7 +11,6 @@ export const APP_CONFIG = {
 
 export const ROUTES = {
   HOME: '/',
-  DASHBOARD: '/dashboard',
   PROFILE: '/profile',
   SETTINGS: '/settings',
   SIGN_IN: '/sign-in',
