@@ -10,6 +10,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { format } from 'date-fns'
 import { ChevronDown, Loader2 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
+import { useParams } from 'next/navigation'
 import { Controller, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { z } from 'zod'
@@ -34,6 +35,7 @@ type CreateAccountContentProps = {
 
 export const CreateAccountContent = ({ setCurrentStep }: CreateAccountContentProps) => {
   const t = useTranslations('home.createAccountDialog')
+     const params = useParams<{ locale: string }>()
   const SkinTypeOptions = [
     { value: 'normal', label: t('fields.skinTypeOptions.normal') },
     { value: 'dry', label: t('fields.skinTypeOptions.dry') },
@@ -64,7 +66,7 @@ export const CreateAccountContent = ({ setCurrentStep }: CreateAccountContentPro
         contact_number: data.contactNumber,
         skin_type: data.skinType,
         birthday: birthday,
-        lean: 'EN',
+        lean: params.locale,
       },
       {
         onSuccess: () => {
