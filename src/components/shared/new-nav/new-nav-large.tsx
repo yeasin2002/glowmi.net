@@ -1,6 +1,7 @@
 import newLogo from '@/assets/GLOWMI-logo.svg'
 import { Link } from '@/i18n/navigation'
 import { Info, Mail, MapPin } from 'lucide-react'
+import { useLocale } from 'next-intl'
 import Image from 'next/image'
 import { LanguageToggle } from '../language-toggle'
 
@@ -18,6 +19,11 @@ type Props = {
 }
 
 export const NewNavLarge = ({ navItems }: Props) => {
+  const locale = useLocale()
+  const isRTL = locale === 'ar'
+
+  // Reverse navigation items for RTL languages so Home appears on the right
+  const displayNavItems = isRTL ? [...navItems].reverse() : navItems
   return (
     <header className="hidden w-full bg-white py-4 lg:block">
       <div className="container mx-auto px-4">
@@ -32,7 +38,7 @@ export const NewNavLarge = ({ navItems }: Props) => {
         <div className="relative flex items-center justify-center">
           {/* Navigation Links - Center */}
           <nav className="flex items-center gap-8 lg:gap-40">
-            {navItems.map((item) => (
+            {displayNavItems.map((item) => (
               <Link
                 key={item.name}
                 href={{ pathname: item.url }}

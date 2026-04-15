@@ -9,7 +9,7 @@ import {
 import { Link } from '@/i18n/navigation'
 import { cn } from '@/lib/utils'
 import { Menu } from 'lucide-react'
-import { getTranslations } from 'next-intl/server'
+import { getLocale, getTranslations } from 'next-intl/server'
 
 interface Props {
   className?: string
@@ -18,6 +18,8 @@ interface Props {
 
 export const NavList = async ({ wrapperClassName, className, ...props }: Props) => {
   const t = await getTranslations('shared.nav.navItems')
+  const locale = await getLocale()
+  const isRTL = locale === 'ar'
 
   const navItemsOne = [
     { name: t('home'), url: '/' },
@@ -31,7 +33,11 @@ export const NavList = async ({ wrapperClassName, className, ...props }: Props) 
     { name: t('needHelp'), url: '/need-help' },
   ]
 
-  const allNav = navItemsOne.concat(navItemsTwo)
+  // Reverse navigation items for RTL languages so Home appears on the right
+  const displayNavItemsOne = isRTL ? [...navItemsOne].reverse() : navItemsOne
+  const displayNavItemsTwo = isRTL ? [...navItemsTwo].reverse() : navItemsTwo
+
+  const allNav = displayNavItemsOne.concat(displayNavItemsTwo)
 
   return (
     <>
@@ -40,7 +46,7 @@ export const NavList = async ({ wrapperClassName, className, ...props }: Props) 
         {...props}
       >
         <div className="flex items-center gap-8 lg:gap-12">
-          {navItemsOne.map((item) => (
+          {displayNavItemsOne.map((item) => (
             <Link
               key={item.name}
               href={{ pathname: item.url }}
@@ -55,7 +61,7 @@ export const NavList = async ({ wrapperClassName, className, ...props }: Props) 
         </div>
 
         <div className="flex items-center gap-6 lg:gap-8">
-          {navItemsTwo.map((item) => (
+          {displayNavItemsTwo.map((item) => (
             <Link
               key={item.name}
               href={{ pathname: item.url }}

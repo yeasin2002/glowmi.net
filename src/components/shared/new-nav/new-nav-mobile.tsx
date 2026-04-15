@@ -4,6 +4,7 @@ import newLogo from '@/assets/icons/logo.svg'
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { Link } from '@/i18n/navigation'
 import { Info, MapPin, Menu, Phone, X } from 'lucide-react'
+import { useLocale } from 'next-intl'
 import Image from 'next/image'
 import { useState } from 'react'
 import { LanguageToggle } from '../language-toggle'
@@ -17,6 +18,11 @@ type Props = {
 
 export const NewNavMobile = ({ navItems }: Props) => {
   const [open, setOpen] = useState(false)
+  const locale = useLocale()
+  const isRTL = locale === 'ar'
+
+  // Reverse navigation items for RTL languages so Home appears on the right
+  const displayNavItems = isRTL ? [...navItems].reverse() : navItems
 
   return (
     <header className="w-full bg-white py-4 lg:hidden">
@@ -56,7 +62,7 @@ export const NewNavMobile = ({ navItems }: Props) => {
 
               {/* Navigation Links */}
               <nav className="flex flex-col gap-1 py-6">
-                {navItems.map((item) => (
+                {displayNavItems.map((item) => (
                   <Link
                     key={item.name}
                     href={{ pathname: item.url }}
