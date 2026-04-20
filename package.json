@@ -98,6 +98,7 @@
     "@hookform/resolvers": "^5.2.2",
     "@next/bundle-analyzer": "latest",
     "@playwright/test": "latest",
+    "@scalar/openapi-to-markdown": "^0.5.5",
     "@tailwindcss/postcss": "^4.1.18",
     "@types/node": "^25.2.1",
     "@types/react": "^19.1.8",
