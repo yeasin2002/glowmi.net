@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import type { AxiosError } from 'axios'
+import { getApiErrorMessage } from '@/lib/api-error'
 import toast from 'react-hot-toast'
 import {
   authApi,
@@ -8,7 +9,6 @@ import {
   type RefreshTokenRequestData,
   type RegisterRequestData,
 } from '../query-list/auth.query'
-import { getApiErrorMessage } from './utils'
 
 const AUTH_KEYS = {
   all: () => ['auth'] as const,

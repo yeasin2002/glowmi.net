@@ -1,8 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import type { AxiosError } from 'axios'
+import { getApiErrorMessage } from '@/lib/api-error'
 import toast from 'react-hot-toast'
 import { profileApi, type UpdateProfileRequestData } from '../query-list/profile.query'
-import { getApiErrorMessage } from './utils'
 
 const PROFILE_KEYS = {
   all: () => ['profile'] as const,

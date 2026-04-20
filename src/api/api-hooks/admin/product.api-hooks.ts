@@ -1,12 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import type { AxiosError } from 'axios'
+import { getApiErrorMessage } from '@/lib/api-error'
 import toast from 'react-hot-toast'
 import {
   adminProductApi,
   type CreateAdminProductRequestData,
   type UpdateAdminProductRequestData,
 } from '../../query-list/admin/product-query'
-import { getApiErrorMessage } from '../utils'
 
 const ADMIN_PRODUCT_KEYS = {
   all: () => ['admin', 'products'] as const,

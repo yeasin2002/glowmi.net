@@ -1,5 +1,5 @@
 import { axiosClient } from '@/lib/axios'
-import { appendFormDataValue, appendFormDataValues } from '../form-data'
+import { appendFormDataValue, appendFormDataValues } from '@/lib/api-form-data'
 
 export interface AdminProductImage {
   id: number

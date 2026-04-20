@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import type { AxiosError } from 'axios'
+import { getApiErrorMessage } from '@/lib/api-error'
 import toast from 'react-hot-toast'
 import {
   forgetPasswordApi,
@@ -7,7 +8,6 @@ import {
   type SendForgetPasswordOtpRequestData,
   type VerifyForgetPasswordOtpRequestData,
 } from '../query-list/forget-password.query'
-import { getApiErrorMessage } from './utils'
 
 const FORGET_PASSWORD_KEYS = {
   all: () => ['forget-password'] as const,

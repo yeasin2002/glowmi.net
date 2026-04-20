@@ -1,12 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import type { AxiosError } from 'axios'
+import { getApiErrorMessage } from '@/lib/api-error'
 import toast from 'react-hot-toast'
 import {
   adminCategoryApi,
   type CreateAdminCategoryRequestData,
   type UpdateAdminCategoryRequestData,
 } from '../../query-list/admin/category-query'
-import { getApiErrorMessage } from '../utils'
 
 const ADMIN_CATEGORY_KEYS = {
   all: () => ['admin', 'categories'] as const,
