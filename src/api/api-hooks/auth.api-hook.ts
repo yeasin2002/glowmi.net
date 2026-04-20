@@ -1,51 +1,36 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import type { AxiosError } from 'axios'
+import toast from 'react-hot-toast'
 import {
   authApi,
-  type LoginQueryParams,
   type LoginRequestData,
-  type RefreshTokenQueryParams,
+  type PasswordChangeRequestData,
   type RefreshTokenRequestData,
-  type RegisterQueryParams,
   type RegisterRequestData,
 } from '../query-list/auth.query'
-
-// ============================================
-// 1. Query Keys (Centralized)
-// ============================================
+import { getApiErrorMessage } from './utils'
 
 const AUTH_KEYS = {
   all: () => ['auth'] as const,
   login: () => ['auth', 'login'] as const,
   register: () => ['auth', 'register'] as const,
   refresh: () => ['auth', 'refresh'] as const,
+  passwordChange: () => ['auth', 'password-change'] as const,
 }
-
-// ============================================
-// 2. Mutation Hooks (POST)
-// ============================================
-
-export interface LoginMutationVariables extends LoginRequestData, LoginQueryParams {}
-export interface RegisterMutationVariables extends RegisterRequestData, RegisterQueryParams {}
-export interface RefreshTokenMutationVariables
-  extends RefreshTokenRequestData, RefreshTokenQueryParams {}
 
 export const useLogin = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: ({ lean, ...data }: LoginMutationVariables) =>
-      authApi.login(data, lean ? { lean } : undefined),
+    mutationFn: (data: LoginRequestData) => authApi.login(data),
 
-    onSuccess: () => {
+    onSuccess: (response) => {
       queryClient.invalidateQueries({ queryKey: AUTH_KEYS.all() })
+      toast.success(response.data.message || 'Logged in successfully')
     },
 
-    onError: (error: AxiosError<{ message?: string; detail?: string }>) => {
-      const message =
-        error.response?.data?.message || error.response?.data?.detail || 'Failed to login'
-      console.log('🚀 ~ useLogin ~ message:', message)
-      // toast.error(message)
+    onError: (error: AxiosError) => {
+      toast.error(getApiErrorMessage(error, 'Failed to login'))
     },
   })
 }
@@ -54,18 +39,15 @@ export const useRegister = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: ({ lean, ...data }: RegisterMutationVariables) =>
-      authApi.register(data, lean ? { lean } : undefined),
+    mutationFn: (data: RegisterRequestData) => authApi.register(data),
 
-    onSuccess: () => {
+    onSuccess: (response) => {
       queryClient.invalidateQueries({ queryKey: AUTH_KEYS.all() })
+      toast.success(response.data.message || 'Registered successfully')
     },
 
-    onError: (error: AxiosError<{ message?: string; detail?: string }>) => {
-      const message =
-        error.response?.data?.message || error.response?.data?.detail || 'Failed to register'
-      console.log('🚀 ~ useRegister ~ message:', message)
-      // toast.error(message)
+    onError: (error: AxiosError) => {
+      toast.error(getApiErrorMessage(error, 'Failed to register'))
     },
   })
 }
@@ -74,18 +56,32 @@ export const useRefreshToken = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: ({ lean, ...data }: RefreshTokenMutationVariables) =>
-      authApi.refresh(data, lean ? { lean } : undefined),
+    mutationFn: (data: RefreshTokenRequestData) => authApi.refresh(data),
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: AUTH_KEYS.all() })
     },
 
-    onError: (error: AxiosError<{ message?: string; detail?: string }>) => {
-      const message =
-        error.response?.data?.message || error.response?.data?.detail || 'Failed to refresh token'
-      console.log('🚀 ~ useRefreshToken ~ message:', message)
-      // toast.error(message)
+    onError: (error: AxiosError) => {
+      toast.error(getApiErrorMessage(error, 'Failed to refresh token'))
+    },
+  })
+}
+
+export const usePasswordChange = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (data: PasswordChangeRequestData) => authApi.changePassword(data),
+
+    onSuccess: (response) => {
+      queryClient.invalidateQueries({ queryKey: AUTH_KEYS.all() })
+      queryClient.invalidateQueries({ queryKey: AUTH_KEYS.passwordChange() })
+      toast.success(response.data.message || 'Password updated successfully')
+    },
+
+    onError: (error: AxiosError) => {
+      toast.error(getApiErrorMessage(error, 'Failed to update password'))
     },
   })
 }
