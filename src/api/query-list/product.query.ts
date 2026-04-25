@@ -25,12 +25,23 @@ export interface Product {
   is_available?: boolean
   video?: string
   images: ProductImage[]
+  order_count?: number
   created_at?: string
   updated_at?: string
 }
 
 export const productApi = {
+  // Existing — user-scoped via /userapi/
   getProducts: () => axiosClient.get<Product[]>('/userapi/products/'),
 
   getProductById: (id: number | string) => axiosClient.get<Product>(`/userapi/products/${id}/`),
+
+  // Best products — sorted by order_count desc
+  getBestProducts: () => axiosClient.get<Product[]>('/productapi/products/best/'),
+
+  // User-scoped via /productapi/products/user/
+  getUserProducts: () => axiosClient.get<Product[]>('/productapi/products/user/'),
+
+  getUserProductById: (id: number | string) =>
+    axiosClient.get<Product>(`/productapi/products/user/${id}/`),
 }
