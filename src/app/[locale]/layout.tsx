@@ -39,7 +39,6 @@ export default async function RootLayout({
         <RootWrapper locale={locale} messages={messages} timeZone={timeZone}>
           <DirectionProvider direction={isRTL ? 'rtl' : 'ltr'}>{children}</DirectionProvider>
         </RootWrapper>
-        <Toaster />
       </body>
     </html>
   )

@@ -21,9 +21,7 @@ export interface TermsAndConditionsResponse {
 // ─── API object ────────────────────────────────────────────────────────────────
 
 export const policyAndConditionsApi = {
-  getPrivacyPolicy: () =>
-    axiosClient.get<PrivacyPolicyResponse>('/privacy-policy/'),
+  getPrivacyPolicy: () => axiosClient.get<PrivacyPolicyResponse>('/privacy-policy'),
 
-  getTermsAndConditions: () =>
-    axiosClient.get<TermsAndConditionsResponse>('/terms-and-conditions/'),
+  getTermsAndConditions: () => axiosClient.get<TermsAndConditionsResponse>('/terms-and-conditions'),
 }
