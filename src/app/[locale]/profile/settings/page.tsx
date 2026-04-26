@@ -1,16 +1,28 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Pencil } from 'lucide-react'
+import { ChevronDown, Pencil } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { useProfile, useUpdateProfile } from '@/api/api-hooks/profile.api-hook'
 import { IconInput } from '@/components/shared/auth-input'
 import { Button } from '@/components/ui'
+import { useEffect } from 'react'
 
 const Settings = () => {
   const t = useTranslations('profile.settings')
+  const { data: userProfile, isLoading } = useProfile()
+  const { mutateAsync: updateProfile, isPending: isUpdating } = useUpdateProfile()
+  const homeTranslations = useTranslations('home.createAccountDialog')
+  const SkinTypeOptions = [
+    { value: 'normal', label: homeTranslations('fields.skinTypeOptions.normal') },
+    { value: 'dry', label: homeTranslations('fields.skinTypeOptions.dry') },
+    { value: 'oily', label: homeTranslations('fields.skinTypeOptions.oily') },
+    { value: 'combination', label: homeTranslations('fields.skinTypeOptions.combination') },
+    { value: 'sensitive', label: homeTranslations('fields.skinTypeOptions.sensitive') },
+  ]
 
   const settingsSchema = z.object({
     name: z.string().min(1, t('errors.nameRequired')),
@@ -24,20 +36,32 @@ const Settings = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<SettingsFormData>({
     resolver: zodResolver(settingsSchema),
-    defaultValues: {
-      name: t('defaultValues.name'),
-      gender: t('defaultValues.gender'),
-      email: t('defaultValues.email'),
-      skinType: t('defaultValues.skinType'),
-    },
   })
 
+  useEffect(() => {
+    if (!isLoading && userProfile) {
+      setValue('name', userProfile.full_name || '')
+      setValue('gender', userProfile.gender || '')
+      setValue('email', userProfile.email || '')
+      setValue('skinType', userProfile.skin_type || '')
+    }
+  }, [isLoading, setValue, userProfile])
+
   const onSubmit = async (data: SettingsFormData) => {
-    // TODO: API integration
-    console.log(data)
+    try {
+      await updateProfile({
+        full_name: data.name,
+        email: data.email,
+        gender: data.gender as 'male' | 'female' | 'other',
+        skin_type: data.skinType,
+      })
+    } catch (error) {
+      console.error('Failed to update profile:', error)
+    }
   }
 
   return (
@@ -73,7 +97,7 @@ const Settings = () => {
           error={errors.email?.message}
           {...register('email')}
         />
-        <IconInput
+        {/* <IconInput
           label={t('skinType')}
           placeholder={t('skinTypePlaceholder')}
           variant="default"
@@ -81,7 +105,37 @@ const Settings = () => {
           className="placeholder:text-main-button text-main-button text-sm"
           error={errors.skinType?.message}
           {...register('skinType')}
-        />
+        /> */}
+
+        {/* Skin Type */}
+        <div className="space-y-1.5">
+          <label htmlFor="skinType" className="text-main-button pb-4! text-sm font-medium">
+            {t('skinType')}
+          </label>
+          <div className="relative">
+            <select
+              id="skinType"
+              className={`border-input bg-background ring-offset-background focus-visible:ring-ring flex w-full border px-3 py-2 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 h-12 rounded-md appearance-none pr-10 placeholder:text-main-button text-main-button text-sm ${errors.skinType ? 'border-destructive' : ''}`}
+              {...register('skinType')}
+              aria-invalid={errors.skinType ? 'true' : 'false'}
+            >
+              <option value="" disabled hidden>
+                {t('skinTypePlaceholder')}
+              </option>
+              {SkinTypeOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+            <ChevronDown className="text-main-button pointer-events-none absolute top-1/2 right-4 size-4 -translate-y-1/2" />
+          </div>
+          {errors.skinType && (
+            <p className="text-destructive text-sm" role="alert">
+              {errors.skinType.message}
+            </p>
+          )}
+        </div>
 
         <Button
           type="submit"

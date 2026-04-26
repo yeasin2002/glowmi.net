@@ -26,6 +26,7 @@ export interface UpdateProfileRequestData {
   full_name?: string
   gender?: ProfileGender
   image?: File | string
+  skin_type?: string
 }
 
 const createProfileFormData = (data: UpdateProfileRequestData) => {
