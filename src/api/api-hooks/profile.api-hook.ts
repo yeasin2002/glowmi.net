@@ -1,6 +1,6 @@
+import { getApiErrorMessage } from '@/lib/api-error'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import type { AxiosError } from 'axios'
-import { getApiErrorMessage } from '@/lib/api-error'
 import toast from 'react-hot-toast'
 import { profileApi, type UpdateProfileRequestData } from '../query-list/profile.query'
 
@@ -13,7 +13,7 @@ export const useProfile = () => {
   return useQuery({
     queryKey: PROFILE_KEYS.detail(),
     queryFn: () => profileApi.getProfile(),
-    select: (response) => response.data,
+    select: (response) => response.data.data,
   })
 }
 

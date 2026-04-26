@@ -1,15 +1,23 @@
-import { axiosClient } from '@/lib/axios'
 import { appendFormDataValue } from '@/lib/api-form-data'
+import { axiosClient } from '@/lib/axios'
 
 export type ProfileGender = 'male' | 'female' | 'other'
 
 export interface Profile {
-  date_of_birth: string
-  email: string
   full_name: string
-  gender: ProfileGender
-  image: string
+  email: string
   role: string
+  image: string | null
+  gender: ProfileGender | null
+  date_of_birth: string | null
+  contact_number: string | null
+  skin_type: string | null
+}
+
+export interface ProfileResponse {
+  success: boolean
+  message: string
+  data: Profile
 }
 
 export interface UpdateProfileRequestData {
@@ -31,10 +39,10 @@ const createProfileFormData = (data: UpdateProfileRequestData) => {
 }
 
 export const profileApi = {
-  getProfile: () => axiosClient.get<Profile>('/profile/'),
+  getProfile: () => axiosClient.get<ProfileResponse>('/profile/'),
 
   updateProfile: (data: UpdateProfileRequestData) =>
-    axiosClient.patch<Profile>('/profile/', createProfileFormData(data), {
+    axiosClient.patch<ProfileResponse>('/profile/', createProfileFormData(data), {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
