@@ -1,5 +1,5 @@
-import { axiosClient } from '@/lib/axios'
 import { appendFormDataValue } from '@/lib/api-form-data'
+import { axiosClient } from '@/lib/axios'
 
 export type AuthGender = 'male' | 'female' | 'other'
 
