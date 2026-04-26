@@ -8,6 +8,7 @@ import {
   type PasswordChangeRequestData,
   type RefreshTokenRequestData,
   type RegisterRequestData,
+  type VerifyRegistrationRequestData,
 } from '../query-list/auth.query'
 
 const AUTH_KEYS = {
@@ -16,6 +17,7 @@ const AUTH_KEYS = {
   register: () => ['auth', 'register'] as const,
   refresh: () => ['auth', 'refresh'] as const,
   passwordChange: () => ['auth', 'password-change'] as const,
+  verifyRegistration: () => ['auth', 'verify-registration'] as const,
 }
 
 export const useLogin = () => {
@@ -82,6 +84,23 @@ export const usePasswordChange = () => {
 
     onError: (error: AxiosError) => {
       toast.error(getApiErrorMessage(error, 'Failed to update password'))
+    },
+  })
+}
+
+export const useVerifyRegistration = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (data: VerifyRegistrationRequestData) => authApi.verifyRegistration(data),
+
+    onSuccess: (response) => {
+      queryClient.invalidateQueries({ queryKey: AUTH_KEYS.all() })
+      toast.success(response.data.message || 'OTP verified successfully')
+    },
+
+    onError: (error: AxiosError) => {
+      toast.error(getApiErrorMessage(error, 'Failed to verify OTP'))
     },
   })
 }

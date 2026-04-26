@@ -1,17 +1,26 @@
 'use client'
 
+import { useVerifyRegistration } from '@/api/api-hooks/auth.api-hook'
 import { Button } from '@/components/ui'
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp'
 import { Link } from '@/i18n/navigation'
+import { useAuthStore } from '@/store/auth.store'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { REGEXP_ONLY_DIGITS } from 'input-otp'
 import { ArrowLeft } from 'lucide-react'
 import { useTranslations } from 'next-intl'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { Suspense } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-const VerifyOTP = () => {
+const VerifyOTPContent = () => {
   const t = useTranslations('auth.verifyOtp')
+  const router = useRouter()
+  const auth = useAuthStore()
+  const searchParams = useSearchParams()
+  const email = searchParams.get('email')
+  console.log(`email: ------>`, email)
 
   const otpSchema = z.object({
     otp: z.string().min(6, t('validation.otpRequired')),
@@ -28,9 +37,29 @@ const VerifyOTP = () => {
     defaultValues: { otp: '' },
   })
 
+  const { mutateAsync: verifyRegistration } = useVerifyRegistration()
+
   const onSubmit = async (data: OtpFormData) => {
-    // TODO: API integration
-    console.log(data)
+    if (!email) {
+      router.push('/sign-up')
+      return
+    }
+
+    try {
+      const response = await verifyRegistration({ email, otp: data.otp })
+      const authData = response.data?.data
+
+      if (authData) {
+        auth.setUser(authData.user ?? null)
+        auth.setToken({
+          accessToken: authData.access,
+          refreshToken: authData.refresh,
+        })
+        router.push('/skin-analyzer/skin-intelligence')
+      }
+    } catch (error) {
+      console.log('🚀 ~ onSubmit ~ error:', error)
+    }
   }
 
   const handleResend = () => {
@@ -116,6 +145,14 @@ const VerifyOTP = () => {
         </form>
       </div>
     </div>
+  )
+}
+
+const VerifyOTP = () => {
+  return (
+    <Suspense fallback={<div className="flex min-h-screen items-center justify-center p-4">Loading...</div>}>
+      <VerifyOTPContent />
+    </Suspense>
   )
 }
 

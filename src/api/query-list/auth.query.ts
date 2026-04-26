@@ -8,17 +8,17 @@ export interface AuthUser {
   email: string
   role: string
   full_name: string
-  gender: string
-  date_of_birth: string
-  image: string
-  contact_number?: string
-  membership_Id?: string
-  skin_type?: string
+  gender: string | null
+  date_of_birth: string | null
+  image: string | null
+  contact_number?: string | null
+  membership_Id?: string | null
+  skin_type?: string | null
 }
 
 export interface AuthTokenPayload {
-  access_token: string
-  refresh_token: string
+  access_token?: string
+  refresh_token?: string
   access: string
   refresh: string
   user: AuthUser
@@ -66,8 +66,18 @@ export interface PasswordChangeRequestData {
   new_password: string
 }
 
+export interface VerifyRegistrationRequestData {
+  email: string
+  otp: string
+}
+
 const createAuthFormData = (
-  data: LoginRequestData | RegisterRequestData | RefreshTokenRequestData | PasswordChangeRequestData
+  data:
+    | LoginRequestData
+    | RegisterRequestData
+    | RefreshTokenRequestData
+    | PasswordChangeRequestData
+    | VerifyRegistrationRequestData
 ) => {
   const formData = new FormData()
 
@@ -79,7 +89,7 @@ const createAuthFormData = (
 }
 
 const normalizeAuthResponse = (response: { data: AuthResponse }) => {
-  const { access_token, refresh_token } = response.data.data
+  const { access_token, refresh_token, access, refresh } = response.data.data
 
   return {
     ...response,
@@ -87,8 +97,8 @@ const normalizeAuthResponse = (response: { data: AuthResponse }) => {
       ...response.data,
       data: {
         ...response.data.data,
-        access: access_token,
-        refresh: refresh_token,
+        access: access || access_token || '',
+        refresh: refresh || refresh_token || '',
       },
     },
   }
@@ -126,4 +136,13 @@ export const authApi = {
         'Content-Type': 'multipart/form-data',
       },
     }),
+
+  verifyRegistration: (data: VerifyRegistrationRequestData) =>
+    axiosClient
+      .post<AuthResponse>('/verify-registration/', createAuthFormData(data), {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then(normalizeAuthResponse),
 }

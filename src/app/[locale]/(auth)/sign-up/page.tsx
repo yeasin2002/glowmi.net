@@ -55,7 +55,7 @@ const SignUp = () => {
           accessToken: registerData.access,
           refreshToken: registerData.refresh,
         })
-        router.push('/skin-analyzer/skin-intelligence')
+        router.push(`/verify-otp?email=${encodeURIComponent(data.email)}`)
       }
     } catch (error) {
       console.log('🚀 ~ onSubmit ~ error:', error)
