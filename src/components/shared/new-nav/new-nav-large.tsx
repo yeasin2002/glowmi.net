@@ -34,7 +34,14 @@ export const NewNavLarge = ({ buttonLabel, navItems }: Props) => {
         <div className="relative pt-4 pb-16">
           <div className="flex justify-center">
             <Link href="/">
-              <Image src={newLogo} alt="GLOWMI" width={400} height={400} className="w-32 lg:w-36" />
+              <Image
+                src={newLogo}
+                alt="GLOWMI"
+                width={400}
+                height={400}
+                className="w-32 lg:w-36"
+                loading="eager"
+              />
             </Link>
           </div>
 

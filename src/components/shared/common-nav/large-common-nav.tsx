@@ -10,7 +10,14 @@ export const LargeCommonNav = () => {
       <div className="container mx-auto px-4">
         <div className="flex min-h-35 items-center justify-between">
           <div className="shrink-0">
-            <Image src={newLogo} alt="GLOWMI" width={400} height={120} className="h-auto w-44" />
+            <Image
+              src={newLogo}
+              alt="GLOWMI"
+              width={400}
+              height={120}
+              className="h-auto w-44"
+              loading="eager"
+            />
           </div>
 
           <div className="flex items-center gap-5">

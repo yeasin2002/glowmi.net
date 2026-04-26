@@ -1,4 +1,4 @@
-import { NavLinkList } from '../../../components/shared/navlink-list'
+import { NavLinkList } from '@/components/shared/new-nav/navlink-list'
 import { UserProfileAndStates } from './user-profile-and-states'
 
 import icon1 from '@/assets/icons/cloud-projects.svg'
@@ -6,8 +6,9 @@ import icon2 from '@/assets/icons/heart.svg'
 import icon4 from '@/assets/icons/packages.svg'
 import icon3 from '@/assets/icons/solar_bag-broken.svg'
 import icon5 from '@/assets/icons/solar_settings-linear.svg'
+import { PrivetRoute } from '@/components/guards'
+import CommonNav from '@/components/shared/common-nav'
 import { getTranslations } from 'next-intl/server'
-import CommonNav from '../../../components/shared/common-nav'
 
 const ProfileLayout = async ({ children }: { children: React.ReactNode }) => {
   const t = await getTranslations('profile.tabs')
@@ -21,20 +22,16 @@ const ProfileLayout = async ({ children }: { children: React.ReactNode }) => {
   ]
 
   return (
-    <div className="bg-background min-h-screen">
-      <CommonNav />
-
-      <div className="px-6 py-6 lg:px-20">
-        <UserProfileAndStates />
-        <NavLinkList
-          items={tabsLists}
-          // inactiveClassName="text-primary-base_medium"
-          // activeClassName="text-main-button font-semibold"
-          className="text-primary-base_medium!"
-        />
-        {children}
+    <PrivetRoute>
+      <div className="bg-background min-h-screen">
+        <CommonNav />
+        <div className="px-6 py-6 lg:px-20">
+          <UserProfileAndStates />
+          <NavLinkList items={tabsLists} className="text-primary-base_medium!" />
+          {children}
+        </div>
       </div>
-    </div>
+    </PrivetRoute>
   )
 }
 
