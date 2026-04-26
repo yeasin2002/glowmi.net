@@ -40,7 +40,7 @@ export const NewNavLarge = ({ buttonLabel, navItems }: Props) => {
 
           <div className="absolute top-4 right-0">
             <Link
-              href={'/sign-up'}
+              href={'/login'}
               className={buttonVariants({
                 //  className: 'bg-primary! hover:bg-primary w-full rounded-md py-2 text-sm text-white',
                 size: 'lg',
@@ -78,7 +78,7 @@ export const NewNavLarge = ({ buttonLabel, navItems }: Props) => {
                   className="rounded-full p-2 transition-colors hover:bg-gray-100"
                   aria-label={action.label}
                 >
-                  <Icon className="size-[1.20rem] font-semibold text-[#363739]" strokeWidth="1.5" />
+                  <Icon className="size-4 font-semibold text-[#363739]" strokeWidth="1.5" />
                 </Link>
               )
             })}

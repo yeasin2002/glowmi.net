@@ -1,6 +1,6 @@
+import { getApiErrorMessage } from '@/lib/api-error'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import type { AxiosError } from 'axios'
-import { getApiErrorMessage } from '@/lib/api-error'
 import toast from 'react-hot-toast'
 import {
   forgetPasswordApi,
