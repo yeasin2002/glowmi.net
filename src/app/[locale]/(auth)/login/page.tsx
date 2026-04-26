@@ -35,7 +35,9 @@ const Login = () => {
   })
 
   const { mutateAsync: login } = useLogin()
+
   const setUser = useAuthStore((state) => state.setUser)
+
   const setToken = useAuthStore((state) => state.setToken)
 
   const onSubmit = async (data: LoginFormData) => {

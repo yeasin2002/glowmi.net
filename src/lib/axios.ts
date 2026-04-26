@@ -1,88 +1,88 @@
-import axios from 'axios'
+import type { RefreshTokenResponse } from '@/api/query-list/auth.query'
+import { appendFormDataValue } from '@/lib/api-form-data'
+import { useAuthStore } from '@/store/auth.store'
+import axios, { type InternalAxiosRequestConfig } from 'axios'
+
+// ─── Extend InternalAxiosRequestConfig to include _retry flag ─────────────────
+
+interface RetryableRequestConfig extends InternalAxiosRequestConfig {
+  _retry?: boolean
+}
+
+// ─── Axios client ──────────────────────────────────────────────────────────────
 
 export const axiosClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
 })
 
-// Request interceptor to add auth token
+// ─── Request interceptor — attach access token ────────────────────────────────
+
 axiosClient.interceptors.request.use(
   (config) => {
-    // Get token from localStorage (where Zustand persist stores it)
-    const authStorage = localStorage.getItem('auth-storage')
+    const { token } = useAuthStore.getState()
 
-    if (authStorage) {
-      try {
-        const { state } = JSON.parse(authStorage)
-        const token = state?.token?.accessToken
-
-        if (token) {
-          config.headers.Authorization = `Bearer ${token}`
-        }
-      } catch (error) {
-        console.error('Error parsing auth storage:', error)
-      }
+    if (token.accessToken) {
+      config.headers.Authorization = `Bearer ${token.accessToken}`
     }
 
     return config
   },
-  (error) => {
-    return Promise.reject(error)
-  }
+  (error: unknown) => Promise.reject(error)
 )
 
-// Response interceptor for handling token refresh
+// ─── Response interceptor — handle 401 with token refresh ────────────────────
+
 axiosClient.interceptors.response.use(
   (response) => response,
-  async (error) => {
-    const originalRequest = error.config
+  async (error: unknown) => {
+    if (!axios.isAxiosError(error)) return Promise.reject(error)
 
-    // If error is 401 and we haven't retried yet
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true
+    const originalRequest = error.config as RetryableRequestConfig | undefined
 
-      try {
-        const authStorage = localStorage.getItem('auth-storage')
-
-        if (authStorage) {
-          const { state } = JSON.parse(authStorage)
-          const refreshToken = state?.token?.refreshToken
-
-          if (refreshToken) {
-            // Try to refresh the token
-            const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/refresh/`, {
-              refresh: refreshToken,
-            })
-
-            const newAccessToken = response.data.access
-
-            // Update the token in localStorage
-            const updatedAuth = {
-              ...JSON.parse(authStorage),
-              state: {
-                ...state,
-                token: {
-                  ...state?.token,
-                  accessToken: newAccessToken,
-                },
-              },
-            }
-            localStorage.setItem('auth-storage', JSON.stringify(updatedAuth))
-
-            // Retry the original request with new token
-            originalRequest.headers.Authorization = `Bearer ${newAccessToken}`
-            return axiosClient(originalRequest)
-          }
-        }
-      } catch (refreshError) {
-        // If refresh fails, clear auth and redirect to login
-        localStorage.removeItem('auth-storage')
-        if (typeof window !== 'undefined') {
-          window.location.href = '/login'
-        }
-        return Promise.reject(refreshError)
-      }
+    // Only attempt refresh on 401 and only once per request
+    if (error.response?.status !== 401 || !originalRequest || originalRequest._retry) {
+      return Promise.reject(error)
     }
 
-    return Promise.reject(error)
+    originalRequest._retry = true
+
+    const { token, setToken, clearAuth } = useAuthStore.getState()
+
+    if (!token.refreshToken) {
+      clearAuth()
+      if (typeof window !== 'undefined') {
+        window.location.href = '/login'
+      }
+      return Promise.reject(error)
+    }
+
+    try {
+      // Build FormData the same way authApi.refresh() does (multipart/form-data)
+      const formData = new FormData()
+      appendFormDataValue(formData, 'refresh', token.refreshToken)
+
+      const response = await axios.post<RefreshTokenResponse>(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/refresh/`,
+        formData,
+        { headers: { 'Content-Type': 'multipart/form-data' } }
+      )
+
+      // The API returns { access, refresh } — mirror RefreshTokenResponse
+      const newAccessToken = response.data.access ?? ''
+
+      // Persist the new access token via the store (keeps refreshToken intact)
+      setToken({ accessToken: newAccessToken, refreshToken: token.refreshToken })
+
+      // Retry the original request with the updated token
+      originalRequest.headers.Authorization = `Bearer ${newAccessToken}`
+      return axiosClient(originalRequest)
+    } catch (refreshError: unknown) {
+      // Refresh failed — sign the user out and redirect
+      clearAuth()
+      if (typeof window !== 'undefined') {
+        window.location.href = '/login'
+      }
+      return Promise.reject(refreshError)
+    }
   }
 )
