@@ -9,7 +9,8 @@ import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/componen
 import Image, { StaticImageData } from 'next/image'
 
 export interface ProductItem {
-  src: StaticImageData
+  id?: number
+  src: StaticImageData | string
   alt: string
   category: string
   benefits: string

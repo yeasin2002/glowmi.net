@@ -11,13 +11,13 @@ export interface Product {
   category_name?: string
   title: string
   sub_title: string
-  skin_type: string
+  skin_type?: string | null
   description: string
   key_ingredients: string
   how_to_use: string
   key_benefits: string
   size?: string
-  sku: string
+  sku?: string
   price: string
   discount?: string
   stock?: number
@@ -30,17 +30,23 @@ export interface Product {
   updated_at?: string
 }
 
+export interface ProductsResponse {
+  success: boolean
+  message: string
+  data: Product[]
+}
+
 export const productApi = {
   // Existing — user-scoped via /userapi/
-  getProducts: () => axiosClient.get<Product[]>('/userapi/products/'),
+  getProducts: () => axiosClient.get<ProductsResponse>('/userapi/products/'),
 
   getProductById: (id: number | string) => axiosClient.get<Product>(`/userapi/products/${id}/`),
 
   // Best products — sorted by order_count desc
-  getBestProducts: () => axiosClient.get<Product[]>('/productapi/products/best/'),
+  getBestProducts: () => axiosClient.get<ProductsResponse>('/productapi/products/best/'),
 
   // User-scoped via /productapi/products/user/
-  getUserProducts: () => axiosClient.get<Product[]>('/productapi/products/user/'),
+  getUserProducts: () => axiosClient.get<ProductsResponse>('/productapi/products/user/'),
 
   getUserProductById: (id: number | string) =>
     axiosClient.get<Product>(`/productapi/products/user/${id}/`),
