@@ -2,6 +2,7 @@ import newLogo from '@/assets/GLOWMI-logo.svg'
 import userImgTemporary from '@/assets/image/bottom-cta-bg-image.jpg'
 import { LogOut } from 'lucide-react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { LanguageToggle } from '../language-toggle'
 
 export const LargeCommonNav = () => {
@@ -9,7 +10,7 @@ export const LargeCommonNav = () => {
     <header className="hidden w-full bg-white lg:block">
       <div className="container mx-auto px-4">
         <div className="flex min-h-35 items-center justify-between">
-          <div className="shrink-0">
+          <Link href="/" className="shrink-0">
             <Image
               src={newLogo}
               alt="GLOWMI"
@@ -18,7 +19,7 @@ export const LargeCommonNav = () => {
               className="h-auto w-44"
               loading="eager"
             />
-          </div>
+          </Link>
 
           <div className="flex items-center gap-5">
             <LanguageToggle />

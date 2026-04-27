@@ -1,6 +1,5 @@
+import { CommonNav, Footer } from '@/components/shared'
 import React from 'react'
-import CommonNav from '../../../../../components/shared/common-nav'
-import { Footer } from '../../../../../components/shared/footer'
 
 const ProductDetailsLayout = ({ children }: { children: React.ReactNode }) => {
   return (

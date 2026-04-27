@@ -12,7 +12,7 @@ import AiPowered from '@/assets/icons/AI-Powered.svg'
 import ExpertBacked from '@/assets/icons/Expert-Backed.svg'
 import Personalized from '@/assets/icons/Personalized.svg'
 import Chat from '@/assets/icons/chat-regular.svg'
-import CommonNav from '@/components/shared/common-nav'
+import { CommonNav } from '@/components/shared'
 import { Link } from '@/i18n/navigation'
 
 const Analysis = () => {

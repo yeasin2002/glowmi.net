@@ -1,5 +1,7 @@
 export * from './auth-input'
 export * from './checkout-items'
+export * from './common-nav'
+export * from './footer'
 export * from './language-toggle'
 export * from './site-heading'
 export * from './sticky-announcement'

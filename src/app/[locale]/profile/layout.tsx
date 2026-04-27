@@ -7,7 +7,7 @@ import icon4 from '@/assets/icons/packages.svg'
 import icon3 from '@/assets/icons/solar_bag-broken.svg'
 import icon5 from '@/assets/icons/solar_settings-linear.svg'
 import { PrivetRoute } from '@/components/guards'
-import CommonNav from '@/components/shared/common-nav'
+import { CommonNav } from '@/components/shared'
 import { getTranslations } from 'next-intl/server'
 
 const ProfileLayout = async ({ children }: { children: React.ReactNode }) => {

@@ -1,4 +1,4 @@
-import CommonNav from '@/components/shared/common-nav'
+import { CommonNav } from '@/components/shared'
 import { AiChatContent } from './ai-chat-content'
 import { AiChatBox } from './ai-chatbox'
 

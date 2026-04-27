@@ -1,6 +1,6 @@
 import { LargeCommonNav } from './large-common-nav'
 
-const CommonNav = () => {
+export const CommonNav = () => {
   return (
     <>
       <LargeCommonNav />
@@ -8,4 +8,3 @@ const CommonNav = () => {
   )
 }
 
-export default CommonNav
