@@ -6,7 +6,7 @@ export const NewNav = async () => {
   const t = await getTranslations('shared.nav')
   const navItems = [
     { name: t('navItems.home'), url: '/' },
-    { name: t('navItems.products'), url: '/coming-soon' },
+    { name: t('navItems.products'), url: '/products' },
     { name: t('navItems.analyzeSkin'), url: '/coming-soon' },
   ]
   return (

@@ -1,5 +1,3 @@
-import { Toaster } from 'react-hot-toast'
-
 import type { Metadata } from 'next'
 import type React from 'react'
 import '../../styles/globals.css'

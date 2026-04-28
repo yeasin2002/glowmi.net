@@ -1,5 +1,5 @@
 import { productApi } from '@/api/query-list/product.query'
-import productImage1 from '@/assets/image/product-image-1.png'
+import notImageFoundImg from '@/assets/image/no-image-placeholder.svg'
 import { SiteHeading } from '@/components/shared'
 import { getTranslations } from 'next-intl/server'
 import { ProductsCarousel, type ProductItem } from './products-list'
@@ -14,7 +14,7 @@ export const BestProductsList = async () => {
   const products: ProductItem[] = apiProducts.map((p) => ({
     id: p.id,
     // Use the first image if available, fallback to a placeholder if none
-    src: p.images?.[0]?.image || productImage1,
+    src: p.images?.[0]?.image || notImageFoundImg,
     alt: p.title || 'Product Image',
     category: p.category_name || 'Skincare',
     benefits: p.key_benefits || '',
