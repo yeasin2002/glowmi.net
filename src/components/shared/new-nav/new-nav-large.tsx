@@ -5,7 +5,7 @@ import { Info, Mail, MapPin } from 'lucide-react'
 import { useLocale } from 'next-intl'
 import Image from 'next/image'
 import { LanguageToggle } from '../language-toggle'
-
+import { ShowCardList } from './show-card-list'
 
 const navActions = [
   { icon: Info, label: 'Information', href: '/coming-soon' },
@@ -89,6 +89,7 @@ export const NewNavLarge = ({ buttonLabel, navItems }: Props) => {
                 </Link>
               )
             })}
+            <ShowCardList />
           </div>
         </div>
       </div>

@@ -15,6 +15,22 @@
     "price": "$ 98.00 ( USD )",
     "remove": "Remove"
   },
+  "cartDrawer": {
+    "trigger": "Open cart",
+    "title": "Your cart",
+    "subtitle": "{count, plural, one {# item in your cart} other {# items in your cart}}",
+    "emptyTitle": "Your cart feels light",
+    "emptyDescription": "Add a few essentials to keep your routine ready in one place.",
+    "itemSubtotal": "Subtotal",
+    "totalLabel": "Total",
+    "viewCart": "View cart",
+    "fallbackProduct": "Skincare item",
+    "loginTitle": "Login required",
+    "loginDescription": "You need to sign in before you can view saved cart items and checkout details.",
+    "loginCardTitle": "Your cart is waiting",
+    "loginCardBody": "Sign in to see products, totals, and a smoother checkout experience.",
+    "loginButton": "Go to login"
+  },
   "footer": {
     "heading": "Science with Intelligence",
     "cta": "Follow Us"

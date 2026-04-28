@@ -15,6 +15,22 @@
     "price": "٩٨٫٠٠ دولار أمريكي",
     "remove": "إزالة"
   },
+  "cartDrawer": {
+    "trigger": "فتح السلة",
+    "title": "سلة التسوق",
+    "subtitle": "{count, plural, one {# منتج في سلتك} other {# منتجات في سلتك}}",
+    "emptyTitle": "سلتك فارغة تقريبًا",
+    "emptyDescription": "أضف بعض الأساسيات لتبقى روتينك جاهزًا في مكان واحد.",
+    "itemSubtotal": "المجموع الفرعي",
+    "totalLabel": "الإجمالي",
+    "viewCart": "عرض السلة",
+    "fallbackProduct": "منتج عناية بالبشرة",
+    "loginTitle": "تسجيل الدخول مطلوب",
+    "loginDescription": "يجب تسجيل الدخول قبل عرض المنتجات المحفوظة وتفاصيل الدفع.",
+    "loginCardTitle": "سلتك بانتظارك",
+    "loginCardBody": "سجّل الدخول لرؤية المنتجات والإجمالي وتجربة دفع أسهل.",
+    "loginButton": "اذهب إلى تسجيل الدخول"
+  },
   "footer": {
     "heading": "...عِلم صُمم لبشرتك",
     "cta": "تابعنا"
