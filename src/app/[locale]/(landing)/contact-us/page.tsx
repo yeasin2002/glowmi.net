@@ -1,5 +1,4 @@
 import contactUsBg from '@/assets/image/contact-image-trans.png'
-import { NavList } from '@/components/shared'
 import { Mail, Phone } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 import Image from 'next/image'
@@ -9,11 +8,6 @@ const ContactUs = async () => {
 
   return (
     <div className="relative min-h-screen bg-[#FBFAF6]">
-      <NavList
-        wrapperClassName="absolute top-5 right-2 z-20 justify-around md:w-full"
-        className="text-main-button"
-      />
-
       <div className="mx-auto grid min-h-screen max-w-7xl grid-cols-1 items-center gap-8 px-6 py-20 md:grid-cols-2 lg:px-8">
         {/* Left - Contact Info */}
         <div className="flex flex-col justify-center">

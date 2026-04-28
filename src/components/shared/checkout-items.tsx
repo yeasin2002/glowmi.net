@@ -9,29 +9,30 @@ export const CheckoutItems = () => {
   const t = useTranslations('shared.checkoutItem')
 
   return (
-    <div className="flex items-start gap-4 border-b border-gray-200 py-6">
-      {/* Product Image */}
-      <div className="relative size-32! shrink-0 overflow-hidden rounded-lg">
-        <Image src={productImage} alt={t('productName')} fill className="object-contain p-2" />
-      </div>
-
-      {/* Product Info */}
-      <div className="flex-1">
-        <h3 className="text-xl font-bold text-[#58351B]">{t('productName')}</h3>
-        <p className="mt-1 text-xl font-semibold text-[#6D5534]">{t('price')}</p>
-        <button type="button" className="underline-[#6D5534] mt-2 text-sm text-[#6D5534] underline">
-          {t('remove')}
-        </button>
+    <div className="flex items-start gap-10 border-b border-gray-200 py-6">
+      <div className="flex">
+        {/* Product Image */}
+        <div className="relative size-32! shrink-0 overflow-hidden rounded-lg">
+          <Image src={productImage} alt={t('productName')} fill className="object-contain p-2" />
+        </div>
+        {/* Product Info */}
+        <div className="text-main-button flex-1">
+          <h3 className="text-xl font-bold">{t('productName')}</h3>
+          <p className="mt-1 text-xl font-semibold">{t('price')}</p>
+          <button type="button" className="mt-2 text-sm">
+            {t('remove')}
+          </button>
+        </div>
       </div>
 
       {/* Quantity Controls */}
-      <div className="flex items-center gap-2 rounded-md border border-gray-300">
+      <div className="bg-main-button flex items-center gap-2 rounded-md border border-gray-300">
         <button type="button" className="p-2 hover:bg-gray-100">
-          <Minus className="text-main-button size-4" />
+          <Minus className="size-4 text-white" />
         </button>
-        <span className="text-main-button w-6 text-center text-sm">1</span>
+        <span className="w-6 text-center text-sm text-white">1</span>
         <button type="button" className="p-2 hover:bg-gray-100">
-          <Plus className="text-main-button size-4" />
+          <Plus className="size-4 text-white" />
         </button>
       </div>
     </div>

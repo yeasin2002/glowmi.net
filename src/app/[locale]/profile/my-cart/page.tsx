@@ -15,6 +15,9 @@ const MyCart = async () => {
           <span className="font-medium">$98.99 USD</span>
         </div>
         <Button className="! w-full py-7 text-xl">{t('continueToCheckout')}</Button>
+        <Button variant="outline" className="! border-main-button w-full py-7 text-xl">
+          More Products
+        </Button>
       </div>
     </div>
   )

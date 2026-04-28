@@ -27,5 +27,15 @@
     "value": "Apply 1-2 pumps to clean, dry skin every morning. Gently massage until fully absorbed. Follow with moisturizer and sunscreen for best results."
   },
   "relatedProducts": "Related Product",
-  "viewDetails": "View Details"
+  "viewDetails": "View Details",
+  "loading": "Loading product details",
+  "retry": "Try Again",
+  "error": {
+    "title": "Unable to load product",
+    "description": "Please try again in a moment."
+  },
+  "empty": {
+    "title": "Product not found",
+    "description": "The requested product is unavailable."
+  }
 }

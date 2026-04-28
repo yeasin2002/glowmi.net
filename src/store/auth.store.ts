@@ -1,13 +1,14 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import { AuthUser } from '../api/query-list/auth.query'
 
 interface AuthState {
-  user: Record<string, unknown> | null
+  user: AuthUser | null
   token: {
     accessToken: string | null
     refreshToken: string | null
   }
-  setUser: (user: Record<string, unknown> | null) => void
+  setUser: (user: AuthUser | null) => void
   setToken: (tokens: { accessToken: string | null; refreshToken?: string | null }) => void
   clearAuth: () => void
 }

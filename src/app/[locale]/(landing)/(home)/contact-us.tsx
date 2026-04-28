@@ -7,11 +7,11 @@ export const ContactUs = async () => {
   const t = await getTranslations('home.contactUs')
 
   return (
-    <section className="bg-[#F8F5EE] py-16">
+    <section className="bg-[#FFFFFF] py-16">
       <div className="grid grid-cols-1 items-center gap-10 md:grid-cols-5">
         {/* Left - Product Image */}
         <div className="flex w-full justify-center bg-[#FBFAF6] py-10 md:col-span-3">
-          <Image src={contactImage} alt={t('imageAlt')} className="min-h-[400px] w-auto" />
+          <Image src={contactImage} alt={t('imageAlt')} className="min-h-100 w-auto" />
         </div>
 
         {/* Right - Contact Info */}

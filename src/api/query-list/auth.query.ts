@@ -1,138 +1,148 @@
+import { appendFormDataValue } from '@/lib/api-form-data'
 import { axiosClient } from '@/lib/axios'
 
-// ============================================
-// 1. TypeScript Interfaces
-// ============================================
+export type AuthGender = 'male' | 'female' | 'other'
+
+export interface AuthUser {
+  id: number
+  email: string
+  role: string
+  full_name: string
+  gender: string | null
+  date_of_birth: string | null
+  image: string | null
+  contact_number?: string | null
+  membership_Id?: string | null
+  skin_type?: string | null
+}
+
+export interface AuthTokenPayload {
+  access_token?: string
+  refresh_token?: string
+  access: string
+  refresh: string
+  user: AuthUser
+}
+
+export interface AuthResponse {
+  success: boolean
+  message: string
+  data: AuthTokenPayload
+}
+
+export interface AuthMessageResponse {
+  success: boolean
+  message: string
+  data: Record<string, never>
+}
 
 export interface LoginRequestData {
   email: string
   password: string
 }
 
-export interface LoginQueryParams {
-  lean?: string
-}
-
 export interface RegisterRequestData {
   email: string
   password: string
-  full_name?: string
-  gender?: string
+  contact_number?: string
   date_of_birth?: string
-  image?: File
-}
-
-export interface RegisterQueryParams {
-  lean?: string
+  full_name?: string
+  gender?: AuthGender
+  image?: File | string
+  skin_type?: string
 }
 
 export interface RefreshTokenRequestData {
   refresh: string
 }
 
-export interface RefreshTokenQueryParams {
-  lean?: string
-}
-
-export interface LoginUser {
-  id?: number
-  email?: string
-  role?: string
-  full_name?: string
-  gender?: string
-  date_of_birth?: string
-  image?: string
-  [key: string]: unknown
-}
-
-export interface LoginSuccessData {
-  access: string
-  refresh: string
-  user: LoginUser
-}
-
-export interface LoginResponse {
-  success: boolean
-  message: string
-  data: LoginSuccessData
-}
-
-export interface RegisterResponse {
-  success: boolean
-  message: string
-  data: LoginSuccessData
-}
-
 export interface RefreshTokenResponse {
-  success: boolean
-  message: string
-  data: {
-    access: string
+  refresh: string
+  access?: string
+}
+
+export interface PasswordChangeRequestData {
+  old_password: string
+  new_password: string
+}
+
+export interface VerifyRegistrationRequestData {
+  email: string
+  otp: string
+}
+
+const createAuthFormData = (
+  data:
+    | LoginRequestData
+    | RegisterRequestData
+    | RefreshTokenRequestData
+    | PasswordChangeRequestData
+    | VerifyRegistrationRequestData
+) => {
+  const formData = new FormData()
+
+  for (const [key, value] of Object.entries(data)) {
+    appendFormDataValue(formData, key, value)
+  }
+
+  return formData
+}
+
+const normalizeAuthResponse = (response: { data: AuthResponse }) => {
+  const { access_token, refresh_token, access, refresh } = response.data.data
+
+  return {
+    ...response,
+    data: {
+      ...response.data,
+      data: {
+        ...response.data.data,
+        access: access || access_token || '',
+        refresh: refresh || refresh_token || '',
+      },
+    },
   }
 }
 
-// ============================================
-// 2. API Object
-// ============================================
-
 export const authApi = {
-  // POST - Login (email & password via form-data)
-  login: (data: LoginRequestData, params?: LoginQueryParams) => {
-    const formData = new FormData()
-    formData.append('email', data.email)
-    formData.append('password', data.password)
+  login: (data: LoginRequestData) =>
+    axiosClient
+      .post<AuthResponse>('/login/', createAuthFormData(data), {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then(normalizeAuthResponse),
 
-    const queryParams = new URLSearchParams()
-    if (params?.lean) queryParams.append('lean', params.lean)
+  register: (data: RegisterRequestData) =>
+    axiosClient
+      .post<AuthResponse>('/register/', createAuthFormData(data), {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then(normalizeAuthResponse),
 
-    const queryString = queryParams.toString()
-    const url = queryString ? `/login/?${queryString}` : '/login/'
-
-    return axiosClient.post<LoginResponse>(url, formData, {
+  refresh: (data: RefreshTokenRequestData) =>
+    axiosClient.post<RefreshTokenResponse>('/refresh/', createAuthFormData(data), {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
-    })
-  },
+    }),
 
-  // POST - Register (email, password, optional profile fields)
-  register: (data: RegisterRequestData, params?: RegisterQueryParams) => {
-    const formData = new FormData()
-    formData.append('email', data.email)
-    formData.append('password', data.password)
-    if (data.full_name) formData.append('full_name', data.full_name)
-    if (data.gender) formData.append('gender', data.gender)
-    if (data.date_of_birth) formData.append('date_of_birth', data.date_of_birth)
-    if (data.image) formData.append('image', data.image)
-
-    const queryParams = new URLSearchParams()
-    if (params?.lean) queryParams.append('lean', params.lean)
-
-    const queryString = queryParams.toString()
-    const url = queryString ? `/register/?${queryString}` : '/register/'
-
-    return axiosClient.post<RegisterResponse>(url, formData, {
+  changePassword: (data: PasswordChangeRequestData) =>
+    axiosClient.post<AuthMessageResponse>('/password-change/', createAuthFormData(data), {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
-    })
-  },
+    }),
 
-  // POST - Refresh Token
-  refresh: (data: RefreshTokenRequestData, params?: RefreshTokenQueryParams) => {
-    const formData = new FormData()
-    formData.append('refresh', data.refresh)
-
-    const queryParams = new URLSearchParams()
-    if (params?.lean) queryParams.append('lean', params.lean)
-
-    const queryString = queryParams.toString()
-    const url = queryString ? `/refresh/?${queryString}` : '/refresh/'
-
-    return axiosClient.post<RefreshTokenResponse>(url, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    })
-  },
+  verifyRegistration: (data: VerifyRegistrationRequestData) =>
+    axiosClient
+      .post<AuthResponse>('/verify-registration/', createAuthFormData(data), {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then(normalizeAuthResponse),
 }

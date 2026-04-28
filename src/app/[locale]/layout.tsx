@@ -1,5 +1,3 @@
-import { Toaster } from 'react-hot-toast'
-
 import type { Metadata } from 'next'
 import type React from 'react'
 import '../../styles/globals.css'
@@ -39,7 +37,6 @@ export default async function RootLayout({
         <RootWrapper locale={locale} messages={messages} timeZone={timeZone}>
           <DirectionProvider direction={isRTL ? 'rtl' : 'ltr'}>{children}</DirectionProvider>
         </RootWrapper>
-        <Toaster />
       </body>
     </html>
   )

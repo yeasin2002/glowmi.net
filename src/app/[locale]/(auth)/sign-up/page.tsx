@@ -1,12 +1,12 @@
 'use client'
 
+import { useRegister } from '@/api/api-hooks/auth.api-hook'
 import { AuthInput } from '@/components/shared'
 import { Button } from '@/components/ui'
 import { Link } from '@/i18n/navigation'
-import { useRegister } from '@/api/api-hooks/auth.api-hook'
 import { useAuthStore } from '@/store/auth.store'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { ArrowLeft, Lock, Mail } from 'lucide-react'
+import { ArrowLeft, Lock, Mail, Phone, User } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
@@ -17,6 +17,12 @@ const SignUp = () => {
   const router = useRouter()
 
   const signUpSchema = z.object({
+    full_name: z.string().min(1, t('validation.fullNameRequired')).optional(),
+    contact_number: z
+      .string()
+      .regex(/^\+?[0-9\s\-()]{7,20}$/, t('validation.contactNumberInvalid'))
+      .optional()
+      .or(z.literal('')),
     email: z.string().min(1, t('validation.emailRequired')).email(t('validation.emailInvalid')),
     password: z
       .string()
@@ -46,10 +52,10 @@ const SignUp = () => {
       if (registerData) {
         setUser(registerData.user ?? null)
         setToken({
-          accessToken: registerData.access_token,
-          refreshToken: registerData.refresh_token,
+          accessToken: registerData.access,
+          refreshToken: registerData.refresh,
         })
-        router.push('/skin-analyzer/analysis')
+        router.push(`/verify-otp?email=${encodeURIComponent(data.email)}`)
       }
     } catch (error) {
       console.log('🚀 ~ onSubmit ~ error:', error)
@@ -68,6 +74,20 @@ const SignUp = () => {
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+        <AuthInput
+          icon={User}
+          placeholder={t('fullNamePlaceholder')}
+          type="text"
+          error={errors.full_name?.message}
+          {...register('full_name')}
+        />
+        <AuthInput
+          icon={Phone}
+          placeholder={t('contactNumberPlaceholder')}
+          type="tel"
+          error={errors.contact_number?.message}
+          {...register('contact_number')}
+        />
         <AuthInput
           icon={Mail}
           placeholder={t('emailPlaceholder')}

@@ -1,60 +1,31 @@
-import productImage1 from '@/assets/image/product-image-1.png'
+import { productApi } from '@/api/query-list/product.query'
+import notImageFoundImg from '@/assets/image/no-image-placeholder.svg'
 import { SiteHeading } from '@/components/shared'
 import { getTranslations } from 'next-intl/server'
 import { ProductsCarousel, type ProductItem } from './products-list'
 
 export const BestProductsList = async () => {
   const t = await getTranslations('home.bestProducts')
+  const { data: response } = await productApi.getBestProducts()
 
-  const products: ProductItem[] = [
-    {
-      src: productImage1,
-      alt: t('products.lipOil.alt'),
-      category: t('products.lipOil.category'),
-      benefits: t('products.lipOil.benefits'),
-      skinType: t('products.lipOil.skinType'),
-    },
-    {
-      src: productImage1,
-      alt: t('products.serum.alt'),
-      category: t('products.serum.category'),
-      benefits: t('products.serum.benefits'),
-      skinType: t('products.serum.skinType'),
-    },
-    {
-      src: productImage1,
-      alt: t('products.sleepingMask.alt'),
-      category: t('products.sleepingMask.category'),
-      benefits: t('products.sleepingMask.benefits'),
-      skinType: t('products.sleepingMask.skinType'),
-    },
-    {
-      src: productImage1,
-      alt: t('products.moisturizer.alt'),
-      category: t('products.moisturizer.category'),
-      benefits: t('products.moisturizer.benefits'),
-      skinType: t('products.moisturizer.skinType'),
-    },
-    {
-      src: productImage1,
-      alt: t('products.cleanser.alt'),
-      category: t('products.cleanser.category'),
-      benefits: t('products.cleanser.benefits'),
-      skinType: t('products.cleanser.skinType'),
-    },
-    {
-      src: productImage1,
-      alt: t('products.eyeCream.alt'),
-      category: t('products.eyeCream.category'),
-      benefits: t('products.eyeCream.benefits'),
-      skinType: t('products.eyeCream.skinType'),
-    },
-  ]
+  // Extract products array from the nested data property
+  const apiProducts = response.data || []
+
+  const products: ProductItem[] = apiProducts.map((p) => ({
+    id: p.id,
+    // Use the first image if available, fallback to a placeholder if none
+    src: p.images?.[0]?.image || notImageFoundImg,
+    alt: p.title || 'Product Image',
+    category: p.category_name || 'Skincare',
+    benefits: p.key_benefits || '',
+    skinType: p.skin_type || 'All Skin Types',
+  }))
+
   return (
     <section className="overflow-x-hidden py-10">
       <SiteHeading heading={t('title')} />
 
-      <div className="relative w-full bg-[#f5f4f3] py-8">
+      <div className="relative w-full py-8">
         <ProductsCarousel products={products} loop={true} viewDetailsLabel={t('viewDetails')} />
       </div>
     </section>

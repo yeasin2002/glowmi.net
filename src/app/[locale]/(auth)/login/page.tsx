@@ -35,7 +35,9 @@ const Login = () => {
   })
 
   const { mutateAsync: login } = useLogin()
+
   const setUser = useAuthStore((state) => state.setUser)
+
   const setToken = useAuthStore((state) => state.setToken)
 
   const onSubmit = async (data: LoginFormData) => {
@@ -51,7 +53,7 @@ const Login = () => {
         if (loginData.user?.role === 'admin') {
           router.push('/dashboard')
         } else {
-          router.push('/skin-analyzer/analysis')
+          router.push('/skin-analyzer/skin-intelligence')
         }
       }
     } catch (error) {

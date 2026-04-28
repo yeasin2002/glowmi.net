@@ -78,8 +78,8 @@ export const AiChatContent = () => {
           <div
             className={`rounded-2xl px-5 py-4 ${
               message.type === 'user'
-                ? 'bg-main-secondary-base ml-8 text-[#58351B]'
-                : 'bg-main-button text-main-secondary mr-8'
+                ? 'ml-8 bg-[#6956CB] text-white'
+                : 'mr-8 bg-[#7D7D7D] text-white'
             }`}
           >
             <p className="text-sm leading-relaxed whitespace-pre-line">
@@ -87,31 +87,36 @@ export const AiChatContent = () => {
             </p>
 
             {/* Product Recommendation Card */}
-            {message.product && (
-              <div className="mt-4 max-w-60 overflow-hidden rounded-lg bg-white">
-                <div className="relative aspect-video w-full">
-                  <Image
-                    src={message.product.image}
-                    alt={message.product.name}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div className="p-3">
-                  <h4 className="text-main-secondary text-sm font-medium">
-                    {message.product.name}
-                  </h4>
-                  <div className="mt-1 flex items-center justify-between">
-                    <span className="text-xs">{message.product.brand}</span>
-                    <span className="text-sm font-semibold">{message.product.price}</span>
-                  </div>
-                  <Button className={`mt-3 w-full rounded-sm!`}>{t('product.viewDetails')}</Button>
-                </div>
-              </div>
-            )}
+            {message.product && <ProductRecommendationCard message={message} />}
           </div>
         </div>
       ))}
+    </div>
+  )
+}
+
+export const ProductRecommendationCard = ({ message }: { message: Message }) => {
+  const t = useTranslations('aiChatAssistant')
+  if (!message.product) return null
+
+  return (
+    <div className="mt-4 max-w-60 overflow-hidden rounded-lg bg-white">
+      <div className="relative aspect-video w-full">
+        <Image
+          src={message.product.image}
+          alt={message.product.name}
+          fill
+          className="object-cover"
+        />
+      </div>
+      <div className="p-3">
+        <h4 className="text-secondary-light text-sm font-semibold">{message.product.name}</h4>
+        <div className="mt-1 flex items-center justify-between">
+          <span className="text-xs">{message.product.brand}</span>
+          <span className="text-sm font-semibold">{message.product.price}</span>
+        </div>
+        <Button className={`mt-3 w-full rounded-sm!`}>{t('product.viewDetails')}</Button>
+      </div>
     </div>
   )
 }

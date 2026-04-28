@@ -13,6 +13,11 @@
   body {
     @apply bg-background text-primary;
   }
+
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
 }
 
 @layer components {
@@ -44,12 +49,12 @@
 
   /* coming-soon page */
   .coming-create-modal-input {
-    @apply h-9.5 w-full  rounded-full bg-white! px-5 py-2 text-sm text-primary placeholder:text-primary focus:ring-2 focus:ring-black/20 focus:outline-none;
+    @apply text-primary placeholder:text-primary h-9.5 w-full rounded-full bg-white! px-5 py-2 text-sm focus:ring-2 focus:ring-black/20 focus:outline-none;
   }
 
   /* footers */
   .footer-email-container {
-    @apply text-lg font-normal md:text-xl lg:text-xl
+    @apply text-lg font-normal md:text-xl lg:text-xl;
   }
   .footer-email {
     @apply text-lg font-normal transition-opacity hover:opacity-70 md:text-xl lg:text-xl;

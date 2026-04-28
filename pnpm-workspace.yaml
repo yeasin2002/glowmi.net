@@ -7,3 +7,4 @@ onlyBuiltDependencies:
   - msw
   - sharp
   - unrs-resolver
+  - vue-demi

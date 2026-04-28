@@ -7,9 +7,11 @@ import { cn } from '@/lib/utils'
 
 import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/components/ui/carousel'
 import Image, { StaticImageData } from 'next/image'
+import Link from 'next/link'
 
 export interface ProductItem {
-  src: StaticImageData
+  id?: number
+  src: StaticImageData | string
   alt: string
   category: string
   benefits: string
@@ -119,13 +121,13 @@ const ProductCard = ({
       </div>
 
       {/* View Details Button */}
-      <button
-        type="button"
-        className="mt-4 w-full rounded-lg border border-[#1a2e1a] bg-transparent py-3 text-sm font-medium text-[#1a2e1a] transition-colors hover:bg-[#1a2e1a] hover:text-white"
+      <Link
+        href={`/skin-analyzer/product-details/${product.id}`}
+        className="mt-4 w-full rounded-lg border border-[#1a2e1a] bg-transparent py-3 text-center text-sm font-medium text-[#1a2e1a] transition-colors hover:bg-[#1a2e1a] hover:text-white"
         onKeyDown={(e) => e.key === 'Enter' && console.log('View details')}
       >
         {viewDetailsLabel}
-      </button>
+      </Link>
     </div>
   )
 }

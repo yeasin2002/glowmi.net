@@ -24,9 +24,9 @@ export const RootWrapper = ({
       <NextIntlClientProvider locale={locale} messages={messages} timeZone={timeZone}>
         <QueryClientProvider client={queryClient}>
           {children}
+          <Toaster />
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
-        <Toaster />
       </NextIntlClientProvider>
     </>
   )

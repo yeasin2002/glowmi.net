@@ -15,9 +15,9 @@ import linkedin from '@/assets/icons/social/ri_linkedin-fill.svg'
 
 const footerLinks = [
   { href: '/', label: 'nav.home' },
-  { href: '/coming-soon', label: 'nav.aboutUs' },
-  { href: '/coming-soon', label: 'legal.privacyPolicy' },
-  { href: '/coming-soon', label: 'legal.termsConditions' },
+  { href: '/about', label: 'nav.aboutUs' },
+  { href: '/privacy-policy', label: 'legal.privacyPolicy' },
+  { href: '/terms-conditions', label: 'legal.termsConditions' },
 ] as const
 
 const socialLinks = [
