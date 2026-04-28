@@ -2,69 +2,14 @@
 
 import { useUserProduct } from '@/api/api-hooks/product.api-hook'
 import type { Product } from '@/api/query-list/product.query'
-import productFallbackImage from '@/assets/image/serum-drop-product.jpg'
+import productFallbackImage from '@/assets/image/no-image-placeholder.svg'
 import { Button } from '@/components/ui'
-import { AlertCircle, Plus, RefreshCw, ShoppingBag } from 'lucide-react'
+import { Plus, ShoppingBag } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import { useParams } from 'next/navigation'
+import { ProductDetailsMessage } from './product-details-message'
 import { ProductDetailsSkeleton } from './product-details-skeleton'
-
-function ProductDetailsMessage({
-  title,
-  description,
-  actionLabel,
-  busyLabel,
-  onAction,
-  isBusy = false,
-}: {
-  title: string
-  description: string
-  actionLabel?: string
-  busyLabel?: string
-  onAction?: () => void
-  isBusy?: boolean
-}) {
-  return (
-    <div className="bg-background min-h-screen px-6 py-12 lg:px-8">
-      <div className="mx-auto flex max-w-3xl items-center justify-center">
-        <div className="border-border bg-card w-full rounded-2xl border p-8 text-center shadow-sm">
-          <AlertCircle className="text-main-button mx-auto size-12" />
-          <h1 className="text-main-button mt-4 text-2xl font-normal">{title}</h1>
-          <p className="text-main-button/70 mt-3 text-sm leading-relaxed">{description}</p>
-          {onAction && actionLabel ? (
-            <Button
-              type="button"
-              variant="outline"
-              className="border-main-button text-main-button mt-6 rounded-md px-6"
-              onClick={onAction}
-              disabled={isBusy}
-            >
-              <RefreshCw className="size-4" />
-              {isBusy ? (busyLabel ?? actionLabel) : actionLabel}
-            </Button>
-          ) : null}
-        </div>
-      </div>
-    </div>
-  )
-}
-
-function splitParagraphs(text?: string) {
-  if (!text) {
-    return []
-  }
-
-  return text.split(/\n\s*\n/).flatMap((paragraph) => {
-    const trimmed = paragraph.trim()
-    return trimmed ? [trimmed] : []
-  })
-}
-
-function getProductImageSource(product?: Product) {
-  const imageSource = product?.images?.[0]?.image
-  return imageSource || productFallbackImage
-}
 
 const SingleProductDetails = () => {
   const t = useTranslations('productDetails')
@@ -86,9 +31,7 @@ const SingleProductDetails = () => {
     return <ProductDetailsMessage title={t('empty.title')} description={t('empty.description')} />
   }
 
-  if (isLoading) {
-    return <ProductDetailsSkeleton />
-  }
+  if (isLoading) return <ProductDetailsSkeleton />
 
   if (isError) {
     return (
@@ -119,29 +62,29 @@ const SingleProductDetails = () => {
     )
   }
 
-  const title = product.title?.trim() || t('productName')
-  const subtitle = product.sub_title?.trim() || t('subtitle')
-  const price = product.price?.trim() || t('price')
-  const volume = product.size?.trim() || t('volume')
-  const skinType = product.skin_type?.trim() || t('skinType.value')
-  const category = product.category_name?.trim()
-  const descriptionParagraphs = splitParagraphs(product.description)
-  const keyIngredients = product.key_ingredients?.trim() || t('keyIngredients.value')
-  const keyBenefits = product.key_benefits?.trim() || t('keyBenefits.value')
-  const howToUse = product.how_to_use?.trim() || t('howToUse.value')
-  const imageSource = getProductImageSource(product)
+  const title = product.data.title?.trim() || '-'
+  const subtitle = product.data?.sub_title?.trim() || '-'
+  const price = product.data?.price?.trim() || '-'
+  const volume = product.data?.size?.trim() || '-'
+  const skinType = product.data?.skin_type?.trim() || '-'
+  const category = product.data?.category_name?.trim()
+  const descriptionParagraphs = splitParagraphs(product.data?.description) || '-'
+  const keyIngredients = product.data?.key_ingredients?.trim() || '-'
+  const keyBenefits = product.data?.key_benefits?.trim() || '-'
+  const howToUse = product.data?.how_to_use?.trim() || '-'
+  const imageSource = getProductImageSource(product.data)
 
   return (
     <div className="bg-background min-h-screen px-6 py-12 lg:px-8">
       <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 lg:grid-cols-2">
         {/* Left - Product Image */}
-        <div className="relative aspect-square overflow-hidden rounded-lg bg-[#f5f4f3]">
+        <div className="relative aspect-square overflow-hidden rounded-lg">
           <Image
             src={imageSource}
             alt={title}
             fill
             sizes="(max-width: 1024px) 100vw, 50vw"
-            className="object-contain p-8"
+            className="aspect-square object-contain p-8"
           />
           {category ? (
             <span className="bg-main-button absolute top-4 left-4 rounded-full px-3 py-1 text-xs text-white">
@@ -216,3 +159,20 @@ const SingleProductDetails = () => {
 }
 
 export default SingleProductDetails
+
+// Utils related this this page
+function splitParagraphs(text?: string) {
+  if (!text) {
+    return []
+  }
+
+  return text.split(/\n\s*\n/).flatMap((paragraph) => {
+    const trimmed = paragraph.trim()
+    return trimmed ? [trimmed] : []
+  })
+}
+
+function getProductImageSource(product?: Product) {
+  const imageSource = product?.images?.[0]?.image
+  return imageSource || productFallbackImage
+}

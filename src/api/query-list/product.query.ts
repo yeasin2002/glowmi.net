@@ -36,6 +36,12 @@ export interface ProductsResponse {
   data: Product[]
 }
 
+export interface SingleProductsResponse {
+  success: boolean
+  message: string
+  data: Product
+}
+
 export const productApi = {
   // Existing — user-scoped via /userapi/
   getProducts: () => axiosClient.get<ProductsResponse>('/userapi/products/'),
@@ -49,5 +55,5 @@ export const productApi = {
   getUserProducts: () => axiosClient.get<ProductsResponse>('/productapi/products/user/'),
 
   getUserProductById: (id: number | string) =>
-    axiosClient.get<Product>(`/productapi/products/user/${id}/`),
+    axiosClient.get<SingleProductsResponse>(`/productapi/products/user/${id}/`),
 }
