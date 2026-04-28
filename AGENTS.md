@@ -4,6 +4,9 @@
 
 Premium bilingual (EN + AR with RTL) frontend for AI-powered skincare e-commerce platform targeting KSA market. Connects to backend via REST API.
 
+## Designs Guidelines
+Check @[Designs](./DESIGNS.md) for more information
+
 ## Architecture
 
 - **This repo:** Frontend only (Next.js)

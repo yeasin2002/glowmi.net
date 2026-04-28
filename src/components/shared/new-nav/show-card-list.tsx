@@ -1,5 +1,6 @@
 'use client'
 
+import { useCart } from '@/api/api-hooks/shop.api-hooks'
 import { buttonVariants } from '@/components/ui/button'
 import {
   Sheet,
@@ -16,7 +17,6 @@ import { cn } from '@/lib/utils'
 import { useAuthStore } from '@/store/auth.store'
 import { ArrowRight, LockKeyhole, Package2, ShoppingBag } from 'lucide-react'
 import { useLocale, useTranslations } from 'next-intl'
-import { useCart } from '../../../api/api-hooks/shop.api-hooks'
 
 export const ShowCardList = () => {
   const locale = useLocale()
@@ -71,7 +71,7 @@ export const ShowCardList = () => {
                       key={item.id ?? `${item.product_id}-${index}`}
                       className="group flex items-start gap-3 rounded-2xl border border-[#e5e0d9] bg-white px-3 py-3 shadow-[0_8px_30px_rgba(26,46,26,0.04)] transition-transform duration-200 hover:-translate-y-0.5"
                     >
-                      <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#1a2e1a] via-[#2e4730] to-[#a7b399] text-white shadow-sm">
+                      <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-linear-to-br from-[#1a2e1a] via-[#2e4730] to-[#a7b399] text-white shadow-sm">
                         <Package2 className="size-5" />
                       </div>
 
