@@ -45,6 +45,12 @@ export interface Cart {
   updated_at?: string
 }
 
+export interface ShopResponse<T> {
+  success: boolean
+  message: string
+  data: T
+}
+
 export interface AddCartItemRequestData {
   product_id: number
   quantity?: number
@@ -79,16 +85,16 @@ const getCartEndpoint = (itemId?: number | string) => {
 }
 
 export const shopApi = {
-  getCart: (itemId?: number | string) => axiosClient.get<Cart>(getCartEndpoint(itemId)),
+  getCart: (itemId?: number | string) => axiosClient.get<ShopResponse<Cart>>(getCartEndpoint(itemId)),
 
   addCartItem: (data: AddCartItemRequestData, itemId?: number | string) =>
-    axiosClient.post<CartItem>(getCartEndpoint(itemId), data),
+    axiosClient.post<ShopResponse<CartItem>>(getCartEndpoint(itemId), data),
 
   updateCartItem: (data: UpdateCartItemRequestData, itemId?: number | string) =>
-    axiosClient.patch<CartItem>(getCartEndpoint(itemId), data),
+    axiosClient.patch<ShopResponse<CartItem>>(getCartEndpoint(itemId), data),
 
   removeCartItem: (itemId?: number | string) => axiosClient.delete<void>(getCartEndpoint(itemId)),
 
   initiateCheckout: (data: CheckoutInitiateRequestData) =>
-    axiosClient.post<CheckoutInitiateResponseData>('/shop/checkout/initiate/', data),
+    axiosClient.post<ShopResponse<CheckoutInitiateResponseData>>('/shop/checkout/initiate/', data),
 }

@@ -22,7 +22,7 @@ export const useCart = (enabled = true) => {
     queryKey: SHOP_KEYS.cart(),
     queryFn: () => shopApi.getCart(),
     enabled,
-    select: (response) => response.data,
+    select: (response) => response.data.data,
   })
 }
 
@@ -37,7 +37,7 @@ export const useCartByItemId = (itemId?: number | string) => {
       return shopApi.getCart(itemId)
     },
     enabled: itemId !== undefined,
-    select: (response) => response.data,
+    select: (response) => response.data.data,
   })
 }
 

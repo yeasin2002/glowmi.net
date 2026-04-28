@@ -5,6 +5,8 @@
   "oldPrice": "$112.00",
   "volume": "30ml",
   "addToCart": "Add to Cart",
+  "updateCart": "Update Cart",
+  "quantity": "Quantity",
   "description": {
     "title": "Description",
     "paragraph1": "Deep Nourishing Day Serum is a lightweight yet powerful daily serum designed to deeply hydrate, restore, and protect your skin throughout the day. Formulated with skin-loving botanical and nourishing actives, it absorbs quickly to deliver long-lasting moisture without feeling greasy or heavy.",

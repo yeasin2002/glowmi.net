@@ -3,11 +3,10 @@
 import { useUserProduct } from '@/api/api-hooks/product.api-hook'
 import type { Product } from '@/api/query-list/product.query'
 import productFallbackImage from '@/assets/image/no-image-placeholder.svg'
-import { Button } from '@/components/ui'
-import { Plus, ShoppingBag } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import { useParams } from 'next/navigation'
+import { AddToCartWithIncrement } from './add-to-cart-with-increment'
 import { ProductDetailsMessage } from './product-details-message'
 import { ProductDetailsSkeleton } from './product-details-skeleton'
 
@@ -103,20 +102,7 @@ const SingleProductDetails = () => {
             <span className="text-main-button/60 text-sm">{volume}</span>
           </div>
 
-          <div className="mt-6 flex flex-wrap items-center gap-3">
-            <div className="bg-main-button flex items-center gap-4 rounded-md px-4 py-2 text-white">
-              <span>1</span>
-              <Plus className="size-4" />
-            </div>
-            <Button
-              type="button"
-              variant="outline"
-              className="border-main-button text-main-button flex items-center gap-2 rounded-md px-6 py-2"
-            >
-              {t('addToCart')}
-              <ShoppingBag className="size-4" />
-            </Button>
-          </div>
+          <AddToCartWithIncrement productId={product.data.id ?? normalizedProductId} />
 
           <div className="mt-8">
             <h3 className="text-main-button text-lg font-semibold">{t('description.title')}</h3>
