@@ -49,7 +49,7 @@ export const ShowCardList = () => {
       <SheetContent
         className={cn(
           'flex w-full flex-col gap-0 border-l border-[#e8e6e3] bg-[#f7f4ef] p-0 sm:max-w-md',
-          isRTL && 'border-l-0 border-r'
+          isRTL && 'border-r border-l-0'
         )}
       >
         {isAuthenticated ? (
@@ -77,7 +77,7 @@ export const ShowCardList = () => {
 
                       <div className="min-w-0 flex-1">
                         <div className="flex items-start justify-between gap-2">
-                          <h3 className="line-clamp-2 text-sm font-medium leading-5 text-[#243224]">
+                          <h3 className="line-clamp-2 text-sm leading-5 font-medium text-[#243224]">
                             {item.product?.title || t('fallbackProduct')}
                           </h3>
                           <span className="shrink-0 rounded-full bg-[#f3efe9] px-2 py-1 text-[11px] font-medium text-[#546057]">
@@ -111,7 +111,7 @@ export const ShowCardList = () => {
             <SheetFooter className="border-t border-black/5 bg-white px-5 py-4">
               <div className="flex w-full items-center justify-between">
                 <div>
-                  <p className="text-[11px] uppercase tracking-[0.2em] text-[#7a7d77]">
+                  <p className="text-[11px] tracking-[0.2em] text-[#7a7d77] uppercase">
                     {t('totalLabel')}
                   </p>
                   <p className="mt-1 text-lg font-semibold text-[#1a2e1a]">{totalPrice}</p>

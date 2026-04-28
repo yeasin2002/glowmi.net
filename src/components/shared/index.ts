@@ -5,4 +5,3 @@ export * from './footer'
 export * from './language-toggle'
 export * from './site-heading'
 export * from './sticky-announcement'
-

@@ -150,7 +150,9 @@ const VerifyOTPContent = () => {
 
 const VerifyOTP = () => {
   return (
-    <Suspense fallback={<div className="flex min-h-screen items-center justify-center p-4">Loading...</div>}>
+    <Suspense
+      fallback={<div className="flex min-h-screen items-center justify-center p-4">Loading...</div>}
+    >
       <VerifyOTPContent />
     </Suspense>
   )

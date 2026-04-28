@@ -13,10 +13,7 @@ type ExpiringDismissalValue = {
   expiresAt: number
 }
 
-export function useExpiringDismissal(
-  key: string,
-  ttlMs: number
-): UseExpiringDismissalReturn {
+export function useExpiringDismissal(key: string, ttlMs: number): UseExpiringDismissalReturn {
   const [isReady, setIsReady] = useState(false)
   const [isDismissed, setIsDismissed] = useState(false)
 

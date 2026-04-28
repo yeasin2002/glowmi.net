@@ -29,7 +29,9 @@ const ForgetPassword = () => {
       </Link>
 
       {step === 'send' && <SendForgetPasswordOtp onSuccess={handleSendSuccess} />}
-      {step === 'verify' && <VerifyForgetPasswordOtp email={email} onSuccess={handleVerifySuccess} />}
+      {step === 'verify' && (
+        <VerifyForgetPasswordOtp email={email} onSuccess={handleVerifySuccess} />
+      )}
       {step === 'reset' && <FinalyResetForgetPassword email={email} />}
     </div>
   )

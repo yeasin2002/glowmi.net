@@ -115,7 +115,7 @@ const Settings = () => {
           <div className="relative">
             <select
               id="skinType"
-              className={`border-input bg-background ring-offset-background focus-visible:ring-ring flex w-full border px-3 py-2 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 h-12 rounded-md appearance-none pr-10 placeholder:text-main-button text-main-button text-sm ${errors.skinType ? 'border-destructive' : ''}`}
+              className={`border-input bg-background ring-offset-background focus-visible:ring-ring placeholder:text-main-button text-main-button flex h-12 w-full appearance-none rounded-md border px-3 py-2 pr-10 text-sm focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 ${errors.skinType ? 'border-destructive' : ''}`}
               {...register('skinType')}
               aria-invalid={errors.skinType ? 'true' : 'false'}
             >

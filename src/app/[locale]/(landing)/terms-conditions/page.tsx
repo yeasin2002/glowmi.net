@@ -13,11 +13,11 @@ const TermsConditions = () => {
         </h1>
 
         {isLoading && (
-          <p className="text-main-button text-2xl text-center animate-pulse">Loading…</p>
+          <p className="text-main-button animate-pulse text-center text-2xl">Loading…</p>
         )}
 
         {isError && (
-          <p className="text-destructive text-2xl text-center">
+          <p className="text-destructive text-center text-2xl">
             Failed to load Terms &amp; Conditions. Please try again later.
           </p>
         )}

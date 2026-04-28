@@ -1,6 +1,5 @@
 import { Lato } from 'next/font/google'
 
-
 export const lato = Lato({
   weight: ['100', '300', '400', '700', '900'],
   subsets: ['latin', 'latin-ext'],
@@ -11,7 +10,6 @@ export const lato = Lato({
 
 const fontList = [lato]
 export const fonts = fontList.map((f) => f.variable).join(' ')
-
 
 // export const caudex = Caudex({
 //   weight: ['400', '700'],

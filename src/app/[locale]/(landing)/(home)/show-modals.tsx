@@ -1,10 +1,7 @@
 'use client'
 
 import { useSessionStorage } from '@/hooks/useSessionStorage'
-import {
-  MembershipModalStep,
-  useMembershipModalStore,
-} from '@/store/membership-modal.store'
+import { MembershipModalStep, useMembershipModalStore } from '@/store/membership-modal.store'
 import { useEffect } from 'react'
 import { BeMemberContent } from './Dialog/be-member-content'
 import { CreateAccountContent } from './Dialog/create-account-content'
