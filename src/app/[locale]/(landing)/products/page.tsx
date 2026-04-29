@@ -1,5 +1,7 @@
-const Products = () => {
+import { ProductCard } from '@/components/shared/product-card-main'
+
+const AllProducts = () => {
   return <div>Products</div>
 }
 
-export default Products
+export default AllProducts

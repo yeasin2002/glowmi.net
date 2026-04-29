@@ -138,6 +138,7 @@
   },
   "bestProducts": {
     "title": "Best Products",
+    "emptyState": "Our best-selling products are temporarily unavailable. Please check back soon.",
     "viewDetails": "View Details",
     "products": {
       "lipOil": {

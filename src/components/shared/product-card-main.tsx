@@ -1,4 +1,4 @@
-import { Product } from '@/api/query-list/product.query'
+import type { Product } from '@/api/query-list/product.query'
 import notImage from '@/assets/image/no-image-placeholder.svg'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -9,12 +9,14 @@ interface Props extends React.ComponentProps<'div'> {
 }
 
 export const ProductCard = ({ product, viewDetailsLabel }: Props) => {
+  const productImage = product.images?.[0]?.image || notImage
+
   return (
     <div className="flex h-full flex-col">
       {/* Product Image */}
       <div className="relative aspect-square w-full overflow-hidden rounded-lg">
         <Image
-          src={product.images[0].image || notImage}
+          src={productImage}
           alt={`Image of ${product.title}`}
           fill
           className="object-contain"
@@ -31,7 +33,6 @@ export const ProductCard = ({ product, viewDetailsLabel }: Props) => {
       <Link
         href={`/skin-analyzer/product-details/${product.id}`}
         className="mt-4 w-full rounded-lg border border-[#1a2e1a] bg-transparent py-3 text-center text-sm font-medium text-[#1a2e1a] transition-colors hover:bg-[#1a2e1a] hover:text-white"
-        onKeyDown={(e) => e.key === 'Enter' && console.log('View details')}
       >
         {viewDetailsLabel}
       </Link>
