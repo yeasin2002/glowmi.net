@@ -1,9 +1,9 @@
 'use client'
 
 import { Button, buttonVariants } from '@/components/ui'
+import { Link } from '@/i18n/navigation'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
-import { Link } from '../../i18n/navigation'
 
 export type Product = {
   id: number

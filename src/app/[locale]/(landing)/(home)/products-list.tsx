@@ -5,9 +5,10 @@ import { useEffect, useState } from 'react'
 
 import { cn } from '@/lib/utils'
 
+import { Product } from '@/api/query-list/product.query'
 import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/components/ui/carousel'
-import Image, { StaticImageData } from 'next/image'
-import Link from 'next/link'
+import { StaticImageData } from 'next/image'
+import { ProductCard } from '../../../../components/shared/product-card-main'
 
 export interface ProductItem {
   id?: number
@@ -19,7 +20,7 @@ export interface ProductItem {
 }
 
 interface ProductsCarouselProps {
-  products: ProductItem[]
+  products: Product[]
   className?: string
   loop?: boolean
   viewDetailsLabel: string
@@ -96,38 +97,6 @@ export const ProductsCarousel = ({
           ))}
         </CarouselContent>
       </Carousel>
-    </div>
-  )
-}
-
-const ProductCard = ({
-  product,
-  viewDetailsLabel,
-}: {
-  product: ProductItem
-  viewDetailsLabel: string
-}) => {
-  return (
-    <div className="flex h-full flex-col">
-      {/* Product Image */}
-      <div className="relative aspect-square w-full overflow-hidden rounded-lg">
-        <Image src={product.src} alt={product.alt} fill className="object-contain" />
-      </div>
-
-      {/* Product Info */}
-      <div className="mt-4 flex grow flex-col">
-        <p className="text-sm leading-relaxed text-gray-700">{product.benefits}</p>
-        <p className="mt-2 text-sm text-gray-500">{product.skinType}</p>
-      </div>
-
-      {/* View Details Button */}
-      <Link
-        href={`/skin-analyzer/product-details/${product.id}`}
-        className="mt-4 w-full rounded-lg border border-[#1a2e1a] bg-transparent py-3 text-center text-sm font-medium text-[#1a2e1a] transition-colors hover:bg-[#1a2e1a] hover:text-white"
-        onKeyDown={(e) => e.key === 'Enter' && console.log('View details')}
-      >
-        {viewDetailsLabel}
-      </Link>
     </div>
   )
 }
