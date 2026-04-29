@@ -42,7 +42,18 @@
       "clickToUpload": "انقر للتحميل أو اسحب وأفلت",
       "fileTypes": "PNG، JPG حتى 10 ميجابايت"
     },
-    "submitButton": "تحليل والحصول على التوصيات"
+    "submitButton": "تحليل والحصول على التوصيات",
+    "validation": {
+      "skinTypeRequired": "اختر نوع البشرة.",
+      "ageRequired": "أدخل عمرك.",
+      "ageInvalid": "يجب أن يحتوي العمر على أرقام فقط.",
+      "ageRange": "يجب أن يكون العمر بين 13 و120.",
+      "concernsRequired": "اختر مشكلة واحدة على الأقل من مشاكل البشرة.",
+      "othersConcernRequired": "يرجى وصف المشكلة الأخرى.",
+      "additionalDetailsMax": "يجب ألا تتجاوز التفاصيل الإضافية 500 حرف.",
+      "photoMaxOne": "قم بتحميل صورة واحدة فقط.",
+      "photoInvalid": "يجب أن تكون الصورة ملفاً صالحاً وبحجم أقل من 10 ميجابايت."
+    }
   },
   "features": {
     "aiPowered": {

@@ -42,7 +42,18 @@
       "clickToUpload": "Click to upload or drag and drop",
       "fileTypes": "PNG, JPG up to 10MB"
     },
-    "submitButton": "ANALYZE & GET RECOMMENDATIONS"
+    "submitButton": "ANALYZE & GET RECOMMENDATIONS",
+    "validation": {
+      "skinTypeRequired": "Select your skin type.",
+      "ageRequired": "Enter your age.",
+      "ageInvalid": "Age must contain only numbers.",
+      "ageRange": "Age must be between 13 and 120.",
+      "concernsRequired": "Select at least one skin concern.",
+      "othersConcernRequired": "Please describe the other skin concern.",
+      "additionalDetailsMax": "Additional details must be 500 characters or less.",
+      "photoMaxOne": "Upload only one photo.",
+      "photoInvalid": "Photo must be a valid image file under 10 MB."
+    }
   },
   "features": {
     "aiPowered": {

@@ -1,60 +1,179 @@
-import { SiteHeading } from '@/components/shared'
-import { buttonVariants } from '@/components/ui/button'
+'use client'
+
+import AiPowered from '@/assets/icons/AI-Powered.svg'
+import Chat from '@/assets/icons/chat-regular.svg'
+import ExpertBacked from '@/assets/icons/Expert-Backed.svg'
+import Personalized from '@/assets/icons/Personalized.svg'
+import { CommonNav, SiteHeading, UploadMedia } from '@/components/shared'
+import { Button } from '@/components/ui'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
+import { useGenerateRoutine } from '@/api/api-hooks/shop.api-hooks'
+import type { ShopSkinType } from '@/api/query-list/shop.query'
+import { Link } from '@/i18n/navigation'
 import { cn } from '@/lib/utils'
-import { FileText, Sparkles, Sun, Upload, UserCircle } from 'lucide-react'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { FileText, Sparkles, Sun, UserCircle } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+import { useMemo } from 'react'
+import { Controller, useForm, useWatch } from 'react-hook-form'
+import { z } from 'zod'
 
-import AiPowered from '@/assets/icons/AI-Powered.svg'
-import ExpertBacked from '@/assets/icons/Expert-Backed.svg'
-import Personalized from '@/assets/icons/Personalized.svg'
-import Chat from '@/assets/icons/chat-regular.svg'
-import { CommonNav } from '@/components/shared'
-import { Link } from '@/i18n/navigation'
+const MAX_PHOTO_SIZE_MB = 10
+const MAX_PHOTO_SIZE_BYTES = MAX_PHOTO_SIZE_MB * 1024 * 1024
 
 const Analysis = () => {
   const t = useTranslations('skinAnalyzerAnalysis')
+  const router = useRouter()
+  const { mutateAsync: generateRoutine, isPending } = useGenerateRoutine()
 
-  const skinTypes = [
-    { key: 'oily', label: t('form.skinType.options.oily') },
-    { key: 'dry', label: t('form.skinType.options.dry') },
-    { key: 'combination', label: t('form.skinType.options.combination') },
-    { key: 'normal', label: t('form.skinType.options.normal') },
-    { key: 'sensitive', label: t('form.skinType.options.sensitive') },
-  ]
+  const skinTypes = useMemo(
+    () => [
+      { key: 'oily', label: t('form.skinType.options.oily') },
+      { key: 'dry', label: t('form.skinType.options.dry') },
+      { key: 'combination', label: t('form.skinType.options.combination') },
+      { key: 'normal', label: t('form.skinType.options.normal') },
+      { key: 'sensitive', label: t('form.skinType.options.sensitive') },
+    ],
+    [t]
+  )
 
-  const skinConcerns = [
-    { key: 'acne', label: t('form.concerns.options.acne') },
-    { key: 'darkSpots', label: t('form.concerns.options.darkSpots') },
-    { key: 'fineLines', label: t('form.concerns.options.fineLines') },
-    { key: 'dryness', label: t('form.concerns.options.dryness') },
-    { key: 'oilySkin', label: t('form.concerns.options.oilySkin') },
-    { key: 'redness', label: t('form.concerns.options.redness') },
-    { key: 'dullness', label: t('form.concerns.options.dullness') },
-    { key: 'largePores', label: t('form.concerns.options.largePores') },
-    { key: 'others', label: t('form.concerns.options.others') },
-  ]
+  const skinConcerns = useMemo(
+    () => [
+      { key: 'acne', label: t('form.concerns.options.acne') },
+      { key: 'darkSpots', label: t('form.concerns.options.darkSpots') },
+      { key: 'fineLines', label: t('form.concerns.options.fineLines') },
+      { key: 'dryness', label: t('form.concerns.options.dryness') },
+      { key: 'oilySkin', label: t('form.concerns.options.oilySkin') },
+      { key: 'redness', label: t('form.concerns.options.redness') },
+      { key: 'dullness', label: t('form.concerns.options.dullness') },
+      { key: 'largePores', label: t('form.concerns.options.largePores') },
+      { key: 'others', label: t('form.concerns.options.others') },
+    ],
+    [t]
+  )
 
-  const features = [
-    {
-      image: AiPowered,
-      title: t('features.aiPowered.title'),
-      subtitle: t('features.aiPowered.subtitle'),
+  const features = useMemo(
+    () => [
+      {
+        image: AiPowered,
+        title: t('features.aiPowered.title'),
+        subtitle: t('features.aiPowered.subtitle'),
+      },
+      {
+        image: Personalized,
+        title: t('features.personalized.title'),
+        subtitle: t('features.personalized.subtitle'),
+      },
+      {
+        image: ExpertBacked,
+        title: t('features.expertBacked.title'),
+        subtitle: t('features.expertBacked.subtitle'),
+      },
+    ],
+    [t]
+  )
+
+  const analysisSchema = useMemo(
+    () =>
+      z
+        .object({
+          skinType: z.string().min(1, t('form.validation.skinTypeRequired')),
+          age: z
+            .string()
+            .min(1, t('form.validation.ageRequired'))
+            .regex(/^\d+$/, t('form.validation.ageInvalid'))
+            .refine((value) => Number(value) >= 13 && Number(value) <= 120, {
+              message: t('form.validation.ageRange'),
+            }),
+          concerns: z
+            .array(z.string())
+            .min(1, t('form.validation.concernsRequired'))
+            .refine((values) => values.length > 0, {
+              message: t('form.validation.concernsRequired'),
+            }),
+          othersConcern: z.string().optional(),
+          additionalDetails: z.string().max(500, t('form.validation.additionalDetailsMax')),
+          photo: z
+            .array(z.instanceof(File))
+            .max(1, t('form.validation.photoMaxOne'))
+            .optional()
+            .refine(
+              (files) =>
+                !files?.[0] ||
+                (files[0].size <= MAX_PHOTO_SIZE_BYTES && files[0].type.startsWith('image/')),
+              {
+                message: t('form.validation.photoInvalid'),
+              }
+            ),
+        })
+        .superRefine((values, ctx) => {
+          if (values.concerns.includes('others') && !values.othersConcern?.trim()) {
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              path: ['othersConcern'],
+              message: t('form.validation.othersConcernRequired'),
+            })
+          }
+        }),
+    [t]
+  )
+
+  type AnalysisFormValues = z.infer<typeof analysisSchema>
+
+  const {
+    control,
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors, isSubmitting },
+  } = useForm<AnalysisFormValues>({
+    resolver: zodResolver(analysisSchema),
+    defaultValues: {
+      skinType: '',
+      age: '',
+      concerns: [],
+      othersConcern: '',
+      additionalDetails: '',
+      photo: [],
     },
-    {
-      image: Personalized,
-      title: t('features.personalized.title'),
-      subtitle: t('features.personalized.subtitle'),
-    },
-    {
-      image: ExpertBacked,
-      title: t('features.expertBacked.title'),
-      subtitle: t('features.expertBacked.subtitle'),
-    },
-  ]
+  })
+
+  const selectedConcerns = useWatch({ control, name: 'concerns' })
+
+  const onSubmit = async (values: AnalysisFormValues) => {
+    const photoFile = values.photo?.[0]
+
+    const payload = {
+      age: Number(values.age),
+      skin_type: values.skinType as ShopSkinType,
+      additional_details: values.additionalDetails.trim() || undefined,
+      concerns: values.concerns
+        .map((concern) =>
+          concern === 'others' ? values.othersConcern?.trim() ?? concern : concern
+        )
+        .filter((concern): concern is string => Boolean(concern)),
+      photo: photoFile,
+    }
+
+    await generateRoutine(payload)
+    router.push('/skin-analyzer/your-routine')
+  }
+
+  const toggleConcern = (concernKey: string) => {
+    const nextConcerns = selectedConcerns?.includes(concernKey)
+      ? selectedConcerns.filter((item) => item !== concernKey)
+      : [...(selectedConcerns ?? []), concernKey]
+
+    setValue('concerns', nextConcerns, { shouldValidate: true, shouldDirty: true })
+
+    if (!nextConcerns.includes('others')) {
+      setValue('othersConcern', '', { shouldValidate: true, shouldDirty: true })
+    }
+  }
 
   return (
     <div className="bg-[#FFFFFF]">
@@ -69,37 +188,54 @@ const Analysis = () => {
         </p>
       </Link>
 
-      {/* Header */}
       <div className="py-12">
         <SiteHeading heading={t('header.title')} subHeading={t('header.subtitle')} />
       </div>
 
-      {/* Form Card */}
       <div className="mx-auto max-w-4xl px-6 pb-20">
-        <div className="rounded-2xl p-8" style={{ backgroundColor: '#F5F6F5' }}>
-          {/* Skin Type */}
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="rounded-2xl p-8"
+          style={{ backgroundColor: '#F5F6F5' }}
+        >
           <div className="mb-8">
             <Label className="text-main-button mb-4 flex items-center gap-2 text-sm font-medium">
               <Sun className="size-4" />
               {t('form.skinType.label')}
             </Label>
-            <div className="flex flex-wrap gap-2">
-              {skinTypes.map((type) => (
-                <button
-                  key={type.key}
-                  type="button"
-                  className={cn(
-                    'rounded-md border px-4 py-2 text-sm transition-colors',
-                    'border-main-button/30 text-main-button hover:border-main-button bg-white'
-                  )}
-                >
-                  {type.label}
-                </button>
-              ))}
-            </div>
+            <Controller
+              control={control}
+              name="skinType"
+              render={({ field }) => (
+                <div className="flex flex-wrap gap-2">
+                  {skinTypes.map((type) => {
+                    const isSelected = field.value === type.key
+
+                    return (
+                      <button
+                        key={type.key}
+                        type="button"
+                        aria-pressed={isSelected}
+                        onClick={() => field.onChange(type.key)}
+                        className={cn(
+                          'rounded-md border px-4 py-2 text-sm transition-colors',
+                          isSelected
+                            ? 'border-main-button bg-main-button text-white'
+                            : 'border-main-button/30 text-main-button hover:border-main-button bg-white'
+                        )}
+                      >
+                        {type.label}
+                      </button>
+                    )
+                  })}
+                </div>
+              )}
+            />
+            {errors.skinType?.message ? (
+              <p className="mt-2 text-sm text-red-600">{errors.skinType.message}</p>
+            ) : null}
           </div>
 
-          {/* Age */}
           <div className="mb-8">
             <Label className="text-main-button mb-4 flex items-center gap-2 text-sm font-medium">
               <UserCircle className="size-4" />
@@ -108,37 +244,60 @@ const Analysis = () => {
             <Input
               type="text"
               placeholder={t('form.age.placeholder')}
-              className="border-main-button/30 bg-white"
+              className={cn('bg-white', errors.age && 'border-destructive')}
+              {...register('age')}
+              aria-invalid={Boolean(errors.age)}
             />
+            {errors.age?.message ? (
+              <p className="mt-2 text-sm text-red-600">{errors.age.message}</p>
+            ) : null}
           </div>
 
-          {/* Skin Concerns */}
           <div className="mb-8">
             <Label className="text-main-button mb-4 flex items-center gap-2 text-sm font-medium">
               <Sparkles className="size-4" />
               {t('form.concerns.label')}
             </Label>
             <div className="flex flex-wrap gap-2">
-              {skinConcerns.map((concern) => (
-                <button
-                  key={concern.key}
-                  type="button"
-                  className={cn(
-                    'rounded-md border px-4 py-2 text-sm transition-colors',
-                    'border-main-button/30 text-main-button hover:border-main-button bg-white'
-                  )}
-                >
-                  {concern.label}
-                </button>
-              ))}
+              {skinConcerns.map((concern) => {
+                const isSelected = selectedConcerns?.includes(concern.key) ?? false
+
+                return (
+                  <button
+                    key={concern.key}
+                    type="button"
+                    aria-pressed={isSelected}
+                    onClick={() => toggleConcern(concern.key)}
+                    className={cn(
+                      'rounded-md border px-4 py-2 text-sm transition-colors',
+                      isSelected
+                        ? 'border-main-button bg-main-button text-white'
+                        : 'border-main-button/30 text-main-button hover:border-main-button bg-white'
+                    )}
+                  >
+                    {concern.label}
+                  </button>
+                )
+              })}
             </div>
-            <Input
-              placeholder={t('form.concerns.othersPlaceholder')}
-              className="border-main-button mt-4 rounded-md bg-transparent"
-            />
+            {errors.concerns?.message ? (
+              <p className="mt-2 text-sm text-red-600">{errors.concerns.message}</p>
+            ) : null}
+            {selectedConcerns?.includes('others') ? (
+              <div className="mt-4">
+                <Input
+                  placeholder={t('form.concerns.othersPlaceholder')}
+                  className={cn('bg-transparent', errors.othersConcern && 'border-destructive')}
+                  {...register('othersConcern')}
+                  aria-invalid={Boolean(errors.othersConcern)}
+                />
+                {errors.othersConcern?.message ? (
+                  <p className="mt-2 text-sm text-red-600">{errors.othersConcern.message}</p>
+                ) : null}
+              </div>
+            ) : null}
           </div>
 
-          {/* Additional Details */}
           <div className="mb-8">
             <Label className="text-main-button mb-4 flex items-center gap-2 text-sm font-medium">
               <FileText className="size-4" />
@@ -146,37 +305,46 @@ const Analysis = () => {
             </Label>
             <Textarea
               placeholder={t('form.additionalDetails.placeholder')}
-              className="border-main-button/30 min-h-30 bg-white"
+              className={cn('min-h-30 bg-white', errors.additionalDetails && 'border-destructive')}
+              {...register('additionalDetails')}
+              aria-invalid={Boolean(errors.additionalDetails)}
+            />
+            {errors.additionalDetails?.message ? (
+              <p className="mt-2 text-sm text-red-600">{errors.additionalDetails.message}</p>
+            ) : null}
+          </div>
+
+          <div className="mb-8">
+            <Controller
+              control={control}
+              name="photo"
+              render={({ field }) => (
+                <UploadMedia
+                  label={t('form.uploadPhoto.label')}
+                  description={`${t('form.uploadPhoto.clickToUpload')} • ${t('form.uploadPhoto.fileTypes')}`}
+                  accept="image/png,image/jpeg,image/jpg,image/webp"
+                  multiple={false}
+                  ariaLabel={t('form.uploadPhoto.label')}
+                  files={field.value ?? []}
+                  onFilesChange={field.onChange}
+                  dropzoneClassName={cn(errors.photo && 'border-destructive')}
+                  error={errors.photo?.message}
+                />
+              )}
             />
           </div>
 
-          {/* Upload Photo */}
-          <div className="mb-8">
-            <Label className="text-main-button mb-4 flex items-center gap-2 text-sm font-medium">
-              <Upload className="size-4" />
-              {t('form.uploadPhoto.label')}
-            </Label>
-            <div className="border-main-button/30 hover:border-main-button flex min-h-25 cursor-pointer flex-col items-center justify-center rounded-md border border-dashed bg-white p-6 transition-colors">
-              <Upload className="text-main-button/50 mb-2 size-6" />
-              <p className="text-main-button text-sm">{t('form.uploadPhoto.clickToUpload')}</p>
-              <p className="text-main-button/60 text-xs">{t('form.uploadPhoto.fileTypes')}</p>
-            </div>
-          </div>
-
-          {/* Submit Button */}
-          <Link
-            href={'/skin-analyzer/your-routine'}
-            className={buttonVariants({
-              className: 'bg-main-button hover:bg-main-button/90 w-full gap-2 py-6 text-white',
-            })}
+          <Button
+            type="submit"
+            className="bg-main-button hover:bg-main-button/90 w-full gap-2 py-6 text-white"
+            disabled={isSubmitting || isPending}
           >
             <Sparkles className="size-4" />
-            {t('form.submitButton')}
-          </Link>
-        </div>
+            {isSubmitting || isPending ? t('form.submitButton') : t('form.submitButton')}
+          </Button>
+        </form>
       </div>
 
-      {/* Features Section */}
       <div className="py-16">
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-6 md:grid-cols-3">
           {features.map((feature) => (

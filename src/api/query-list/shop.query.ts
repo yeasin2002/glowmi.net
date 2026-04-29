@@ -1,3 +1,4 @@
+import { appendFormDataValue, appendFormDataValues } from '@/lib/api-form-data'
 import { axiosClient } from '@/lib/axios'
 
 export type ShopSkinType = 'oily' | 'dry' | 'normal' | 'combination' | 'sensitive'
@@ -76,6 +77,42 @@ export interface CheckoutInitiateRequestData {
 
 export type CheckoutInitiateResponseData = CheckoutInitiateRequestData
 
+export interface GenerateRoutineRequestData {
+  age: number
+  skin_type: ShopSkinType
+  additional_details?: string
+  concerns: string[]
+  photo?: File
+}
+
+export interface GenerateRoutineRecommendation {
+  step: string
+  product_id: number
+  product_name: string
+  rationale: string
+  medical_disclaimer: boolean
+  image_url: string
+  product_url: string
+  price: number
+}
+
+export interface GenerateRoutineResponseData {
+  am_routine: GenerateRoutineRecommendation[]
+  pm_routine: GenerateRoutineRecommendation[]
+}
+
+const createGenerateRoutineFormData = (data: GenerateRoutineRequestData) => {
+  const formData = new FormData()
+
+  appendFormDataValue(formData, 'age', data.age)
+  appendFormDataValue(formData, 'skin_type', data.skin_type)
+  appendFormDataValue(formData, 'additional_details', data.additional_details)
+  appendFormDataValues(formData, 'concerns', data.concerns)
+  appendFormDataValue(formData, 'photo', data.photo)
+
+  return formData
+}
+
 const getCartEndpoint = (itemId?: number | string) => {
   if (itemId === undefined) {
     return '/shop/cart/'
@@ -97,4 +134,15 @@ export const shopApi = {
 
   initiateCheckout: (data: CheckoutInitiateRequestData) =>
     axiosClient.post<ShopResponse<CheckoutInitiateResponseData>>('/shop/checkout/initiate/', data),
+
+  generateRoutine: (data: GenerateRoutineRequestData) =>
+    axiosClient.post<ShopResponse<GenerateRoutineResponseData>>(
+      '/shop/generate-routine/',
+      createGenerateRoutineFormData(data),
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    ),
 }

@@ -6,6 +6,7 @@ import {
   shopApi,
   type AddCartItemRequestData,
   type CheckoutInitiateRequestData,
+  type GenerateRoutineRequestData,
   type UpdateCartItemRequestData,
 } from '../query-list/shop.query'
 
@@ -15,6 +16,8 @@ const SHOP_KEYS = {
   cartDetail: (itemId: number | string) => ['shop', 'cart', 'detail', itemId] as const,
   checkout: () => ['shop', 'checkout'] as const,
   checkoutInitiate: () => ['shop', 'checkout', 'initiate'] as const,
+  routine: () => ['shop', 'routine'] as const,
+  routineGenerate: () => ['shop', 'routine', 'generate'] as const,
 }
 
 export const useCart = (enabled = true) => {
@@ -107,6 +110,22 @@ export const useInitiateCheckout = () => {
 
     onError: (error: AxiosError) => {
       toast.error(getApiErrorMessage(error, 'Failed to initiate checkout'))
+    },
+  })
+}
+
+export const useGenerateRoutine = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (data: GenerateRoutineRequestData) => shopApi.generateRoutine(data),
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: SHOP_KEYS.routine() })
+    },
+
+    onError: (error: AxiosError) => {
+      toast.error(getApiErrorMessage(error, 'Failed to generate routine'))
     },
   })
 }
