@@ -1,0 +1,28 @@
+{
+  "eyebrow": "Shop",
+  "title": "All Products",
+  "description": "Browse the full Glowmi catalog. Search and filter controls are shown here as a static layout for now.",
+  "filters": {
+    "searchLabel": "Search products",
+    "searchPlaceholder": "Search by product name or benefit",
+    "categoryLabel": "Category",
+    "categoryAll": "All categories",
+    "sortLabel": "Sort",
+    "sortDefault": "Featured"
+  },
+  "viewDetails": "View Details",
+  "states": {
+    "loadingTitle": "Loading products",
+    "loadingDescription": "Fetching the product catalog.",
+    "errorTitle": "Unable to load products",
+    "errorDescription": "The product list could not be loaded right now.",
+    "emptyTitle": "No products found",
+    "emptyDescription": "There are no products to display at the moment."
+  },
+  "pagination": {
+    "summary": "Showing {count} products",
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page {page}"
+  }
+}

@@ -17,7 +17,7 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       { hostname: 'images.unsplash.com' },
-      { hostname: 'being-screening-configured-talked.trycloudflare.com' },
+      { hostname: 'consequence-string-quarterly-deny.trycloudflare.com' },
     ],
     qualities: [25, 50, 75, 90, 100],
   },

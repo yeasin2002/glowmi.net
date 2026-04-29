@@ -1,0 +1,28 @@
+{
+  "eyebrow": "تسوق",
+  "title": "جميع المنتجات",
+  "description": "تصفح كتالوج غلومي الكامل. تظهر عناصر البحث والتصفية هنا كتصميم ثابت حالياً.",
+  "filters": {
+    "searchLabel": "ابحث عن منتج",
+    "searchPlaceholder": "ابحث باسم المنتج أو الفائدة",
+    "categoryLabel": "الفئة",
+    "categoryAll": "جميع الفئات",
+    "sortLabel": "الترتيب",
+    "sortDefault": "المميزة"
+  },
+  "viewDetails": "عرض التفاصيل",
+  "states": {
+    "loadingTitle": "جارٍ تحميل المنتجات",
+    "loadingDescription": "يتم جلب كتالوج المنتجات.",
+    "errorTitle": "تعذر تحميل المنتجات",
+    "errorDescription": "تعذر عرض قائمة المنتجات حالياً.",
+    "emptyTitle": "لا توجد منتجات",
+    "emptyDescription": "لا توجد منتجات لعرضها في الوقت الحالي."
+  },
+  "pagination": {
+    "summary": "عرض {count} منتج",
+    "previous": "السابق",
+    "next": "التالي",
+    "page": "الصفحة {page}"
+  }
+}
