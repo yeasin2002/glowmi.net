@@ -32,7 +32,8 @@ export const AddToCartWithIncrement = ({ productId }: Props) => {
 
   const cartItem = cart?.items?.find((item) => String(item.product_id) === String(productId))
   const selectedQuantity = Math.max(1, draftQuantity ?? cartItem?.quantity ?? 1)
-  const isPending = isCartLoading || isAddingToCart || isUpdatingCart || submitLockRef.current || !hasProductId
+  const isPending =
+    isCartLoading || isAddingToCart || isUpdatingCart || submitLockRef.current || !hasProductId
 
   const handleSubmit = async () => {
     if (submitLockRef.current || isPending || !hasProductId) {

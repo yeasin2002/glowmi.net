@@ -153,7 +153,7 @@ const Analysis = () => {
       additional_details: values.additionalDetails.trim() || undefined,
       concerns: values.concerns
         .map((concern) =>
-          concern === 'others' ? values.othersConcern?.trim() ?? concern : concern
+          concern === 'others' ? (values.othersConcern?.trim() ?? concern) : concern
         )
         .filter((concern): concern is string => Boolean(concern)),
       photo: photoFile,

@@ -1,28 +1,47 @@
 {
   "eyebrow": "تسوق",
   "title": "جميع المنتجات",
-  "description": "تصفح كتالوج غلومي الكامل. تظهر عناصر البحث والتصفية هنا كتصميم ثابت حالياً.",
+  "description": "تصفح كتالوج غلومي الكامل وضيّق النتائج عبر البحث المباشر وفلاتر المنتجات.",
   "filters": {
     "searchLabel": "ابحث عن منتج",
     "searchPlaceholder": "ابحث باسم المنتج أو الفائدة",
     "categoryLabel": "الفئة",
     "categoryAll": "جميع الفئات",
-    "sortLabel": "الترتيب",
-    "sortDefault": "المميزة"
+    "categoryLoading": "جارٍ تحميل الفئات...",
+    "categoryUnavailable": "فلتر الفئات غير متاح حالياً",
+    "categoryError": "تعذر تحميل الفئات حالياً.",
+    "skinTypeLabel": "نوع البشرة",
+    "minPriceLabel": "أقل سعر",
+    "maxPriceLabel": "أعلى سعر",
+    "pricePlaceholder": "0",
+    "hint": "تتحدّث الفلاتر مع القائمة مباشرة وتبقى متزامنة مع رابط الصفحة.",
+    "clear": "مسح الفلاتر",
+    "skinTypes": {
+      "all": "جميع أنواع البشرة",
+      "oily": "دهنية",
+      "dry": "جافة",
+      "normal": "عادية",
+      "combination": "مختلطة",
+      "sensitive": "حساسة"
+    }
   },
   "viewDetails": "عرض التفاصيل",
+  "actions": {
+    "retry": "حاول مرة أخرى"
+  },
   "states": {
     "loadingTitle": "جارٍ تحميل المنتجات",
     "loadingDescription": "يتم جلب كتالوج المنتجات.",
+    "updating": "جارٍ تحديث النتائج...",
     "errorTitle": "تعذر تحميل المنتجات",
     "errorDescription": "تعذر عرض قائمة المنتجات حالياً.",
     "emptyTitle": "لا توجد منتجات",
     "emptyDescription": "لا توجد منتجات لعرضها في الوقت الحالي."
   },
   "pagination": {
-    "summary": "عرض {count} منتج",
+    "summary": "عرض {from}-{to} من أصل {count} منتج",
     "previous": "السابق",
     "next": "التالي",
-    "page": "الصفحة {page}"
+    "page": "الصفحة {page} من {totalPages}"
   }
 }

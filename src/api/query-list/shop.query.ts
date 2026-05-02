@@ -122,7 +122,8 @@ const getCartEndpoint = (itemId?: number | string) => {
 }
 
 export const shopApi = {
-  getCart: (itemId?: number | string) => axiosClient.get<ShopResponse<Cart>>(getCartEndpoint(itemId)),
+  getCart: (itemId?: number | string) =>
+    axiosClient.get<ShopResponse<Cart>>(getCartEndpoint(itemId)),
 
   addCartItem: (data: AddCartItemRequestData, itemId?: number | string) =>
     axiosClient.post<ShopResponse<CartItem>>(getCartEndpoint(itemId), data),

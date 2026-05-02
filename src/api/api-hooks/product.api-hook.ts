@@ -1,20 +1,30 @@
-import { useQuery } from '@tanstack/react-query'
-import { productApi } from '../query-list/product.query'
+import { keepPreviousData, useQuery } from '@tanstack/react-query'
+import {
+  normalizeProductsResponse,
+  type ProductFilters,
+  productApi,
+} from '../query-list/product.query'
 
 const PRODUCT_KEYS = {
   all: () => ['products'] as const,
   lists: () => ['products', 'list'] as const,
   detail: (id: number | string) => ['products', 'detail', id] as const,
   best: () => ['products', 'best'] as const,
-  userLists: () => ['products', 'user', 'list'] as const,
+  userLists: (filters?: ProductFilters) => ['products', 'user', 'list', filters ?? {}] as const,
   userDetail: (id: number | string) => ['products', 'user', 'detail', id] as const,
 }
 
-export const useProducts = () => {
+const createUserProductsQuery = (filters?: ProductFilters) => ({
+  queryKey: PRODUCT_KEYS.userLists(filters),
+  queryFn: () => productApi.getUserProducts(filters),
+  placeholderData: keepPreviousData,
+  select: (response: Awaited<ReturnType<typeof productApi.getUserProducts>>) =>
+    normalizeProductsResponse(response.data, filters),
+})
+
+export const useProducts = (filters?: ProductFilters) => {
   return useQuery({
-    queryKey: PRODUCT_KEYS.lists(),
-    queryFn: () => productApi.getProducts(),
-    select: (response) => response.data,
+    ...createUserProductsQuery(filters),
   })
 }
 
@@ -41,11 +51,9 @@ export const useBestProducts = () => {
   })
 }
 
-export const useUserProducts = () => {
+export const useUserProducts = (filters?: ProductFilters) => {
   return useQuery({
-    queryKey: PRODUCT_KEYS.userLists(),
-    queryFn: () => productApi.getUserProducts(),
-    select: (response) => response.data,
+    ...createUserProductsQuery(filters),
   })
 }
 

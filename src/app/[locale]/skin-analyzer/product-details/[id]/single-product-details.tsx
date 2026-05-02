@@ -147,7 +147,7 @@ const SingleProductDetails = () => {
 export default SingleProductDetails
 
 // Utils related this this page
-function splitParagraphs(text?: string) {
+function splitParagraphs(text?: string | null) {
   if (!text) {
     return []
   }

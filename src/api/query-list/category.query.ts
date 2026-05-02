@@ -3,13 +3,26 @@ import { axiosClient } from '@/lib/axios'
 export interface Category {
   id: number
   name: string
-  image: string
+  image: string | null
   created_at: string
   updated_at: string
 }
 
-export const categoryApi = {
-  getCategories: () => axiosClient.get<Category[]>('/userapi/categories/'),
+export interface CategoriesResponse {
+  success: boolean
+  message: string
+  data: Category[]
+}
 
-  getCategoryById: (id: number | string) => axiosClient.get<Category>(`/userapi/categories/${id}/`),
+export interface SingleCategoryResponse {
+  success: boolean
+  message: string
+  data: Category
+}
+
+export const categoryApi = {
+  getCategories: () => axiosClient.get<CategoriesResponse>('/userapi/categories/'),
+
+  getCategoryById: (id: number | string) =>
+    axiosClient.get<SingleCategoryResponse>(`/userapi/categories/${id}/`),
 }

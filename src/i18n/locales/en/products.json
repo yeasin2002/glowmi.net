@@ -1,28 +1,47 @@
 {
   "eyebrow": "Shop",
   "title": "All Products",
-  "description": "Browse the full Glowmi catalog. Search and filter controls are shown here as a static layout for now.",
+  "description": "Browse the full Glowmi catalog and narrow the collection with live search and product filters.",
   "filters": {
     "searchLabel": "Search products",
     "searchPlaceholder": "Search by product name or benefit",
     "categoryLabel": "Category",
     "categoryAll": "All categories",
-    "sortLabel": "Sort",
-    "sortDefault": "Featured"
+    "categoryLoading": "Loading categories...",
+    "categoryUnavailable": "Category filter unavailable",
+    "categoryError": "Categories could not be loaded right now.",
+    "skinTypeLabel": "Skin type",
+    "minPriceLabel": "Min price",
+    "maxPriceLabel": "Max price",
+    "pricePlaceholder": "0",
+    "hint": "Filters update the product list and stay synced with the URL.",
+    "clear": "Clear filters",
+    "skinTypes": {
+      "all": "All skin types",
+      "oily": "Oily",
+      "dry": "Dry",
+      "normal": "Normal",
+      "combination": "Combination",
+      "sensitive": "Sensitive"
+    }
   },
   "viewDetails": "View Details",
+  "actions": {
+    "retry": "Try Again"
+  },
   "states": {
     "loadingTitle": "Loading products",
     "loadingDescription": "Fetching the product catalog.",
+    "updating": "Updating results...",
     "errorTitle": "Unable to load products",
     "errorDescription": "The product list could not be loaded right now.",
     "emptyTitle": "No products found",
     "emptyDescription": "There are no products to display at the moment."
   },
   "pagination": {
-    "summary": "Showing {count} products",
+    "summary": "Showing {from}-{to} of {count} products",
     "previous": "Previous",
     "next": "Next",
-    "page": "Page {page}"
+    "page": "Page {page} of {totalPages}"
   }
 }

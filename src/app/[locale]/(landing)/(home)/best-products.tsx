@@ -1,4 +1,8 @@
-import { productApi, type Product } from '@/api/query-list/product.query'
+import {
+  normalizeProductsResponse,
+  productApi,
+  type Product,
+} from '@/api/query-list/product.query'
 import { SiteHeading } from '@/components/shared'
 import { getTranslations } from 'next-intl/server'
 import { ProductsCarousel } from './products-list'
@@ -9,7 +13,7 @@ export const BestProductsList = async () => {
 
   try {
     const { data } = await productApi.getBestProducts()
-    products = data.data || []
+    products = normalizeProductsResponse(data).items
   } catch (error) {
     console.error('Failed to load best products:', error)
   }

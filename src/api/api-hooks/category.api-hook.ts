@@ -11,7 +11,7 @@ export const useCategories = () => {
   return useQuery({
     queryKey: CATEGORY_KEYS.lists(),
     queryFn: () => categoryApi.getCategories(),
-    select: (response) => response.data,
+    select: (response) => response.data.data,
   })
 }
 
@@ -26,6 +26,6 @@ export const useCategory = (id?: number | string) => {
       return categoryApi.getCategoryById(id)
     },
     enabled: id !== undefined,
-    select: (response) => response.data,
+    select: (response) => response.data.data,
   })
 }
