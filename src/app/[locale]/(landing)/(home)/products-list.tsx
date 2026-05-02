@@ -6,9 +6,9 @@ import { useEffect, useState } from 'react'
 import { cn } from '@/lib/utils'
 
 import { Product } from '@/api/query-list/product.query'
+import { ProductCard } from '@/components/shared/product-card-main'
 import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/components/ui/carousel'
 import { StaticImageData } from 'next/image'
-import { ProductCard } from '../../../../components/shared/product-card-main'
 
 export interface ProductItem {
   id?: number

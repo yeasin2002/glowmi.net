@@ -1,7 +1,14 @@
+import {
+  DEFAULT_PRODUCT_PAGE_SIZE,
+  PRODUCT_SKIN_TYPES,
+  type ProductFilters,
+  type ProductSkinType,
+} from '@/api/query-list/product.query'
 import type { Category } from '@/api/query-list/category.query'
-import type { ProductSkinType } from '@/api/query-list/product.query'
 import { Search, SlidersHorizontal } from 'lucide-react'
 import { useTranslations } from 'next-intl'
+import { parseAsInteger, useQueryState } from 'nuqs'
+import { useDeferredValue } from 'react'
 
 const SKIN_TYPE_OPTIONS: ProductSkinType[] = [
   'all',
@@ -29,6 +36,110 @@ interface ProductFilterSortProps {
   onSkinTypeChange: (value: ProductSkinType) => void
   search: string
   skinType: ProductSkinType
+}
+
+export const useProductFilterSortState = () => {
+  const [search, setSearch] = useQueryState('search', { defaultValue: '' })
+  const [categoryId, setCategoryId] = useQueryState('category', parseAsInteger)
+  const [skinTypeQuery, setSkinTypeQuery] = useQueryState('skin_type', { defaultValue: 'all' })
+  const [minPrice, setMinPrice] = useQueryState('min_price', parseAsInteger)
+  const [maxPrice, setMaxPrice] = useQueryState('max_price', parseAsInteger)
+  const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1))
+  const [pageSize] = useQueryState(
+    'page_size',
+    parseAsInteger.withDefault(DEFAULT_PRODUCT_PAGE_SIZE)
+  )
+
+  const deferredSearch = useDeferredValue(search)
+  const normalizedSearch = deferredSearch.trim()
+  const normalizedPage = page > 0 ? page : 1
+  const normalizedPageSize = pageSize > 0 ? pageSize : DEFAULT_PRODUCT_PAGE_SIZE
+  const normalizedSkinType = PRODUCT_SKIN_TYPES.includes(skinTypeQuery as ProductSkinType)
+    ? (skinTypeQuery as ProductSkinType)
+    : 'all'
+
+  const filters: ProductFilters = {
+    search: normalizedSearch || undefined,
+    category: categoryId ?? undefined,
+    skin_type: normalizedSkinType,
+    min_price: minPrice ?? undefined,
+    max_price: maxPrice ?? undefined,
+    page: normalizedPage,
+    page_size: normalizedPageSize,
+  }
+
+  const hasActiveFilters =
+    search.trim().length > 0 ||
+    categoryId !== null ||
+    normalizedSkinType !== 'all' ||
+    minPrice !== null ||
+    maxPrice !== null
+
+  const resetToFirstPage = () => {
+    void setPage(null)
+  }
+
+  const handleSearchChange = (value: string) => {
+    void setSearch(value.trim().length > 0 ? value : null)
+    resetToFirstPage()
+  }
+
+  const handleCategoryChange = (value: number | null) => {
+    void setCategoryId(value)
+    resetToFirstPage()
+  }
+
+  const handleSkinTypeChange = (value: ProductSkinType) => {
+    void setSkinTypeQuery(value === 'all' ? null : value)
+    resetToFirstPage()
+  }
+
+  const handleMinPriceChange = (value: number | null) => {
+    void setMinPrice(value)
+    resetToFirstPage()
+  }
+
+  const handleMaxPriceChange = (value: number | null) => {
+    void setMaxPrice(value)
+    resetToFirstPage()
+  }
+
+  const handleClearFilters = () => {
+    void setSearch(null)
+    void setCategoryId(null)
+    void setSkinTypeQuery(null)
+    void setMinPrice(null)
+    void setMaxPrice(null)
+    void setPage(null)
+  }
+
+  const handlePageChange = (nextPage: number) => {
+    void setPage(nextPage <= 1 ? null : nextPage)
+  }
+
+  return {
+    filters,
+    hasActiveFilters,
+    normalizedPage,
+    normalizedPageSize,
+    setPage,
+    clearFilters: handleClearFilters,
+    pageChange: handlePageChange,
+    filterSortProps: {
+      search,
+      categoryId,
+      skinType: normalizedSkinType,
+      minPrice,
+      maxPrice,
+      hasActiveFilters,
+      onSearchChange: handleSearchChange,
+      onCategoryChange: handleCategoryChange,
+      onSkinTypeChange: handleSkinTypeChange,
+      onMinPriceChange: handleMinPriceChange,
+      onMaxPriceChange: handleMaxPriceChange,
+      onClearFilters: handleClearFilters,
+    },
+  }
 }
 
 export const ProductFilterSort = ({

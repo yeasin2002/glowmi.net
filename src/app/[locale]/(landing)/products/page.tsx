@@ -2,17 +2,10 @@
 
 import { useCategories } from '@/api/api-hooks/category.api-hook'
 import { useProducts } from '@/api/api-hooks/product.api-hook'
-import {
-  DEFAULT_PRODUCT_PAGE_SIZE,
-  PRODUCT_SKIN_TYPES,
-  type ProductFilters,
-  type ProductSkinType,
-} from '@/api/query-list/product.query'
 import { ProductCard } from '@/components/shared/product-card-main'
 import { useTranslations } from 'next-intl'
-import { parseAsInteger, useQueryState } from 'nuqs'
-import { useDeferredValue, useEffect } from 'react'
-import { ProductFilterSort } from './product-filter-sort'
+import { useEffect } from 'react'
+import { ProductFilterSort, useProductFilterSortState } from './product-filter-sort'
 import { ProductCardSkeleton } from './product-page-skeleton'
 import { ProductPagination } from './product-pagination'
 
@@ -28,34 +21,16 @@ const ProductsGridSkeleton = () => {
 
 const ProductsPage = () => {
   const t = useTranslations('productsPage')
-  const [search, setSearch] = useQueryState('search', { defaultValue: '' })
-  const [category, setCategory] = useQueryState('category', parseAsInteger)
-  const [skinTypeQuery, setSkinTypeQuery] = useQueryState('skin_type', { defaultValue: 'all' })
-  const [minPrice, setMinPrice] = useQueryState('min_price', parseAsInteger)
-  const [maxPrice, setMaxPrice] = useQueryState('max_price', parseAsInteger)
-  const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1))
-  const [pageSize] = useQueryState(
-    'page_size',
-    parseAsInteger.withDefault(DEFAULT_PRODUCT_PAGE_SIZE)
-  )
-
-  const deferredSearch = useDeferredValue(search)
-  const normalizedSearch = deferredSearch.trim()
-  const normalizedPage = page > 0 ? page : 1
-  const normalizedPageSize = pageSize > 0 ? pageSize : DEFAULT_PRODUCT_PAGE_SIZE
-  const normalizedSkinType = PRODUCT_SKIN_TYPES.includes(skinTypeQuery as ProductSkinType)
-    ? (skinTypeQuery as ProductSkinType)
-    : 'all'
-
-  const filters: ProductFilters = {
-    search: normalizedSearch || undefined,
-    category: category ?? undefined,
-    skin_type: normalizedSkinType,
-    min_price: minPrice ?? undefined,
-    max_price: maxPrice ?? undefined,
-    page: normalizedPage,
-    page_size: normalizedPageSize,
-  }
+  const {
+    filters,
+    hasActiveFilters,
+    normalizedPage,
+    normalizedPageSize,
+    setPage,
+    clearFilters,
+    pageChange,
+    filterSortProps,
+  } = useProductFilterSortState()
 
   const { data, error, isLoading, isFetching, refetch: refetchProducts } = useProducts(filters)
   const {
@@ -68,60 +43,12 @@ const ProductsPage = () => {
   const products = Array.isArray(data?.items) ? data.items : []
   const totalCount = data?.count ?? 0
   const totalPages = data?.totalPages ?? 1
-  const hasActiveFilters =
-    search.trim().length > 0 ||
-    category !== null ||
-    normalizedSkinType !== 'all' ||
-    minPrice !== null ||
-    maxPrice !== null
 
   useEffect(() => {
     if (data && normalizedPage > data.totalPages) {
       void setPage(data.totalPages > 1 ? data.totalPages : null)
     }
   }, [data, normalizedPage, setPage])
-
-  const resetToFirstPage = () => {
-    void setPage(null)
-  }
-
-  const handleSearchChange = (value: string) => {
-    void setSearch(value.trim().length > 0 ? value : null)
-    resetToFirstPage()
-  }
-
-  const handleCategoryChange = (value: number | null) => {
-    void setCategory(value)
-    resetToFirstPage()
-  }
-
-  const handleSkinTypeChange = (value: ProductSkinType) => {
-    void setSkinTypeQuery(value === 'all' ? null : value)
-    resetToFirstPage()
-  }
-
-  const handleMinPriceChange = (value: number | null) => {
-    void setMinPrice(value)
-    resetToFirstPage()
-  }
-
-  const handleMaxPriceChange = (value: number | null) => {
-    void setMaxPrice(value)
-    resetToFirstPage()
-  }
-
-  const handleClearFilters = () => {
-    void setSearch(null)
-    void setCategory(null)
-    void setSkinTypeQuery(null)
-    void setMinPrice(null)
-    void setMaxPrice(null)
-    void setPage(null)
-  }
-
-  const handlePageChange = (nextPage: number) => {
-    void setPage(nextPage <= 1 ? null : nextPage)
-  }
 
   const handleRetryProducts = () => {
     void refetchProducts()
@@ -146,22 +73,11 @@ const ProductsPage = () => {
         </div>
 
         <ProductFilterSort
-          search={search}
-          categoryId={category}
           categories={categories}
           categoriesError={isCategoriesError}
           categoriesLoading={isCategoriesLoading}
-          skinType={normalizedSkinType}
-          minPrice={minPrice}
-          maxPrice={maxPrice}
-          hasActiveFilters={hasActiveFilters}
-          onSearchChange={handleSearchChange}
-          onCategoryChange={handleCategoryChange}
-          onSkinTypeChange={handleSkinTypeChange}
-          onMinPriceChange={handleMinPriceChange}
-          onMaxPriceChange={handleMaxPriceChange}
-          onClearFilters={handleClearFilters}
           onRetryCategories={handleRetryCategories}
+          {...filterSortProps}
         />
 
         <section className="mt-8">
@@ -191,7 +107,7 @@ const ProductsPage = () => {
               {hasActiveFilters ? (
                 <button
                   type="button"
-                  onClick={handleClearFilters}
+                  onClick={clearFilters}
                   className="mt-5 inline-flex h-11 items-center justify-center rounded-lg border border-[#1a2e1a] px-5 text-sm font-medium text-[#1a2e1a] transition hover:bg-[#1a2e1a] hover:text-white"
                 >
                   {t('filters.clear')}
@@ -217,7 +133,7 @@ const ProductsPage = () => {
           page={normalizedPage}
           pageSize={normalizedPageSize}
           totalPages={totalPages}
-          onPageChange={handlePageChange}
+          onPageChange={pageChange}
         />
       </main>
     </div>
