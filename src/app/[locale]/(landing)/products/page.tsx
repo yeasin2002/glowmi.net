@@ -3,6 +3,7 @@
 import { useProducts } from '@/api/api-hooks/product.api-hook'
 import { ProductCard } from '@/components/shared/product-card-main'
 import { useTranslations } from 'next-intl'
+import { parseAsInteger, useQueryState } from 'nuqs'
 import { ProductFilterSort } from './product-filter-sort'
 import { ProductCardSkeleton } from './product-page-skeleton'
 import { ProductPagination } from './product-pagination'
@@ -20,7 +21,18 @@ const ProductsGridSkeleton = () => {
 const ProductsPage = () => {
   const t = useTranslations('productsPage')
   const { data, error, isLoading } = useProducts()
+  const [min_price, setMin_price] = useQueryState('min_price', parseAsInteger)
 
+  /*  
+  Product and filters
+  /productapi/user/products/?page=1&page_size=3
+   /productapi/user/products/?category=1"
+  /productapi/user/products/?skin_type=all"
+  /productapi/user/products/?min_price=30"
+  /productapi/user/products/?max_price=40"
+  /productapi/user/products/?min_price=30&max_price=40"
+  /productapi/user/products/?search=Serum&category=1&min_price=30&max_price=50&page=1&page_size=5"
+  */
   const products = data?.data ?? []
 
   return (
